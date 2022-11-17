@@ -71,3 +71,5 @@ Thumbs.db
 *.dll
 *.exe
 
+# Build folder
+build-A8_EducationalApp-Desktop_Qt_6_4_0_MinGW_64_bit-Debug
