@@ -1,2 +1,8 @@
-<!DOCTYPE RCC>
-<RCC version="1.0"/>
+<RCC>
+    <qresource prefix="/OpenScreen">
+        <file>Play.png</file>
+        <file>info.png</file>
+        <file>library.png</file>
+        <file>PlayPressed.png</file>
+    </qresource>
+</RCC>
