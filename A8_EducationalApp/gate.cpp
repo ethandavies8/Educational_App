@@ -4,14 +4,15 @@
 Gate::Gate(){
     output = false;
 }
-SourceGate::SourceGate(){
-    output = true;
-}
 
 bool Gate::getOutput(){
     return output;
 }
 
+//CONSTRUCTOR FOR SOURCE OUTPUT ALWAYS TRUE
+SourceGate::SourceGate(){
+    output = true;
+}
 
 //SET OUTPUTS FOR GATE TYPES<<<
 void NOTGate::setOutput(){
@@ -23,4 +24,6 @@ void ANDGate::setOutput(){
         for(int i = 2; i < (int)inputs.size(); i++)
             output = output & inputs[i];
     }
+    else
+        output = false;
 }
