@@ -2,7 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QVector>
 #include <Box2D/Box2D.h>
+#include "physicsscene.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,18 +19,17 @@ public:
 public slots:
     void PressedPlay();
     void PressedInfo();
-    void Pressed();
-private slots:
-    void UpdateWorld();
+    void PressedHelp();
+    void GoToMainMenue();
+signals:
+    void titleFallOut();
+    void titleFallIn();
 private:
     Ui::MainWindow *ui;
-    void titleFallOut();
     void setUpTitle();
-    void titleFallIn();
+    void connectTitle();
+    void connectActions();
+    PhysicsScene* physicsScene;
     b2World* world;
-    b2Body* body;
-    float32 timeStep;
-    int32 velocityIterations;
-    int32 positionIterations;
 };
 #endif // MAINWINDOW_H
