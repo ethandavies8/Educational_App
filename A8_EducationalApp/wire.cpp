@@ -25,10 +25,12 @@ void Wire::updateValue(bool newValue) {
 
 // Add a gate to the end of this wire
 void Wire::connect(Gate& gate) {
-    // ends.push_back(&gate);
+    ends.push_back(&gate);
+    // gate.setOutput();
 }
 
 // Remove a connection between this wire and a gate
 void Wire::disconnect(Gate& gate) {
     // ends.remove(&gate);
+    // gate.removeInput(this);
 }
