@@ -8,7 +8,7 @@ class PhysicsObject : public QWidget
 {
     Q_OBJECT
 public:
-    explicit PhysicsObject(QWidget *parent,b2World* world,int worldChannel);
+    explicit PhysicsObject(QWidget *parent,b2World* world,int worldChannel,float bounce = 0.3);
     ~PhysicsObject();
 public slots:
     void UpdateGuiPosition();

@@ -13,7 +13,7 @@ class PhysicsScene : public QWidget
 public:
     explicit PhysicsScene(QWidget *parent);
     ~PhysicsScene();
-    void addBody(QWidget* widget);
+    void addBody(QWidget* widget,float bounce=0.3);
 public slots:
     void fallIn();
     void fallOut();

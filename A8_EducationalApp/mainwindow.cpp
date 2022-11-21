@@ -2,6 +2,7 @@
 #include <QTimer>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -32,10 +33,10 @@ void MainWindow::connectActions(){
 void MainWindow::setUpTitle(){
     this->physicsScene = new PhysicsScene(this);
     this->physicsScene->addBody(ui->TitleBackround);
-    this->physicsScene->addBody(ui->TitleForground);
-    this->physicsScene->addBody(ui->helpTitleButton);
-    this->physicsScene->addBody(ui->learnTitleButton);
-    this->physicsScene->addBody(ui->playTitleButton);
+    this->physicsScene->addBody(ui->TitleForground,0.35f);
+    this->physicsScene->addBody(ui->helpTitleButton,0.35);
+    this->physicsScene->addBody(ui->learnTitleButton,0.35);
+    this->physicsScene->addBody(ui->playTitleButton,0.4f);
 
     connect(this,&MainWindow::titleFallIn,this->physicsScene,&PhysicsScene::fallIn);
     connect(this,&MainWindow::titleFallOut,this->physicsScene,&PhysicsScene::fallOut);
@@ -57,4 +58,11 @@ void MainWindow::PressedHelp(){
 
 void MainWindow::GoToMainMenue(){
     emit titleFallIn();
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+    QMainWindow::resizeEvent(event);
+    std::cout << "resize" << std::endl;
+
 }

@@ -2,9 +2,10 @@
 #include "Box2D/Box2D.h"
 #include <QPointF>
 #include <iostream>
+#include <math.h>
 
 
-PhysicsObject::PhysicsObject(QWidget *parent,b2World* world,int worldChannel)
+PhysicsObject::PhysicsObject(QWidget *parent,b2World* world,int worldChannel,float bounce)
     : QWidget{parent}
 {
     // Define the dynamic body. We set its position and call the body factory.
@@ -33,13 +34,14 @@ PhysicsObject::PhysicsObject(QWidget *parent,b2World* world,int worldChannel)
 
     // Override the default friction.
     fixtureDef.friction = 0.3f;
-    fixtureDef.restitution = 0.3f;
+    fixtureDef.restitution = bounce;
 
     // Add the shape to the body.
     body->CreateFixture(&fixtureDef);
 
 
 }
+
 
 PhysicsObject::~PhysicsObject(){
     // Both of the pointers in the class are managed elsewere, the body's memory is cleared with the world. and the widget is removed with the parent(main Window).
@@ -59,6 +61,9 @@ void PhysicsObject::UpdateGuiPosition(){
     }
 
 }
+//void PhysicsObject::resize(QRect rect){
+
+//}
 
 QPoint PhysicsObject::worldToGuiPos(QPointF pos){
     int x = (int)(pos.x()*100) - this->offset.x();

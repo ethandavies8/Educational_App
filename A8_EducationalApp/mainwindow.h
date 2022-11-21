@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void resizeEvent(QResizeEvent* event);
 public slots:
     void PressedPlay();
     void PressedInfo();
@@ -24,6 +25,7 @@ public slots:
 signals:
     void titleFallOut();
     void titleFallIn();
+    void mainWindowResized();
 private:
     Ui::MainWindow *ui;
     void setUpTitle();

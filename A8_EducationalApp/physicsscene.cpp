@@ -60,10 +60,10 @@ void PhysicsScene::updateWorld(){
     emit postSimulation();
 }
 
-void PhysicsScene::addBody(QWidget* widget){
+void PhysicsScene::addBody(QWidget* widget,float bounce){
     int bodyCount = this->bodies.count();
     // add the body to the world
-    this->bodies.append(new PhysicsObject(widget,this->world,bodyCount));
+    this->bodies.append(new PhysicsObject(widget,this->world,bodyCount,bounce));
     //add the signal so it will update its postion after each simulation cycle.
     connect(this,&PhysicsScene::postSimulation,this->bodies.value(bodyCount),&PhysicsObject::UpdateGuiPosition);
     connect(this,&PhysicsScene::TriggerFallIn,this->bodies.value(bodyCount),&PhysicsObject::fallIn);
