@@ -2,7 +2,7 @@
 #include "wire.h"
 
 //Operator template to avoid a lot of repeated code.
-template <typename op> bool applyOperator(std::vector<Wire> inputs){
+template <typename op> bool applyOperator(std::vector<Wire*> inputs){
     bool tempLogic;
     if(inputs.size() >= 2){
         tempLogic = op()(inputs[1]->getValue(), inputs[1]->getValue());
@@ -42,18 +42,18 @@ void NOTGate::setOutput(){
 //Using template that uses "std::bit_and" as the generic value.
 void ANDGate::setOutput(){
     bool _and = applyOperator<std::bit_and<bool>>(inputs);
-    outputWire.updateValue(_and);
+    outputWire->updateValue(_and);
 }
 void NANDGate::setOutput(){
     bool nand = !applyOperator<std::bit_and<bool>>(inputs);
-    outputWire.updateValue(nand);
+    outputWire->updateValue(nand);
 }
 void ORGate::setOutput(){
     bool _or = applyOperator<std::bit_or<bool>>(inputs);
-    outputWire.updateValue(_or);
+    outputWire->updateValue(_or);
 }
 void XORGate::setOutput(){
     bool _xor = applyOperator<std::bit_xor<bool>>(inputs);
-    outputWire.updateValue(_xor);
+    outputWire->updateValue(_xor);
 }
 
