@@ -29,3 +29,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Images.qrc
+
+DISTFILES += \
+    Box2D/Box2DConfig.cmake \
+    Box2D/CMakeLists.txt
