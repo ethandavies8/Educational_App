@@ -2,30 +2,29 @@
 #define GATE_H
 
 #include <vector>
+#include "wire.h"
 
 class Gate
 {
 protected:
-    std::vector<bool> inputs;
-    bool output;
+    std::vector<Wire> inputs;
+    Wire outputWire;
     virtual void setOutput() = 0;
 
 public:
     Gate();
-    bool getOutput();
-    void addInput(bool wire);
+    void addInput(Wire wire);
 };
 
 //A source gate doesn't inherit from gate and output is true;
-class SourceGate{
-    bool output;
+class SourceGate : Gate{\
     SourceGate();
 };
 
 //Not gate can only have 1 input.
 class NOTGate : public Gate{
     void setOutput();
-    void addInput(bool wire); //Overwrite output
+    void addInput(Wire wire); //Overwrite output
 };
 
 class ANDGate : public Gate{
