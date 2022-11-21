@@ -26,6 +26,7 @@ void Wire::updateValue(bool newValue) {
 // Add a gate to the end of this wire
 void Wire::connect(Gate& gate) {
     ends.push_back(&gate);
+    gate.addInput(this);
     // gate.setOutput();
 }
 
