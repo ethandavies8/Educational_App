@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/title">
+        <file>fonts/OCRAEXT.TTF</file>
+    </qresource>
+</RCC>
