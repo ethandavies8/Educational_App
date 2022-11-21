@@ -1,4 +1,18 @@
 #include "gate.h"
+#include "wire.h"
+
+//Operator template to avoid a lot of repeated code.
+template <typename op> bool applyOperator(std::vector<Wire> inputs){
+    bool tempLogic;
+    if(inputs.size() >= 2){
+        tempLogic = op()(inputs[1].getValue(), inputs[1].getValue());
+        for(int i = 2; i < (int)inputs.size(); i++)
+            tempLogic = op()(tempLogic, inputs[i].getValue());
+        return tempLogic;
+    }
+    else
+        return false;
+}
 
 //Constructors for gates.
 Gate::Gate(){
@@ -25,48 +39,21 @@ SourceGate::SourceGate(){
 void NOTGate::setOutput(){
     outputWire.updateValue(!inputs[0].getValue());
 }
+//Using template that uses "std::bit_and" as the generic value.
 void ANDGate::setOutput(){
-    bool tempLogic;
-    if(inputs.size() >= 2){
-        tempLogic = inputs[0].getValue() && inputs[1].getValue();
-        for(int i = 2; i < (int)inputs.size(); i++)
-            tempLogic = tempLogic & inputs[i].getValue();
-        outputWire.updateValue(tempLogic);
-    }
-    else
-        outputWire.updateValue(false);
+    bool _and = applyOperator<std::bit_and<bool>>(inputs);
+    outputWire.updateValue(_and);
 }
-//The only difference between the NANDGate setOutput is the "!" after the for loop
 void NANDGate::setOutput(){
-    bool tempLogic;
-    if(inputs.size() >= 2){
-        tempLogic = inputs[0].getValue() && inputs[1].getValue();
-        for(int i = 2; i < (int)inputs.size(); i++)
-            tempLogic = tempLogic & inputs[i].getValue();
-        outputWire.updateValue(!tempLogic);
-    }
-    else
-        outputWire.updateValue(false);
+    bool nand = !applyOperator<std::bit_and<bool>>(inputs);
+    outputWire.updateValue(nand);
 }
 void ORGate::setOutput(){
-    bool tempLogic;
-    if(inputs.size() >= 2){
-        tempLogic = inputs[0].getValue() || inputs[1].getValue();
-        for(int i = 2; i < (int)inputs.size(); i++)
-            tempLogic = tempLogic | inputs[i].getValue();
-        outputWire.updateValue(tempLogic);
-    }
-    else
-        outputWire.updateValue(false);
+    bool _or = applyOperator<std::bit_or<bool>>(inputs);
+    outputWire.updateValue(_or);
 }
 void XORGate::setOutput(){
-    bool tempLogic;
-    if(inputs.size() >= 2){
-        tempLogic = inputs[0].getValue() ^ inputs[1].getValue();
-        for(int i = 2; i < (int)inputs.size(); i++)
-            tempLogic = tempLogic ^ inputs[i].getValue();
-        outputWire.updateValue(tempLogic);
-    }
-    else
-        outputWire.updateValue(false);
+    bool _xor = applyOperator<std::bit_xor<bool>>(inputs);
+    outputWire.updateValue(_xor);
 }
+
