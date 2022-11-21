@@ -3,11 +3,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <iostream>
+#include <QFontDatabase>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
+    QFontDatabase::addApplicationFont(":/title/fonts/OCRAEXT.TTF");
+
+
     ui->setupUi(this);
     connectActions();
     connectTitle();
