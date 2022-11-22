@@ -16,22 +16,19 @@ void Wire::updateValue(bool newValue) {
     value = newValue;
 
     // When this wire's value changes, all subsequent gate's outputs will change
-    /*
     for (Gate* gate : ends) {
         gate->setOutput();
     }
-    */
 }
 
 // Add a gate to the end of this wire
 void Wire::connect(Gate& gate) {
     ends.push_back(&gate);
     gate.addInput(this);
-    // gate.setOutput();
 }
 
 // Remove a connection between this wire and a gate
 void Wire::disconnect(Gate& gate) {
-    // ends.remove(&gate);
-    // gate.removeInput(this);
+    ends.erase(std::remove(ends.begin(), ends.end(), &gate), ends.end()); // Remove gate from vector
+//    gate.removeInput(this);
 }
