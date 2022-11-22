@@ -27,7 +27,10 @@ public slots:
     void NANDGateSelection();
     void ORGateSelection();
     void NOTGateSelection();
+    void NORGateSelection();
+    void XORGateSelection();
     void lineSelection();
+    void selectToolSelection();
 signals:
     void titleFallOut();
     void titleFallIn();
@@ -38,13 +41,15 @@ private:
     void connectTitle();
     void connectActions();
     void connectTools();
+    void setupMouseIcons();
     PhysicsScene* physicsScene;
     b2World* world;
     int mainMenuIndex = 0;
     int infoIndex = 1;
     int helpIndex = 2;
     int firstLevelIndex = 3;
-    enum Tool {AND, OR, NOT, NAND, Wire, Deselect};
+    enum Tool {AND, OR, NOT, NAND, NOR, XOR, Wire, Deselect};
     Tool currentTool;
+    QHash<Tool, QPixmap> mouseIcons;
 };
 #endif // MAINWINDOW_H

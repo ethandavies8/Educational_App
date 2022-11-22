@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
     QFontDatabase::addApplicationFont(":/title/fonts/OCRAEXT.TTF");
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
@@ -19,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     connectTitle();
     setUpTitle();
     connectTools();
+    setupMouseIcons();
 }
 
 MainWindow::~MainWindow()
@@ -43,6 +43,9 @@ void MainWindow::connectTools(){
     connect(ui->ORGateButton, &QPushButton::pressed, this, &MainWindow::ORGateSelection);
     connect(ui->NOTGateButton, &QPushButton::pressed, this, &MainWindow::NOTGateSelection);
     connect(ui->lineButton, &QPushButton::pressed, this, &MainWindow::lineSelection);
+    connect(ui->selectionButton, &QPushButton::pressed, this, &MainWindow::selectToolSelection);
+    connect(ui->NORGateButton, &QPushButton::pressed, this, &MainWindow::NORGateSelection);
+    connect(ui->XORGateButton, &QPushButton::pressed, this, &MainWindow::XORGateSelection);
 }
 
 void MainWindow::setUpTitle(){
@@ -57,6 +60,17 @@ void MainWindow::setUpTitle(){
     connect(this,&MainWindow::titleFallOut,this->physicsScene,&PhysicsScene::fallOut);
 
     emit titleFallIn();
+}
+
+void MainWindow::setupMouseIcons(){
+    mouseIcons.insert(AND, QPixmap(":/icons/ANDGate.png"));
+    mouseIcons.insert(OR, QPixmap(":/icons/ORGate.png"));
+    mouseIcons.insert(NOT, QPixmap(":/icons/NOTGate.png"));
+    mouseIcons.insert(NAND, QPixmap(":/icons/NANDGate.png"));
+    mouseIcons.insert(NOR, QPixmap(":/icons/NORGate.png"));
+    mouseIcons.insert(XOR, QPixmap(":/icons/XORGate.png"));
+    mouseIcons.insert(Wire, QPixmap(":/icons/line.png"));
+    mouseIcons.insert(Deselect, QPixmap(":/icons/mousePointer.png"));
 }
 
 void MainWindow::PressedPlay(){
@@ -87,49 +101,59 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 
 void MainWindow::ANDGateSelection(){
         currentTool = AND;
-        QPixmap p = QPixmap(":/icons/ANDGate.png");
-        p.scaled(50, 50);
-        QCursor c = QCursor(p, 0, 0);
-        setCursor(c);
+        QCursor cursor = QCursor(mouseIcons[AND], 0, 0);
+        setCursor(cursor);
         std::cout <<"select AND gate" <<std::endl;
 }
 
 void MainWindow::NANDGateSelection(){
     currentTool = NAND;
-    QPixmap p = QPixmap(":/icons/NANDGate.png");
-    p.scaled(50, 50);
-    QCursor c = QCursor(p, 0, 0);
-    setCursor(c);
+    QCursor cursor = QCursor(mouseIcons[NAND], 0, 0);
+    setCursor(cursor);
     std::cout <<"select NAND gate" <<std::endl;
 }
 
 void MainWindow::ORGateSelection(){
     currentTool = OR;
-    QPixmap p = QPixmap(":/icons/ORGate.png");
-    p.scaled(50, 50, Qt::IgnoreAspectRatio);
-    QCursor c = QCursor(p, 0, 0);
-    setCursor(c);
+    QCursor cursor = QCursor(mouseIcons[OR], 0, 0);
+    setCursor(cursor);
     std::cout <<"select OR gate" <<std::endl;
 
 }
 
 void MainWindow::NOTGateSelection(){
     currentTool = NOT;
-    QPixmap p = QPixmap(":/icons/NOTGate.png");
-    p.scaled(50, 50);
-    QCursor c = QCursor(p, 0, 0);
-    setCursor(c);
+    QCursor cursor = QCursor(mouseIcons[NOT], 0, 0);
+    setCursor(cursor);
     std::cout <<"select NOT gate" <<std::endl;
 
 }
 
 void MainWindow::lineSelection(){
     currentTool = Wire;
-    QPixmap p = QPixmap(":/icons/line.png");
-    p.scaled(50, 50);
-    QCursor c = QCursor(p, 0, 0);
-    setCursor(c);
+    QCursor cursor = QCursor(mouseIcons[Wire], 0, 0);
+    setCursor(cursor);
     std::cout <<"select line" <<std::endl;
 
+}
+
+void MainWindow::selectToolSelection(){
+    currentTool = Deselect;
+    setCursor(Qt::ArrowCursor);
+    std::cout <<"select tool" <<std::endl;
+}
+
+void MainWindow::NORGateSelection(){
+    currentTool = NOR;
+    QCursor cursor = QCursor(mouseIcons[NOR], 0, 0);
+    setCursor(cursor);
+    std::cout <<"select NOR gate" <<std::endl;
+}
+
+void MainWindow::XORGateSelection(){
+    currentTool = XOR;
+    QCursor cursor = QCursor(mouseIcons[XOR], 0, 0);
+    setCursor(cursor);
+    std::cout <<"select XOR gate" <<std::endl;
 }
 
