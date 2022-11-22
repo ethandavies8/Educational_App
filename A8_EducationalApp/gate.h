@@ -10,11 +10,11 @@ class Gate
 protected:
     std::vector<Wire*> inputs;
     Wire* outputWire;
-    virtual void setOutput() = 0;
 
 public:
     Gate();
     void addInput(Wire* wire);
+    virtual void setOutput() = 0;
 };
 
 //A source gate doesn't inherit from gate and output is true;
