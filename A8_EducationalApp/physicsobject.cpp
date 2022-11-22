@@ -93,7 +93,7 @@ void PhysicsObject::fallIn(){
 }
 
 void PhysicsObject::fallOut(){
-    std::cout<<"Trigger fall in"<<std::endl;
+    std::cout<<"Trigger fall out"<<std::endl;
 
     b2Transform transform = this->body->GetTransform();
     transform.p.y = -10;

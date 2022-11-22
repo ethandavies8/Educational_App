@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/OpenScreen">
+    <qresource prefix="/">
         <file>Play.png</file>
         <file>info.png</file>
         <file>library.png</file>

@@ -3,7 +3,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <iostream>
+#include <QString>
 #include <QFontDatabase>
+#include <QMouseEvent>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -11,12 +13,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     QFontDatabase::addApplicationFont(":/title/fonts/OCRAEXT.TTF");
-
-
     ui->setupUi(this);
+    ui->stackedWidget->setCurrentIndex(0);
     connectActions();
     connectTitle();
     setUpTitle();
+    connectTools();
 }
 
 MainWindow::~MainWindow()
@@ -35,6 +37,10 @@ void MainWindow::connectActions(){
     connect(ui->actiontitle,&QAction::triggered,this,&MainWindow::GoToMainMenue); // TODO replace with more
 }
 
+void MainWindow::connectTools(){
+    connect(ui->ANDGateButton, &QPushButton::pressed, this, &MainWindow::ANDGateSelection);
+}
+
 void MainWindow::setUpTitle(){
     this->physicsScene = new PhysicsScene(this);
     this->physicsScene->addBody(ui->TitleBackround);
@@ -51,14 +57,17 @@ void MainWindow::setUpTitle(){
 
 void MainWindow::PressedPlay(){
     emit titleFallOut();
+    ui->stackedWidget->setCurrentIndex(firstLevelIndex);
 }
 
 void MainWindow::PressedInfo(){
     emit titleFallIn();
+    ui->stackedWidget->setCurrentIndex(infoIndex);
 }
 
 void MainWindow::PressedHelp(){
     emit titleFallIn();
+    ui->stackedWidget->setCurrentIndex(helpIndex);
 }
 
 void MainWindow::GoToMainMenue(){
@@ -69,5 +78,17 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 {
     QMainWindow::resizeEvent(event);
     std::cout << "resize" << std::endl;
+
+}
+
+void MainWindow::ANDGateSelection(){
+        currentTool = AND;
+        QPixmap p = QPixmap(":/icons/ANDGate.png");
+        QCursor c = QCursor(p, 0, 0);
+        setCursor(c);
+        std::cout <<"select and gate" <<std::endl;
+}
+
+void MainWindow::mouseClicked(){
 
 }
