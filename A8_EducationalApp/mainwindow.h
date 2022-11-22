@@ -29,7 +29,7 @@ public slots:
     void PressedHelp();
     void GoToMainMenue();
     void ANDGateSelection();
-    void mouseClicked();
+    //void mouseClicked();
     void resetTool();
     void NANDGateSelection();
     void ORGateSelection();

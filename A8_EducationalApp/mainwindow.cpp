@@ -127,24 +127,20 @@ void MainWindow::ANDGateSelection()
 {
     currentTool = AND;
     dragWidget.AddItem(mouseIcons[AND]);
-    // QCursor cursor = QCursor(mouseIcons[AND], 0, 0);
-    // setCursor(cursor);
     std::cout << "select AND gate" << std::endl;
 }
 
 void MainWindow::NANDGateSelection()
 {
     currentTool = NAND;
-    QCursor cursor = QCursor(mouseIcons[NAND], 0, 0);
-    setCursor(cursor);
+    dragWidget.AddItem(mouseIcons[NAND]);
     std::cout << "select NAND gate" << std::endl;
 }
 
 void MainWindow::ORGateSelection()
 {
     currentTool = OR;
-    QCursor cursor = QCursor(mouseIcons[OR], 0, 0);
-    setCursor(cursor);
+    dragWidget.AddItem(mouseIcons[OR]);
     std::cout << "select OR gate" << std::endl;
 }
 
@@ -158,16 +154,14 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::NOTGateSelection()
 {
     currentTool = NOT;
-    QCursor cursor = QCursor(mouseIcons[NOT], 0, 0);
-    setCursor(cursor);
+    dragWidget.AddItem(mouseIcons[NOT]);
     std::cout << "select NOT gate" << std::endl;
 }
 
 void MainWindow::lineSelection()
 {
     currentTool = Wire;
-    QCursor cursor = QCursor(mouseIcons[Wire], 0, 0);
-    setCursor(cursor);
+    dragWidget.AddItem(mouseIcons[Wire]);
     std::cout << "select line" << std::endl;
 }
 
@@ -181,15 +175,13 @@ void MainWindow::selectToolSelection()
 void MainWindow::NORGateSelection()
 {
     currentTool = NOR;
-    QCursor cursor = QCursor(mouseIcons[NOR], 0, 0);
-    setCursor(cursor);
+    dragWidget.AddItem(mouseIcons[NOR]);
     std::cout << "select NOR gate" << std::endl;
 }
 
 void MainWindow::XORGateSelection()
 {
     currentTool = XOR;
-    QCursor cursor = QCursor(mouseIcons[XOR], 0, 0);
-    setCursor(cursor);
+    dragWidget.AddItem(mouseIcons[XOR]);
     std::cout << "select XOR gate" << std::endl;
 }
