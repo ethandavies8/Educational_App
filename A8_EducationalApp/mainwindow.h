@@ -28,6 +28,7 @@ public slots:
     void PressedInfo();
     void PressedHelp();
     void GoToMainMenue();
+    void refreshGameView();
     void ANDGateSelection();
     //void mouseClicked();
     void resetTool();

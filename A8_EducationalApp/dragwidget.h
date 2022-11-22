@@ -16,6 +16,8 @@ class DragWidget : public QFrame
     Q_OBJECT
 public:
     explicit DragWidget(QWidget *parent = nullptr);
+    //DragWidget& operator=(const DragWidget& other);
+    void clearChildren();
     void AddItem(QPixmap map);
 public slots:
     //void receiveMouse(QMouseEvent *event);

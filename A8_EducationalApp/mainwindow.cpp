@@ -46,6 +46,7 @@ void MainWindow::connectActions()
 {
     connect(ui->actiontitle, &QAction::triggered, this, &MainWindow::GoToMainMenue); // TODO replace with more
     connect(&dragWidget, &DragWidget::resetTool, this, &MainWindow::resetTool);
+    connect(ui->clearButton, &QPushButton::clicked, this, &MainWindow::refreshGameView);
 }
 
 void MainWindow::resetTool()
@@ -121,6 +122,11 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
     std::cout << "resize" << std::endl;
+}
+
+void MainWindow::refreshGameView(){
+    dragWidget.clearChildren();
+    std::cout << "refresh" << std::endl;
 }
 
 void MainWindow::ANDGateSelection()

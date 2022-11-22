@@ -243,7 +243,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/ANDGate.png</normaloff>:/icons/ANDGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -272,7 +272,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/ORGate.png</normaloff>:/icons/ORGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -301,7 +301,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/NOTGate.png</normaloff>:/icons/NOTGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -330,7 +330,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/NANDGate.png</normaloff>:/icons/NANDGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -359,7 +359,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/NORGate.png</normaloff>:/icons/NORGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -388,7 +388,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/XORGate.png</normaloff>:/icons/XORGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -434,7 +434,7 @@
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="Gates.qrc">
+       <iconset>
         <normaloff>:/icons/LogicTruthTables.png</normaloff>:/icons/LogicTruthTables.png</iconset>
       </property>
       <property name="iconSize">
@@ -624,7 +624,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/line.png</normaloff>:/icons/line.png</iconset>
        </property>
        <property name="iconSize">
@@ -650,7 +650,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/ANDGate.png</normaloff>:/icons/ANDGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -676,7 +676,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/ORGate.png</normaloff>:/icons/ORGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -702,7 +702,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/NOTGate.png</normaloff>:/icons/NOTGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -728,7 +728,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/NANDGate.png</normaloff>:/icons/NANDGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -754,7 +754,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/mousePointer.png</normaloff>:/icons/mousePointer.png</iconset>
        </property>
        <property name="iconSize">
@@ -780,7 +780,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/NORGate.png</normaloff>:/icons/NORGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -806,7 +806,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/XORGate.png</normaloff>:/icons/XORGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -846,6 +846,22 @@
        </property>
        <layout class="QGridLayout" name="toolLayout"/>
       </widget>
+     </widget>
+     <widget class="QPushButton" name="clearButton">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>20</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Clear</string>
+      </property>
      </widget>
     </widget>
    </widget>
@@ -910,7 +926,6 @@
  </widget>
  <resources>
   <include location="Images.qrc"/>
-  <include location="Gates.qrc"/>
  </resources>
  <connections/>
 </ui>

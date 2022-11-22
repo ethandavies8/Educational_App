@@ -12,6 +12,21 @@ DragWidget::DragWidget(QWidget *parent)
     setAcceptDrops(true);
 
 }
+/*
+DragWidget& DragWidget::operator=(const DragWidget& other) {
+
+    gates = other.gates;
+    lastLabelClickedIndex = other.lastLabelClickedIndex;
+    while ( QWidget* w = findChild<QWidget*>() )
+        delete w;
+    return *this;
+}
+*/
+
+void DragWidget::clearChildren(){
+    while ( QWidget* w = findChild<QWidget*>() )
+        delete w;
+}
 void DragWidget::AddItem(QPixmap map){
 
     QLabel *itemIcon = new QLabel(this);
