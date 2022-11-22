@@ -24,7 +24,10 @@ public slots:
     void PressedHelp();
     void GoToMainMenue();
     void ANDGateSelection();
-    void mouseClicked();
+    void NANDGateSelection();
+    void ORGateSelection();
+    void NOTGateSelection();
+    void lineSelection();
 signals:
     void titleFallOut();
     void titleFallIn();

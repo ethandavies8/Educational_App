@@ -246,7 +246,17 @@
         </rect>
        </property>
        <property name="text">
-        <string>Draw Line</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/line.png</normaloff>:/icons/line.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>100</width>
+         <height>100</height>
+        </size>
        </property>
       </widget>
       <widget class="QPushButton" name="ANDGateButton">
@@ -267,7 +277,7 @@
        </property>
        <property name="iconSize">
         <size>
-         <width>100</width>
+         <width>90</width>
          <height>100</height>
         </size>
        </property>
@@ -282,7 +292,17 @@
         </rect>
        </property>
        <property name="text">
-        <string>Or Gate</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/ORGate.png</normaloff>:/icons/ORGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>100</height>
+        </size>
        </property>
       </widget>
       <widget class="QPushButton" name="NOTGateButton">
@@ -295,10 +315,20 @@
         </rect>
        </property>
        <property name="text">
-        <string>Not Gate</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/NOTGate.png</normaloff>:/icons/NOTGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>100</height>
+        </size>
        </property>
       </widget>
-      <widget class="QPushButton" name="N">
+      <widget class="QPushButton" name="NANDGateButton">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -308,7 +338,17 @@
         </rect>
        </property>
        <property name="text">
-        <string>PushButton</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/NANDGate.png</normaloff>:/icons/NANDGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>100</height>
+        </size>
        </property>
       </widget>
      </widget>

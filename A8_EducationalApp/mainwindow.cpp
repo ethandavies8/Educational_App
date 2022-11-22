@@ -39,6 +39,10 @@ void MainWindow::connectActions(){
 
 void MainWindow::connectTools(){
     connect(ui->ANDGateButton, &QPushButton::pressed, this, &MainWindow::ANDGateSelection);
+    connect(ui->NANDGateButton, &QPushButton::pressed, this, &MainWindow::NANDGateSelection);
+    connect(ui->ORGateButton, &QPushButton::pressed, this, &MainWindow::ORGateSelection);
+    connect(ui->NOTGateButton, &QPushButton::pressed, this, &MainWindow::NOTGateSelection);
+    connect(ui->lineButton, &QPushButton::pressed, this, &MainWindow::lineSelection);
 }
 
 void MainWindow::setUpTitle(){
@@ -84,11 +88,48 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 void MainWindow::ANDGateSelection(){
         currentTool = AND;
         QPixmap p = QPixmap(":/icons/ANDGate.png");
+        p.scaled(50, 50);
         QCursor c = QCursor(p, 0, 0);
         setCursor(c);
-        std::cout <<"select and gate" <<std::endl;
+        std::cout <<"select AND gate" <<std::endl;
 }
 
-void MainWindow::mouseClicked(){
+void MainWindow::NANDGateSelection(){
+    currentTool = NAND;
+    QPixmap p = QPixmap(":/icons/NANDGate.png");
+    p.scaled(50, 50);
+    QCursor c = QCursor(p, 0, 0);
+    setCursor(c);
+    std::cout <<"select NAND gate" <<std::endl;
+}
+
+void MainWindow::ORGateSelection(){
+    currentTool = OR;
+    QPixmap p = QPixmap(":/icons/ORGate.png");
+    p.scaled(50, 50, Qt::IgnoreAspectRatio);
+    QCursor c = QCursor(p, 0, 0);
+    setCursor(c);
+    std::cout <<"select OR gate" <<std::endl;
 
 }
+
+void MainWindow::NOTGateSelection(){
+    currentTool = NOT;
+    QPixmap p = QPixmap(":/icons/NOTGate.png");
+    p.scaled(50, 50);
+    QCursor c = QCursor(p, 0, 0);
+    setCursor(c);
+    std::cout <<"select NOT gate" <<std::endl;
+
+}
+
+void MainWindow::lineSelection(){
+    currentTool = Wire;
+    QPixmap p = QPixmap(":/icons/line.png");
+    p.scaled(50, 50);
+    QCursor c = QCursor(p, 0, 0);
+    setCursor(c);
+    std::cout <<"select line" <<std::endl;
+
+}
+
