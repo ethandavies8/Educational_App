@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>710</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,8 +23,8 @@
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>-10</x>
-      <y>-30</y>
+      <x>0</x>
+      <y>0</y>
       <width>821</width>
       <height>651</height>
      </rect>
@@ -149,7 +149,7 @@
       <property name="geometry">
        <rect>
         <x>270</x>
-        <y>150</y>
+        <y>155</y>
         <width>81</width>
         <height>111</height>
        </rect>
@@ -175,32 +175,401 @@
      </widget>
     </widget>
     <widget class="QWidget" name="learnWidget">
-     <widget class="QLabel" name="learningLabel">
+     <widget class="QLabel" name="learningLogicLabel">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>140</y>
-        <width>471</width>
-        <height>271</height>
+        <x>10</x>
+        <y>0</y>
+        <width>561</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>OCR A Extended</family>
+        <pointsize>28</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Learning Logic Gates</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="learningLogicBox">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>75</width>
+        <height>570</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+      <widget class="QPushButton" name="ANDDisplayButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>75</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/ANDGate.png</normaloff>:/icons/ANDGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>90</width>
+         <height>100</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ORDisplayButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>100</y>
+         <width>75</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/ORGate.png</normaloff>:/icons/ORGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>100</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="NOTDisplayButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>200</y>
+         <width>75</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/NOTGate.png</normaloff>:/icons/NOTGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>100</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="NANDDisplayButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>300</y>
+         <width>75</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/NANDGate.png</normaloff>:/icons/NANDGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>100</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="NORDisplayButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>400</y>
+         <width>75</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/NORGate.png</normaloff>:/icons/NORGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>200</width>
+         <height>200</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="XORDisplayButton">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>500</y>
+         <width>75</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/XORGate.png</normaloff>:/icons/XORGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>70</width>
+         <height>75</height>
+        </size>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="andHelpLabel">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>80</y>
+        <width>211</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;And Gate: ouput is &amp;quot;high&amp;quot; only &lt;/p&gt;&lt;p&gt;if first input and second input&lt;/p&gt;&lt;p&gt; are both &amp;quot;high&amp;quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="truthTableButton">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>80</y>
+        <width>481</width>
+        <height>451</height>
        </rect>
       </property>
       <property name="text">
-       <string>Learning</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="Gates.qrc">
+        <normaloff>:/icons/LogicTruthTables.png</normaloff>:/icons/LogicTruthTables.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>500</width>
+        <height>450</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="orHelpLabel">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>180</y>
+        <width>221</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Or Gate: ouput is &amp;quot;high&amp;quot; if &lt;/p&gt;&lt;p&gt;first input or second &lt;/p&gt;&lt;p&gt;input is &amp;quot;high&amp;quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="notHelpLabel">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>280</y>
+        <width>211</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Not Gate:&lt;/p&gt;&lt;p&gt;negates current signal&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="nandHelpLabel">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>380</y>
+        <width>211</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nand gate:&lt;/p&gt;&lt;p&gt;Negated and gate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="norHelpLabel">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>480</y>
+        <width>211</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nor Gate:&lt;/p&gt;&lt;p&gt;Negated or gate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="xorHelpLabel">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>580</y>
+        <width>431</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Xor Gate:&lt;/p&gt;&lt;p&gt;Give a &amp;quot;high&amp;quot; output if either, but not both inputs are &amp;quot;high&amp;quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
     </widget>
     <widget class="QWidget" name="helpWidget">
-     <widget class="QLabel" name="helpLabel">
+     <widget class="QLabel" name="helpPageTitle">
       <property name="geometry">
        <rect>
-        <x>160</x>
-        <y>120</y>
-        <width>471</width>
-        <height>271</height>
+        <x>90</x>
+        <y>10</y>
+        <width>561</width>
+        <height>51</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <family>OCR A Extended</family>
+        <pointsize>28</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
        <string>Help</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
@@ -208,8 +577,8 @@
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>630</x>
-        <y>20</y>
+        <x>680</x>
+        <y>30</y>
         <width>171</width>
         <height>31</height>
        </rect>
@@ -226,9 +595,12 @@
        <rect>
         <x>20</x>
         <y>30</y>
-        <width>120</width>
-        <height>541</height>
+        <width>75</width>
+        <height>621</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
       <property name="title">
        <string>Tools</string>
@@ -239,24 +611,40 @@
       <widget class="QPushButton" name="lineButton">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>100</width>
-         <height>100</height>
+         <x>0</x>
+         <y>95</y>
+         <width>75</width>
+         <height>75</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
        <property name="text">
-        <string>Draw Line</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/line.png</normaloff>:/icons/line.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>100</width>
+         <height>100</height>
+        </size>
        </property>
       </widget>
       <widget class="QPushButton" name="ANDGateButton">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>130</y>
-         <width>100</width>
-         <height>100</height>
+         <x>0</x>
+         <y>170</y>
+         <width>75</width>
+         <height>75</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
        </property>
        <property name="text">
         <string/>
@@ -267,7 +655,7 @@
        </property>
        <property name="iconSize">
         <size>
-         <width>100</width>
+         <width>90</width>
          <height>100</height>
         </size>
        </property>
@@ -275,50 +663,167 @@
       <widget class="QPushButton" name="ORGateButton">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>230</y>
-         <width>100</width>
-         <height>100</height>
+         <x>0</x>
+         <y>245</y>
+         <width>75</width>
+         <height>75</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
        <property name="text">
-        <string>Or Gate</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/ORGate.png</normaloff>:/icons/ORGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>100</height>
+        </size>
        </property>
       </widget>
       <widget class="QPushButton" name="NOTGateButton">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>330</y>
-         <width>100</width>
-         <height>100</height>
+         <x>0</x>
+         <y>320</y>
+         <width>75</width>
+         <height>75</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
        <property name="text">
-        <string>Not Gate</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/NOTGate.png</normaloff>:/icons/NOTGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>100</height>
+        </size>
        </property>
       </widget>
-      <widget class="QPushButton" name="N">
+      <widget class="QPushButton" name="NANDGateButton">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>430</y>
-         <width>100</width>
-         <height>100</height>
+         <x>0</x>
+         <y>395</y>
+         <width>75</width>
+         <height>75</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
        <property name="text">
-        <string>PushButton</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/NANDGate.png</normaloff>:/icons/NANDGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>100</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="selectionButton">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>20</y>
+         <width>75</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/mousePointer.png</normaloff>:/icons/mousePointer.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="NORGateButton">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>470</y>
+         <width>75</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/NORGate.png</normaloff>:/icons/NORGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>100</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="XORGateButton">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>545</y>
+         <width>75</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(100, 100, 100);</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="Gates.qrc">
+         <normaloff>:/icons/XORGate.png</normaloff>:/icons/XORGate.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>80</width>
+         <height>100</height>
+        </size>
        </property>
       </widget>
      </widget>
      <widget class="QWidget" name="drawingWidget" native="true">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>50</y>
-        <width>641</width>
-        <height>521</height>
+        <x>100</x>
+        <y>60</y>
+        <width>691</width>
+        <height>591</height>
        </rect>
       </property>
       <property name="mouseTracking">
@@ -345,6 +850,7 @@
     </widget>
    </widget>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -354,15 +860,19 @@
      <height>19</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuReset_Title">
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 255, 255);</string>
+   </property>
+   <widget class="QMenu" name="menuHome">
     <property name="title">
-     <string>Screen</string>
+     <string>Home</string>
     </property>
-    <addaction name="actiontitle"/>
+    <addaction name="homeMenu"/>
+    <addaction name="helpPage"/>
+    <addaction name="learnPage"/>
    </widget>
-   <addaction name="menuReset_Title"/>
+   <addaction name="menuHome"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actiontitle">
    <property name="enabled">
     <bool>false</bool>
@@ -371,7 +881,36 @@
     <string>Title</string>
    </property>
   </action>
+  <action name="homeMenu">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Home Page</string>
+   </property>
+  </action>
+  <action name="helpPage">
+   <property name="text">
+    <string>Help Page</string>
+   </property>
+  </action>
+  <action name="actionInfo_Page">
+   <property name="text">
+    <string>Info Page</string>
+   </property>
+  </action>
+  <action name="learnPage">
+   <property name="text">
+    <string>Learn Page</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="Images.qrc"/>
+  <include location="Gates.qrc"/>
+ </resources>
  <connections/>
 </ui>

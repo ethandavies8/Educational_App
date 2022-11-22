@@ -1,5 +1,13 @@
 <RCC>
     <qresource prefix="/icons">
         <file>ANDGate.png</file>
+        <file>ORGate.png</file>
+        <file>NOTGate.png</file>
+        <file>NANDGate.png</file>
+        <file>line.png</file>
+        <file>mousePointer.png</file>
+        <file>LogicTruthTables.png</file>
+        <file>NORGate.png</file>
+        <file>XORGate.png</file>
     </qresource>
 </RCC>
