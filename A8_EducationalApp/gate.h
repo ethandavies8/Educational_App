@@ -25,7 +25,7 @@ class SourceGate : Gate{
 //Not gate can only have 1 input.
 class NOTGate : public Gate{
     void setOutput();
-    void addInput(Wire* wire); //Overwrite output
+    void addInput(Wire* wire); //Overwrite addInput
 };
 
 class ANDGate : public Gate{
