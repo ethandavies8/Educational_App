@@ -40,7 +40,15 @@ class ORGate : public Gate{
     void setOutput();
 };
 
+class NORGate : public Gate{
+    void setOutput();
+};
+
 class XORGate : public Gate{
+    void setOutput();
+};
+
+class XNORGate : public Gate{
     void setOutput();
 };
 

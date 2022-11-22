@@ -37,9 +37,12 @@ SourceGate::SourceGate(){
 
 //SET OUTPUTS FOR GATE TYPES<<<<<
 void NOTGate::setOutput(){
-    outputWire->updateValue(!inputs[0]->getValue());
+    if(inputs.size() > 0)
+        outputWire->updateValue(!inputs[0]->getValue());
+    else
+        outputWire->updateValue(false);
 }
-//Using template that uses "std::bit_and" as the generic value.
+//Using template that uses "std::bit_and/or/xor" as the generic value.
 void ANDGate::setOutput(){
     bool _and = applyOperator<std::bit_and<bool>>(inputs);
     outputWire->updateValue(_and);
@@ -52,8 +55,16 @@ void ORGate::setOutput(){
     bool _or = applyOperator<std::bit_or<bool>>(inputs);
     outputWire->updateValue(_or);
 }
+void NORGate::setOutput(){
+    bool nor = !applyOperator<std::bit_or<bool>>(inputs);
+    outputWire->updateValue(nor);
+}
 void XORGate::setOutput(){
     bool _xor = applyOperator<std::bit_xor<bool>>(inputs);
     outputWire->updateValue(_xor);
+}
+void XNORGate::setOutput(){
+    bool xnor = !applyOperator<std::bit_xor<bool>>(inputs);
+    outputWire->updateValue(xnor);
 }
 
