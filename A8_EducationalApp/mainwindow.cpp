@@ -6,6 +6,10 @@
 #include <QString>
 #include <QFontDatabase>
 #include <QMouseEvent>
+#include <QHBoxLayout>
+
+#include "dragwidget.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -19,6 +23,12 @@ MainWindow::MainWindow(QWidget *parent)
     connectTitle();
     setUpTitle();
     connectTools();
+
+   // QGroupBox *drawingTools = new QGroupBox(ui->groupBox);
+   // QHBoxLayout *verticalLayout = new QHBoxLayout(ui->drawingWidget);
+    ui->toolLayout->addWidget(&dragWidget);
+    //ui->toolLayout->addWidget(new DragWidget);
+
 }
 
 MainWindow::~MainWindow()
@@ -35,10 +45,17 @@ void MainWindow::connectTitle(){
 
 void MainWindow::connectActions(){
     connect(ui->actiontitle,&QAction::triggered,this,&MainWindow::GoToMainMenue); // TODO replace with more
+    connect(&dragWidget, &DragWidget::resetTool, this, &MainWindow::resetTool);
+}
+
+void MainWindow::resetTool(){
+    setCursor(Qt::ArrowCursor);
+    std::cout << "reset tool" <<std::endl;
 }
 
 void MainWindow::connectTools(){
     connect(ui->ANDGateButton, &QPushButton::pressed, this, &MainWindow::ANDGateSelection);
+    connect(this, &MainWindow::deleteEvent, &dragWidget, &DragWidget::receiveDeleteKey);
 }
 
 void MainWindow::setUpTitle(){
@@ -85,10 +102,17 @@ void MainWindow::ANDGateSelection(){
         currentTool = AND;
         QPixmap p = QPixmap(":/icons/ANDGate.png");
         QCursor c = QCursor(p, 0, 0);
-        setCursor(c);
+        //setCursor(c);
+        dragWidget.AddItem(p);
         std::cout <<"select and gate" <<std::endl;
 }
 
 void MainWindow::mouseClicked(){
 
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event){
+    if(event->key() == Qt::Key_Delete){
+        emit deleteEvent();
+    }
 }

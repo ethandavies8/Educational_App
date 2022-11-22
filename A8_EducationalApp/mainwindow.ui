@@ -46,7 +46,7 @@
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="Images.qrc">
+       <iconset>
         <normaloff>:/library.png</normaloff>:/library.png</iconset>
       </property>
       <property name="iconSize">
@@ -72,7 +72,7 @@
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="Images.qrc">
+       <iconset>
         <normaloff>:/Play.png</normaloff>:/Play.png</iconset>
       </property>
       <property name="iconSize">
@@ -104,7 +104,7 @@
        <string/>
       </property>
       <property name="icon">
-       <iconset resource="Images.qrc">
+       <iconset>
         <normaloff>:/info.png</normaloff>:/info.png</iconset>
       </property>
       <property name="iconSize">
@@ -262,7 +262,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset resource="Gates.qrc">
+        <iconset>
          <normaloff>:/icons/ANDGate.png</normaloff>:/icons/ANDGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -330,6 +330,17 @@
       <property name="styleSheet">
        <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
+      <widget class="QWidget" name="gridLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>0</y>
+         <width>521</width>
+         <height>471</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="toolLayout"/>
+      </widget>
      </widget>
     </widget>
    </widget>
@@ -340,7 +351,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuReset_Title">
@@ -361,9 +372,6 @@
    </property>
   </action>
  </widget>
- <resources>
-  <include location="Gates.qrc"/>
-  <include location="Images.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

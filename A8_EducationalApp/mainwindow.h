@@ -5,6 +5,7 @@
 #include <QVector>
 #include <Box2D/Box2D.h>
 #include "physicsscene.h"
+#include "dragwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,6 +17,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    DragWidget dragWidget;
     void resizeEvent(QResizeEvent* event);
 
 public slots:
@@ -25,10 +27,12 @@ public slots:
     void GoToMainMenue();
     void ANDGateSelection();
     void mouseClicked();
+    void resetTool();
 signals:
     void titleFallOut();
     void titleFallIn();
     void mainWindowResized();
+    void deleteEvent();
 private:
     Ui::MainWindow *ui;
     void setUpTitle();
@@ -43,5 +47,7 @@ private:
     int firstLevelIndex = 3;
     enum Tool {AND, OR, NOT, NAND, Wire, Deselect};
     Tool currentTool;
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
 };
 #endif // MAINWINDOW_H
