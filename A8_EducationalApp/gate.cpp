@@ -21,12 +21,14 @@ Gate::Gate(){
 //Normal gates can have any number of inputs
 void Gate::addInput(Wire* wire){
     inputs.push_back(wire);
+    setOutput();
 }
 
 //Not gates can only have one input
 void NOTGate::addInput(Wire* wire){
     if(inputs.size() == 0)
         inputs.push_back(wire);
+    setOutput();
 }
 
 
