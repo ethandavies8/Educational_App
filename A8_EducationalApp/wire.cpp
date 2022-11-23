@@ -30,5 +30,5 @@ void Wire::connect(Gate& gate) {
 // Remove a connection between this wire and a gate
 void Wire::disconnect(Gate& gate) {
     ends.erase(std::remove(ends.begin(), ends.end(), &gate), ends.end()); // Remove gate from vector
-//    gate.removeInput(this);
+    gate.removeInput(this);
 }
