@@ -1,5 +1,6 @@
 #include "gate.h"
 #include "wire.h"
+#include <algorithm>
 
 //Operator template to avoid a lot of repeated code.
 template <typename op> bool applyOperator(std::vector<Wire*> inputs){
@@ -31,6 +32,10 @@ void NOTGate::addInput(Wire* wire){
     setOutput();
 }
 
+//Remove a certain wire from the inputs list.
+void Gate::removeInput(Wire* wire){
+    inputs.erase(std::remove(inputs.begin(), inputs.end(), wire), inputs.end());
+}
 
 //CONSTRUCTOR FOR SOURCE GATE, OUTPUT ALWAYS TRUE
 SourceGate::SourceGate(){

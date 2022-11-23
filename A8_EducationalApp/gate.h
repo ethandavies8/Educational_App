@@ -14,6 +14,7 @@ protected:
 public:
     Gate();
     void addInput(Wire* wire);
+    void removeInput(Wire* wire);
     virtual void setOutput() = 0;
 };
 
