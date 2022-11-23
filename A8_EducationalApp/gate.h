@@ -18,7 +18,7 @@ public:
     virtual void setOutput() = 0;
 };
 
-//A source gate doesn't inherit from gate and output is true;
+//A source gate's output is true;
 class SourceGate : Gate{
     SourceGate();
 };
