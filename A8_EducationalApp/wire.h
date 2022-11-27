@@ -1,6 +1,7 @@
 #ifndef WIRE_H
 #define WIRE_H
 
+#include <QPainter>
 #include <QGraphicsLineItem>
 #include "gate.h"
 
@@ -14,12 +15,19 @@ public:
     void connect(Gate& gate);
     void disconnect(Gate& gate);
 
+    QRectF boundingRect() const;
+    void updatePosition();
+    void addSubLineStarting(QPointF);
+
 private:
     Gate *begin;
+    QPointF startPoint;
     QVector<Gate*> ends;
     bool value; // Each wire has a value of true or false (1 or 0)
     QPolygonF beginNode, endNode;
     QColor myColor = Qt::black;
+    QList<QPointF> subLineStarting;
+    //void paint(QPainter *painter, const QStyleOptionGraphicsItem * option, QWidget *widget);
 };
 
 #endif // WIRE_H
