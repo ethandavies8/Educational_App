@@ -11,7 +11,8 @@ public:
     Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent = nullptr); // Need to include gate classes in constructor (begin, end)
 
     void updateValue(bool newValue); // Updates this wire's value, then updates the next gates
-    bool getValue() const { return value; }
+    bool getValue() const { return value; } // Returns value currently on the wire
+    int getConnectionCount() const { return ends.count(); } // Returns number of connections
     void connect(Gate& gate);
     void disconnect(Gate& gate);
 
