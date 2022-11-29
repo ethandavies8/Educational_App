@@ -24,8 +24,12 @@ void Gate::addInput(Wire* wire){
     inputs.push_back(wire);
     setOutput();
 }
+void Gate::addOutput(Wire* wire){
+    outputWire = wire;
+}
 
-//Not gates can only have one input
+
+//Not gates and output gates can only have one input
 void NOTGate::addInput(Wire* wire){
     if(inputs.size() == 0)
         inputs.push_back(wire);
@@ -37,18 +41,35 @@ void Gate::removeInput(Wire* wire){
     inputs.erase(std::remove(inputs.begin(), inputs.end(), wire), inputs.end());
 }
 
-//CONSTRUCTOR FOR SOURCE GATE, OUTPUT ALWAYS TRUE
-SourceGate::SourceGate(){
-    outputWire->updateValue(true);
-}
-
 //SET OUTPUTS FOR GATE TYPES<<<<<
 void NOTGate::setOutput(){
-    if(inputs.size() > 0)
-        outputWire->updateValue(!inputs[0]->getValue());
-    else
-        outputWire->updateValue(false);
+    if(outputWire != nullptr){
+        if(inputs.size() > 0)
+            outputWire->updateValue(!inputs[0]->getValue());
+        else
+            outputWire->updateValue(false);
+    }
 }
+//SourceGate overwritten methods
+void SourceGate::setOutput(){}
+void SourceGate::setOutput(bool output){
+    outputWire->updateValue(output);
+}
+void SourceGate::addInput(){}
+
+//OutputGate overwritten methods
+bool OutputGate::getOutput(){
+    if(inputs.size() == 1)
+        return inputs[0]->getValue();
+    else return false;
+}
+void OutputGate::addInput(Wire* wire){
+    if(inputs.size() == 0)
+        inputs.push_back(wire);
+}
+void OutputGate::addOutput(){}
+void OutputGate::setOutput(){}
+
 //Using template that uses "std::bit_and/or/xor" as the generic value.
 void ANDGate::setOutput(){
     bool _and = applyOperator<std::bit_and<bool>>(inputs);

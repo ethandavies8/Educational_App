@@ -14,13 +14,23 @@ protected:
 public:
     Gate();
     void addInput(Wire* wire);
+    void addOutput(Wire* wire);
     void removeInput(Wire* wire);
     virtual void setOutput() = 0;
 };
 
 //A source gate's output is true;
-class SourceGate : Gate{
-    SourceGate();
+class SourceGate : public Gate{
+    void addInput();
+    void setOutput(bool);
+    void setOutput();
+};
+
+class OutputGate : public Gate{
+    void addOutput();
+    void addInput(Wire* wire);
+    void setOutput();
+    bool getOutput();
 };
 
 //Not gate can only have 1 input.
