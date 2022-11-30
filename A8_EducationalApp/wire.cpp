@@ -8,6 +8,8 @@ Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLin
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     ends.push_back(&endGate);
+    beginGate.addOutput(this);
+    endGate.addInput(this);
 
     // waiting gate class inherit from GraphicsItems
     //startPoint = beginGate->pos();

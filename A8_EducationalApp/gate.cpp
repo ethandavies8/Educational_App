@@ -6,7 +6,7 @@
 template <typename op> bool applyOperator(std::vector<Wire*> inputs){
     bool tempLogic;
     if(inputs.size() >= 2){
-        tempLogic = op()(inputs[1]->getValue(), inputs[1]->getValue());
+        tempLogic = op()(inputs[0]->getValue(), inputs[1]->getValue());
         for(int i = 2; i < (int)inputs.size(); i++)
             tempLogic = op()(tempLogic, inputs[i]->getValue());
         return tempLogic;
@@ -22,7 +22,6 @@ Gate::Gate(){
 //Normal gates can have any number of inputs
 void Gate::addInput(Wire* wire){
     inputs.push_back(wire);
-    setOutput();
 }
 void Gate::addOutput(Wire* wire){
     outputWire = wire;
@@ -33,7 +32,6 @@ void Gate::addOutput(Wire* wire){
 void NOTGate::addInput(Wire* wire){
     if(inputs.size() == 0)
         inputs.push_back(wire);
-    setOutput();
 }
 
 //Remove a certain wire from the inputs list.

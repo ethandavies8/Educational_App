@@ -21,12 +21,14 @@ public:
 
 //A source gate's output is true;
 class SourceGate : public Gate{
+public:
     void addInput();
-    void setOutput(bool);
     void setOutput();
+    void setOutput(bool);
 };
 
 class OutputGate : public Gate{
+public:
     void addOutput();
     void addInput(Wire* wire);
     void setOutput();
@@ -40,6 +42,7 @@ class NOTGate : public Gate{
 };
 
 class ANDGate : public Gate{
+public:
     void setOutput();
 };
 
