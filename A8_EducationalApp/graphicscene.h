@@ -45,8 +45,7 @@ private:
     bool leftButtonDown;
     QPointF startPoint;
     QGraphicsLineItem *line;
-    QColor myItemColor;
-    QColor myLineColor;
+    QColor myLineColor ;
     QPixmap currentGate;
 };
 

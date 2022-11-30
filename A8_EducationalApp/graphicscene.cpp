@@ -13,7 +13,6 @@ GraphicScene::GraphicScene(QMenu *itemMenu, QObject *parent)
     myMode = MoveItem;
     myItemType = SceneItem::NoSelection;
     line = nullptr;
-    myItemColor = Qt::white;
     myLineColor = Qt::black;
 }
 
@@ -33,9 +32,8 @@ void GraphicScene::setGateImage(QPixmap gateImage){
 
 void GraphicScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    //if (mouseEvent->button() != Qt::LeftButton)
-      //  return;
-
+    if (mouseEvent->button() != Qt::LeftButton)
+        return;
     SceneItem *item;
     switch (myMode) {
         case InsertItem:
@@ -100,10 +98,6 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
            //wire->updatePosition();
         }
     }
-
-    //temp fix to be able to move items
-    //myItemType = SceneItem::NoSelection;
-    //myMode = MoveItem;
 
     line = nullptr;
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
