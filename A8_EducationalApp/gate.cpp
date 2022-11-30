@@ -18,6 +18,9 @@ template <typename op> bool applyOperator(std::vector<Wire*> inputs){
 //Constructors for gates.
 Gate::Gate(){
 }
+void Gate::removeOutput(){
+    outputWire = nullptr;
+}
 
 //Normal gates can have any number of inputs
 void Gate::addInput(Wire* wire){
