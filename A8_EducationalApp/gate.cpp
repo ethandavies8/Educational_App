@@ -54,25 +54,11 @@ void NOTGate::setOutput(){
             outputWire->updateValue(!inputs[0]->getValue());
     }
 }
-//SourceGate overwritten methods
 void SourceGate::setOutput(){}
 void SourceGate::setOutput(bool output){
     if(outputWire != nullptr)
         outputWire->updateValue(output);
 }
-void SourceGate::addInput(){}
-
-//OutputGate overwritten methods
-bool OutputGate::getOutput(){
-    if(inputs.size() == 1)
-        return inputs[0]->getValue();
-    else return false;
-}
-void OutputGate::addInput(Wire* wire){
-    if(inputs.size() == 0)
-        inputs.push_back(wire);
-}
-void OutputGate::addOutput(){}
 void OutputGate::setOutput(){}
 
 //Using template that uses "std::bit_and/or/xor" as the generic value,
@@ -102,3 +88,17 @@ void XNORGate::setOutput(){
     applyOperator<std::bit_xor<bool>>(true);
 }
 
+//SourceGate special methods
+void SourceGate::addInput(){}
+
+//OutputGate special methods
+bool OutputGate::getOutput(){
+    if(inputs.size() == 1)
+        return inputs[0]->getValue();
+    else return false;
+}
+void OutputGate::addInput(Wire* wire){
+    if(inputs.size() == 0)
+        inputs.push_back(wire);
+}
+void OutputGate::addOutput(){}
