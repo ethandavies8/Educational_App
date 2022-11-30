@@ -12,7 +12,7 @@ class QMenu;
 class QPolygonF;
 QT_END_NAMESPACE
 
-//class Arrow;
+//class Wire;
 
 class SceneItem : public QGraphicsPolygonItem
 {
@@ -45,7 +45,7 @@ private:
     QMenu *myContextMenu;
     QImage myGateImage;
     QRect *imageBounds();
-    //QList<Arrow *> arrows;
+    //QList<Wire *> wires;
 };
 
 #endif // SCENEITEM_H

@@ -40,12 +40,12 @@ SceneItem::SceneItem(ItemType sceneItemType, QMenu *contextMenu,QPixmap gateImag
 }
 
 /*
-void SceneItem::removeArrow(Arrow *arrow)
+void SceneItem::removeWire(Wire *wire)
 {
-    arrows.removeAll(arrow);
+    wires.removeAll(arrow);
 }
 
-void SceneItem::removeArrows()
+void SceneItem::removeWires()
 {
 
     const auto wiresCopy = wires;
