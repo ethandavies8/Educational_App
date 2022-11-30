@@ -52,8 +52,6 @@ void NOTGate::setOutput(){
     if(outputWire != nullptr){
         if(inputs.size() > 0)
             outputWire->updateValue(!inputs[0]->getValue());
-        else
-            outputWire->updateValue(false);
     }
 }
 //SourceGate overwritten methods
