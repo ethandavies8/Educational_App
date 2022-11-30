@@ -3,21 +3,25 @@
 #include <algorithm>
 
 //Operator template to avoid a lot of repeated code.
-template <typename op> bool applyOperator(std::vector<Wire*> inputs){
+//Does the generic op on input values and inverts if nott is true.
+template <typename op> void Gate:: applyOperator(bool nott){
     bool tempLogic;
-    if(inputs.size() >= 2){
+    if(inputs.size() >= 2 && outputWire != nullptr){
         tempLogic = op()(inputs[0]->getValue(), inputs[1]->getValue());
         for(int i = 2; i < (int)inputs.size(); i++)
             tempLogic = op()(tempLogic, inputs[i]->getValue());
-        return tempLogic;
+
+        if(nott)
+            outputWire->updateValue(!tempLogic);
+        else
+            outputWire->updateValue(tempLogic);
     }
-    else
-        return false;
 }
 
 //Constructors for gates.
 Gate::Gate(){
 }
+//Get rid of a wire.
 void Gate::removeOutput(){
     outputWire = nullptr;
 }
@@ -26,6 +30,7 @@ void Gate::removeOutput(){
 void Gate::addInput(Wire* wire){
     inputs.push_back(wire);
 }
+//Set outputWire to a wire.
 void Gate::addOutput(Wire* wire){
     outputWire = wire;
 }
@@ -54,7 +59,8 @@ void NOTGate::setOutput(){
 //SourceGate overwritten methods
 void SourceGate::setOutput(){}
 void SourceGate::setOutput(bool output){
-    outputWire->updateValue(output);
+    if(outputWire != nullptr)
+        outputWire->updateValue(output);
 }
 void SourceGate::addInput(){}
 
@@ -71,29 +77,30 @@ void OutputGate::addInput(Wire* wire){
 void OutputGate::addOutput(){}
 void OutputGate::setOutput(){}
 
-//Using template that uses "std::bit_and/or/xor" as the generic value.
+//Using template that uses "std::bit_and/or/xor" as the generic value,
+//and a bool value that tell if the result should be inverted.
 void ANDGate::setOutput(){
-    bool _and = applyOperator<std::bit_and<bool>>(inputs);
-    outputWire->updateValue(_and);
+    //Apply a bit and on gate inputs
+    applyOperator<std::bit_and<bool>>(false);
 }
 void NANDGate::setOutput(){
-    bool nand = !applyOperator<std::bit_and<bool>>(inputs);
-    outputWire->updateValue(nand);
+    //Apply a bit and on gate inputs then invert it because parameter is "true"
+    applyOperator<std::bit_and<bool>>(true);
 }
 void ORGate::setOutput(){
-    bool _or = applyOperator<std::bit_or<bool>>(inputs);
-    outputWire->updateValue(_or);
+    //Apply a bit or on gate inputs
+    applyOperator<std::bit_or<bool>>(false);
 }
 void NORGate::setOutput(){
-    bool nor = !applyOperator<std::bit_or<bool>>(inputs);
-    outputWire->updateValue(nor);
+    //Apply a bit or on gate inputs and invert it.
+    applyOperator<std::bit_or<bool>>(true);
 }
 void XORGate::setOutput(){
-    bool _xor = applyOperator<std::bit_xor<bool>>(inputs);
-    outputWire->updateValue(_xor);
+    //Apply a bit xor on gate inputs
+    applyOperator<std::bit_xor<bool>>(false);
 }
 void XNORGate::setOutput(){
-    bool xnor = !applyOperator<std::bit_xor<bool>>(inputs);
-    outputWire->updateValue(xnor);
+    //Apply a bit xor on gate inputs and invert it.
+    applyOperator<std::bit_xor<bool>>(true);
 }
 

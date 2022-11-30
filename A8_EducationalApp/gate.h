@@ -12,6 +12,7 @@ protected:
     Wire* outputWire;
 
 public:
+    template <typename op> void applyOperator(bool);
     Gate();
     void addInput(Wire* wire);
     void addOutput(Wire* wire);
