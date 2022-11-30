@@ -33,14 +33,14 @@ void GraphicScene::setGateImage(QPixmap gateImage){
 
 void GraphicScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if (mouseEvent->button() != Qt::LeftButton)
-        return;
+    //if (mouseEvent->button() != Qt::LeftButton)
+      //  return;
 
     SceneItem *item;
     switch (myMode) {
         case InsertItem:
             item = new SceneItem(myItemType, myItemMenu, currentGate);
-            item->setBrush(myItemColor);
+            //item->setBrush(myItemColor);
             addItem(item);
             item->setPos(mouseEvent->scenePos());
             emit itemInserted(item);
@@ -102,16 +102,18 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
     //temp fix to be able to move items
-    myItemType = SceneItem::NoSelection;
-    myMode = MoveItem;
+    //myItemType = SceneItem::NoSelection;
+    //myMode = MoveItem;
 
     line = nullptr;
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
+/*
 bool GraphicScene::isItemChange(int type) const
 {
     const QList<QGraphicsItem *> items = selectedItems();
     const auto cb = [type](const QGraphicsItem *item) { return item->type() == type; };
     return std::find_if(items.begin(), items.end(), cb) != items.end();
 }
+*/

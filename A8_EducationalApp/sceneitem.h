@@ -14,7 +14,7 @@ QT_END_NAMESPACE
 
 //class Wire;
 
-class SceneItem : public QGraphicsPolygonItem
+class SceneItem : public QGraphicsPixmapItem
 {
 public:
     enum ItemType {         AND,

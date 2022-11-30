@@ -12,40 +12,33 @@
 
 SceneItem::SceneItem(ItemType sceneItemType, QMenu *contextMenu,QPixmap gateImage,
                          QGraphicsItem *parent)
-    : QGraphicsPolygonItem(parent), myType(sceneItemType)
+    : QGraphicsPixmapItem(parent), myType(sceneItemType)
     , myContextMenu(contextMenu)
 {
-    QPainterPath path;
+
     switch (myType) {
         case AND:
-            path.moveTo(200, 50);
-            path.arcTo(150, 0, 50, 50, 0, 90);
-            path.arcTo(50, 0, 50, 50, 90, 90);
-            path.arcTo(50, 50, 50, 50, 180, 90);
-            path.arcTo(150, 50, 50, 50, 270, 90);
-            path.lineTo(200, 25);
-            myPolygon = path.toFillPolygon();
+
             break;
         default:
-            myGateImage = gateImage.toImage();
-            myPolygon << QPointF(-120, -80) << QPointF(-70, 80)
-                      << QPointF(120, 80) << QPointF(70, -80)
-                      << QPointF(-120, -80);
+
             break;
     }
-    setPolygon(myPolygon);
+    setPixmap(gateImage);
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 }
 
+
+
 /*
-void SceneItem::removeWire(Wire *wire)
+void SceneItem::removeWire(Wire *arrow)
 {
-    wires.removeAll(arrow);
+    arrows.removeAll(arrow);
 }
 
-void SceneItem::removeWires()
+void SceneItem::removeArrows()
 {
 
     const auto wiresCopy = wires;
@@ -61,7 +54,8 @@ void SceneItem::addWire(Wire *wire)
 {
     wires.append(wire);
 }
-*/
+
+
 QPixmap SceneItem::image() const
 {
     QPixmap pixmap(250, 250);
@@ -74,7 +68,7 @@ QPixmap SceneItem::image() const
     return pixmap;
 
 }
-
+*/
 void SceneItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
     scene()->clearSelection();
