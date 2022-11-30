@@ -25,6 +25,7 @@ SceneItem::SceneItem(ItemType sceneItemType, QMenu *contextMenu,QPixmap gateImag
             break;
     }
     setPixmap(gateImage);
+    setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
@@ -38,7 +39,7 @@ void SceneItem::removeWire(Wire *arrow)
     arrows.removeAll(arrow);
 }
 
-void SceneItem::removeArrows()
+void SceneItem::removeWires()
 {
 
     const auto wiresCopy = wires;
@@ -55,20 +56,8 @@ void SceneItem::addWire(Wire *wire)
     wires.append(wire);
 }
 
-
-QPixmap SceneItem::image() const
-{
-    QPixmap pixmap(250, 250);
-    pixmap.fill(Qt::transparent);
-    QPainter painter(&pixmap);
-    painter.setPen(QPen(Qt::black, 8));
-    painter.translate(125, 125);
-    painter.drawPolyline(myPolygon);
-    std::cout << "attempt draw" << std::endl;
-    return pixmap;
-
-}
 */
+
 void SceneItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
     scene()->clearSelection();
