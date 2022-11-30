@@ -15,6 +15,7 @@ public:
     int getConnectionCount() const { return ends.count(); } // Returns number of connections
     void connect(Gate& gate);
     void disconnect(Gate& gate);
+    void removeConnections();
 
     QRectF boundingRect() const;
     void updatePosition();

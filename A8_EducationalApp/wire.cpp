@@ -22,7 +22,8 @@ void Wire::updateValue(bool newValue) {
 
     // When this wire's value changes, all subsequent gate's outputs will change
     for (Gate* gate : ends) {
-        gate->setOutput();
+        if (gate)
+            gate->setOutput();
     }
 }
 
@@ -36,6 +37,17 @@ void Wire::connect(Gate& gate) {
 void Wire::disconnect(Gate& gate) {
     ends.erase(std::remove(ends.begin(), ends.end(), &gate), ends.end()); // Remove gate from vector
     gate.removeInput(this);
+}
+
+// Remove all connections of this wire
+void Wire::removeConnections() {
+    if (begin)
+        begin->removeOutput();
+
+    for (Gate* gate : ends) {
+        if (gate)
+            gate->removeInput(this);
+    }
 }
 
 // Telling the scene, how big is the wire
