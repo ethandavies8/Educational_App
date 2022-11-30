@@ -16,7 +16,8 @@ template <typename op> bool applyOperator(std::vector<Wire*> inputs){
 }
 
 //Constructors for gates.
-Gate::Gate(){
+Gate::Gate(GateType type, QGraphicsItem *parent) : QGraphicsItem(parent){
+    myType = type;
 }
 
 //Normal gates can have any number of inputs

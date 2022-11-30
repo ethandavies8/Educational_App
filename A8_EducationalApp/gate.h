@@ -2,21 +2,33 @@
 #define GATE_H
 
 #include <vector>
+#include <QGraphicsPolygonItem>
 
 class Wire;
 
-class Gate
+class Gate : public QGraphicsItem
 {
+
 protected:
     std::vector<Wire*> inputs;
     Wire* outputWire;
 
 public:
-    Gate();
+    enum GateType {
+            AND,
+            OR,
+            NOT,
+            NAND,
+            NOR,
+            XOR,
+    };
+    Gate(GateType, QGraphicsItem *parent);
     void addInput(Wire* wire);
     void addOutput(Wire* wire);
     void removeInput(Wire* wire);
     virtual void setOutput() = 0;
+private:
+    GateType myType;
 };
 
 //A source gate's output is true;

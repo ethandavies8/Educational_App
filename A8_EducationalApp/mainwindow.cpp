@@ -7,8 +7,10 @@
 #include <QFontDatabase>
 #include <QMouseEvent>
 #include <QHBoxLayout>
+#include <QtWidgets>
 
-#include "dragwidget.h"
+#include "graphicscene.h"
+#include "sceneitem.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -21,10 +23,31 @@ MainWindow::MainWindow(QWidget *parent)
     setUpTitle();
     connectTools();
 
-    // QGroupBox *drawingTools = new QGroupBox(ui->groupBox);
-    // QHBoxLayout *verticalLayout = new QHBoxLayout(ui->drawingWidget);
-    ui->toolLayout->addWidget(&dragWidget);
-    // ui->toolLayout->addWidget(new DragWidget);
+    scene = new GraphicScene(itemMenu, this);
+    scene->setSceneRect(QRectF(0, 0, 250, 250));
+
+    connect(scene, &GraphicScene::itemInserted,
+            this, &MainWindow::itemInserted);
+    connect(scene, &GraphicScene::itemSelected,
+            this, &MainWindow::itemSelected);
+
+    connect(this, &MainWindow::changeSelectedGate, scene, &GraphicScene::setGateImage);
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    //layout->addWidget(toolBox);
+    view = new QGraphicsView(scene);
+    layout->addWidget(view);
+
+    QWidget *widget = new QWidget;
+    widget->setLayout(layout);
+
+
+    ui->toolLayout->addWidget(widget);
+
+    //QGroupBox *drawingTools = new QGroupBox(ui->groupBox);
+    //QHBoxLayout *verticalLayout = new QHBoxLayout(ui->drawingWidget);
+    //ui->toolLayout->addWidget(&sceneWidget);
+    //ui->toolLayout->addWidget(new DragWidget);
 
     setupMouseIcons();
 }
@@ -45,8 +68,9 @@ void MainWindow::connectTitle()
 void MainWindow::connectActions()
 {
     connect(ui->actiontitle, &QAction::triggered, this, &MainWindow::GoToMainMenue); // TODO replace with more
-    connect(&dragWidget, &DragWidget::resetTool, this, &MainWindow::resetTool);
+    //connect(&dragWidget, &DragWidget::resetTool, this, &MainWindow::resetTool);
     connect(ui->clearButton, &QPushButton::clicked, this, &MainWindow::refreshGameView);
+
 }
 
 void MainWindow::resetTool()
@@ -58,7 +82,7 @@ void MainWindow::resetTool()
 void MainWindow::connectTools()
 {
     connect(ui->ANDGateButton, &QPushButton::pressed, this, &MainWindow::ANDGateSelection);
-    connect(this, &MainWindow::deleteEvent, &dragWidget, &DragWidget::receiveDeleteKey);
+    //connect(this, &MainWindow::deleteEvent, &dragWidget, &DragWidget::receiveDeleteKey);
     connect(ui->NANDGateButton, &QPushButton::pressed, this, &MainWindow::NANDGateSelection);
     connect(ui->ORGateButton, &QPushButton::pressed, this, &MainWindow::ORGateSelection);
     connect(ui->NOTGateButton, &QPushButton::pressed, this, &MainWindow::NOTGateSelection);
@@ -66,6 +90,7 @@ void MainWindow::connectTools()
     connect(ui->selectionButton, &QPushButton::pressed, this, &MainWindow::selectToolSelection);
     connect(ui->NORGateButton, &QPushButton::pressed, this, &MainWindow::NORGateSelection);
     connect(ui->XORGateButton, &QPushButton::pressed, this, &MainWindow::XORGateSelection);
+
 }
 
 void MainWindow::setUpTitle()
@@ -95,6 +120,18 @@ void MainWindow::setupMouseIcons()
     mouseIcons.insert(Deselect, QPixmap(":/icons/mousePointer.png"));
 }
 
+
+void MainWindow::itemInserted(SceneItem *item)
+{
+
+}
+
+
+void MainWindow::itemSelected(QGraphicsItem *item)
+{
+
+
+}
 void MainWindow::PressedPlay()
 {
     emit titleFallOut();
@@ -125,29 +162,36 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 }
 
 void MainWindow::refreshGameView(){
-    dragWidget.clearChildren();
+    //dragWidget.clearChildren();
     std::cout << "refresh" << std::endl;
 }
 
 void MainWindow::ANDGateSelection()
 {
     currentTool = AND;
-    dragWidget.AddItem(mouseIcons[AND]);
+    //dragWidget.AddItem(mouseIcons[AND]);
     std::cout << "select AND gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+    emit changeSelectedGate(mouseIcons[AND]);
+
 }
 
 void MainWindow::NANDGateSelection()
 {
     currentTool = NAND;
-    dragWidget.AddItem(mouseIcons[NAND]);
+    //dragWidget.AddItem(mouseIcons[NAND]);
     std::cout << "select NAND gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+    emit changeSelectedGate(mouseIcons[NAND]);
 }
 
 void MainWindow::ORGateSelection()
 {
     currentTool = OR;
-    dragWidget.AddItem(mouseIcons[OR]);
+    //dragWidget.AddItem(mouseIcons[OR]);
     std::cout << "select OR gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+    emit changeSelectedGate(mouseIcons[OR]);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -160,15 +204,19 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::NOTGateSelection()
 {
     currentTool = NOT;
-    dragWidget.AddItem(mouseIcons[NOT]);
+    //dragWidget.AddItem(mouseIcons[NOT]);
     std::cout << "select NOT gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+    emit changeSelectedGate(mouseIcons[NOT]);
 }
 
 void MainWindow::lineSelection()
 {
     currentTool = Wire;
-    dragWidget.AddItem(mouseIcons[Wire]);
+    //dragWidget.AddItem(mouseIcons[Wire]);
     std::cout << "select line" << std::endl;
+    scene->setMode(GraphicScene::InsertLine);
+    emit
 }
 
 void MainWindow::selectToolSelection()
@@ -176,18 +224,23 @@ void MainWindow::selectToolSelection()
     currentTool = Deselect;
     setCursor(Qt::ArrowCursor);
     std::cout << "select tool" << std::endl;
+    scene->setMode(GraphicScene::MoveItem);
 }
 
 void MainWindow::NORGateSelection()
 {
     currentTool = NOR;
-    dragWidget.AddItem(mouseIcons[NOR]);
+    //dragWidget.AddItem(mouseIcons[NOR]);
     std::cout << "select NOR gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+    emit changeSelectedGate(mouseIcons[NOR]);
 }
 
 void MainWindow::XORGateSelection()
 {
     currentTool = XOR;
-    dragWidget.AddItem(mouseIcons[XOR]);
+    //dragWidget.AddItem(mouseIcons[XOR]);
     std::cout << "select XOR gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+    emit changeSelectedGate(mouseIcons[XOR]);
 }

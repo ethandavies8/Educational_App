@@ -5,14 +5,20 @@
 #include <QVector>
 #include <Box2D/Box2D.h>
 #include "physicsscene.h"
-#include "dragwidget.h"
+#include "sceneitem.h"
+
+class GraphicScene;
 
 QT_BEGIN_NAMESPACE
+class QGraphicsView;
 namespace Ui
 {
     class MainWindow;
 }
+
 QT_END_NAMESPACE
+
+
 
 class MainWindow : public QMainWindow
 {
@@ -20,7 +26,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    DragWidget dragWidget;
     void resizeEvent(QResizeEvent *event);
 
 public slots:
@@ -39,14 +44,19 @@ public slots:
     void XORGateSelection();
     void lineSelection();
     void selectToolSelection();
+    void itemSelected(QGraphicsItem *item);
+    void itemInserted(SceneItem *item);
 signals:
     void titleFallOut();
     void titleFallIn();
     void mainWindowResized();
     void deleteEvent();
+    void changeSelectedGate(QPixmap map);
 
 private:
     Ui::MainWindow *ui;
+    GraphicScene *scene;
+    QGraphicsView *view;
     void setUpTitle();
     void connectTitle();
     void connectActions();
@@ -58,6 +68,7 @@ private:
     int infoIndex = 1;
     int helpIndex = 2;
     int firstLevelIndex = 3;
+    QMenu *itemMenu;
     enum Tool
     {
         AND,

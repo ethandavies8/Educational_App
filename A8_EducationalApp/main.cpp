@@ -15,10 +15,13 @@ bool testGatesAndWires() {
 
 int main(int argc, char *argv[])
 {
-    std::cout << testGatesAndWires() << std::endl;
-    srand(time(0));
+    //std::cout << testGatesAndWires() << std::endl;
+    //srand(time(0));
+    //Q_INIT_RESOURCE(graphicscene);
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
     return a.exec();
+
+
 }
