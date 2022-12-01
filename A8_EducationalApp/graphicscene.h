@@ -4,6 +4,9 @@
 
 #include "sceneitem.h"
 
+#include "wire.h"
+#include "gate.h"
+
 #include <QGraphicsScene>
 
 QT_BEGIN_NAMESPACE
@@ -25,11 +28,11 @@ public:
 
 public slots:
     void setMode(Mode mode);
-    void setItemType(SceneItem::ItemType type);
+    void setItemType(Gate::GateType type);
     void setGateImage(QPixmap gateImage);
 
 signals:
-    void itemInserted(SceneItem *item);
+    void itemInserted(Gate *item);
     void itemSelected(QGraphicsItem *item);
 
 protected:
@@ -39,7 +42,8 @@ protected:
 
 private:
     bool isItemChange(int type) const;
-    SceneItem::ItemType myItemType;
+    //SceneItem::ItemType myItemType;
+    Gate::GateType myItemType;
     QMenu *myItemMenu;
     Mode myMode;
     bool leftButtonDown;

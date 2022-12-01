@@ -8,6 +8,7 @@
 #include "sceneitem.h"
 
 class GraphicScene;
+class Gate;
 
 QT_BEGIN_NAMESPACE
 class QGraphicsView;
@@ -45,7 +46,7 @@ public slots:
     void lineSelection();
     void selectToolSelection();
     void itemSelected(QGraphicsItem *item);
-    void itemInserted(SceneItem *item);
+    void itemInserted(Gate *item);
 signals:
     void titleFallOut();
     void titleFallIn();

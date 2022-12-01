@@ -1,6 +1,6 @@
 
 #include "sceneitem.h"
-//#include "arrow.h"
+#include "arrow.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
@@ -34,16 +34,16 @@ SceneItem::SceneItem(ItemType sceneItemType, QMenu *contextMenu,QPixmap gateImag
 
 
 /*
-void SceneItem::removeWire(Wire *arrow)
+void SceneItem::removeWire(Arrow *wire)
 {
-    arrows.removeAll(arrow);
+    wires.removeAll(wire);
 }
 
 void SceneItem::removeWires()
 {
 
     const auto wiresCopy = wires;
-    for (Wire *wire : wiresCopy) {
+    for (Arrow *wire : wiresCopy) {
         wire->startItem()->removeWire(wire);
         wire->endItem()->removeWire(wire);
         scene()->removeItem(wire);
@@ -51,13 +51,13 @@ void SceneItem::removeWires()
     }
 }
 
-void SceneItem::addWire(Wire *wire)
+void SceneItem::addWire(Arrow *wire)
 {
     wires.append(wire);
 }
 
-*/
 
+*/
 void SceneItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
     scene()->clearSelection();
@@ -68,8 +68,8 @@ void SceneItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 QVariant SceneItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     if (change == QGraphicsItem::ItemPositionChange) {
-       // for (Wire *wire : qAsConst(wire))
-           // wire->updatePosition();
+        for (Arrow *arrow : qAsConst(wires))
+            arrow->updatePosition();
     }
 
     return value;

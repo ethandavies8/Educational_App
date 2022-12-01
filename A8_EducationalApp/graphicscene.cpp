@@ -1,7 +1,6 @@
 
 #include "graphicscene.h"
-//#include "wire.h"
-//#include "gate.h"
+//#include "arrow.h"
 
 #include <QGraphicsSceneMouseEvent>
 
@@ -11,7 +10,7 @@ GraphicScene::GraphicScene(QMenu *itemMenu, QObject *parent)
 {
     myItemMenu = itemMenu;
     myMode = MoveItem;
-    myItemType = SceneItem::NoSelection;
+    myItemType = Gate::NoSelection;
     line = nullptr;
     myLineColor = Qt::black;
 }
@@ -21,7 +20,7 @@ void GraphicScene::setMode(Mode mode)
     myMode = mode;
 }
 
-void GraphicScene::setItemType(SceneItem::ItemType type)
+void GraphicScene::setItemType(Gate::GateType type)
 {
     myItemType = type;
 }
@@ -34,10 +33,13 @@ void GraphicScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (mouseEvent->button() != Qt::LeftButton)
         return;
-    SceneItem *item;
+    //SceneItem *item;
+    Gate *item;
     switch (myMode) {
         case InsertItem:
-            item = new SceneItem(myItemType, myItemMenu, currentGate);
+            //item = new Gate(myItemType, currentGate);
+            item = new Gate(myItemType, myItemMenu, currentGate);
+            //item = new SceneItem(myItemType, myItemMenu, currentGate);
             //item->setBrush(myItemColor);
             addItem(item);
             item->setPos(mouseEvent->scenePos());
@@ -84,18 +86,20 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 
         if (startItems.count() > 0 && endItems.count() > 0 &&
-            startItems.first()->type() == SceneItem::Type &&
-            endItems.first()->type() == SceneItem::Type &&
+            startItems.first()->type() == Gate::Type &&
+            endItems.first()->type() == Gate::Type &&
             startItems.first() != endItems.first()) {
-            SceneItem *startItem = qgraphicsitem_cast<SceneItem *>(startItems.first());
-            SceneItem *endItem = qgraphicsitem_cast<SceneItem *>(endItems.first());
-            //Wire *wire = new Wire(startItem, endItem);
-            //wire->setColor(myLineColor);
-            //startItem->addWire(wire);
-            //endItem->addWire(wire);
-            //wire->setZValue(-1000.0);
-            //addItem(wire);
-           //wire->updatePosition();
+            Gate *startItem = qgraphicsitem_cast<Gate *>(startItems.first());
+            Gate *endItem = qgraphicsitem_cast<Gate *>(endItems.first());
+
+
+            Wire *wire = new Wire(startItem, endItem);
+            wire->setColor(myLineColor);
+            startItem->addWire(wire);
+            endItem->addWire(wire);
+            wire->setZValue(-1000.0);
+            addItem(wire);
+            wire->updatePosition();
         }
     }
 
@@ -110,4 +114,6 @@ bool GraphicScene::isItemChange(int type) const
     const auto cb = [type](const QGraphicsItem *item) { return item->type() == type; };
     return std::find_if(items.begin(), items.end(), cb) != items.end();
 }
+
+
 

@@ -1,6 +1,10 @@
 #include "gate.h"
 #include "wire.h"
+//#include "arrow.h"
 #include <algorithm>
+
+#include <QGraphicsScene>
+#include <QGraphicsSceneContextMenuEvent>
 
 //Operator template to avoid a lot of repeated code.
 template <typename op> bool applyOperator(std::vector<Wire*> inputs){
@@ -16,9 +20,55 @@ template <typename op> bool applyOperator(std::vector<Wire*> inputs){
 }
 
 //Constructors for gates.
-Gate::Gate(GateType type, QGraphicsItem *parent) : QGraphicsItem(parent){
+/*
+Gate::Gate(GateType type, QPixmap gateMap, QGraphicsItem *parent) : QGraphicsPixmapItem(parent){
     myType = type;
+    setPixmap(gateMap);
 }
+*/
+Gate::Gate(GateType type, QMenu *contextMenu,QPixmap gateImage,
+                         QGraphicsItem *parent)
+    : QGraphicsPixmapItem(parent), myType(type)
+    , myContextMenu(contextMenu)
+{
+
+    switch (myType) {
+        case AND:
+
+            break;
+        default:
+
+            break;
+    }
+    setPixmap(gateImage);
+    setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
+    setFlag(QGraphicsItem::ItemIsMovable, true);
+    setFlag(QGraphicsItem::ItemIsSelectable, true);
+    setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+}
+
+void Gate::removeWire(Wire *wire)
+{
+    wires.removeAll(wire);
+}
+
+void Gate::removeWires()
+{
+
+    const auto wiresCopy = wires;
+    for (Wire *wire : wiresCopy) {
+        wire->startItem()->removeWire(wire);
+        wire->endItem()->removeWire(wire);
+        scene()->removeItem(wire);
+        delete wire;
+    }
+}
+
+void Gate::addWire(Wire *wire)
+{
+    wires.append(wire);
+}
+
 
 //Normal gates can have any number of inputs
 void Gate::addInput(Wire* wire){
@@ -29,6 +79,9 @@ void Gate::addOutput(Wire* wire){
     outputWire = wire;
 }
 
+void Gate::setOutput(){
+
+}
 
 //Not gates and output gates can only have one input
 void NOTGate::addInput(Wire* wire){
@@ -95,5 +148,23 @@ void XORGate::setOutput(){
 void XNORGate::setOutput(){
     bool xnor = !applyOperator<std::bit_xor<bool>>(inputs);
     outputWire->updateValue(xnor);
+}
+
+
+void Gate::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+   // scene()->clearSelection();
+    //setSelected(true);
+    //myContextMenu->exec(event->screenPos());
+}
+
+QVariant Gate::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+    //if (change == QGraphicsItem::ItemPositionChange) {
+      //  for (Arrow *arrow : qAsConst(wires))
+        //    arrow->updatePosition();
+    //}
+
+    return value;
 }
 

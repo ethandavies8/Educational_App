@@ -5,13 +5,16 @@
 #include <QGraphicsPolygonItem>
 
 class Wire;
+class Arrow;
 
-class Gate : public QGraphicsItem
+class Gate : public QGraphicsPixmapItem
 {
 
 protected:
     std::vector<Wire*> inputs;
     Wire* outputWire;
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) override;
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
 public:
     enum GateType {
@@ -21,14 +24,23 @@ public:
             NAND,
             NOR,
             XOR,
+            NoSelection,
     };
-    Gate(GateType, QGraphicsItem *parent);
+   // Gate(GateType, QPixmap, QGraphicsItem *parent);
+    Gate(GateType itemType, QMenu *contextMenu, QPixmap gateImage, QGraphicsItem *parent = nullptr);
     void addInput(Wire* wire);
     void addOutput(Wire* wire);
     void removeInput(Wire* wire);
-    virtual void setOutput() = 0;
+    void setOutput();
+
+    void removeWire(Wire *wire);
+    void addWire(Wire *wire);
+    void removeWires();
 private:
     GateType myType;
+    QMenu *myContextMenu;
+
+    QList<Wire *> wires;
 };
 
 //A source gate's output is true;

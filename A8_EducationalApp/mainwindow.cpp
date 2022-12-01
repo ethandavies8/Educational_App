@@ -121,7 +121,7 @@ void MainWindow::setupMouseIcons()
 }
 
 
-void MainWindow::itemInserted(SceneItem *item)
+void MainWindow::itemInserted(Gate *item)
 {
 
 }

@@ -1,8 +1,12 @@
 #include "wire.h"
+#include "gate.h"
 
 #include <QPen>
+#include <QPainter>
+#include <QtMath>
 
 // Constructor for wire class
+/*
 Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLineItem(parent), begin(&beginGate) {
     value = 0; // Preset wire's value to 0, won't care until update time
     setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -11,6 +15,48 @@ Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLin
 
     // waiting gate class inherit from GraphicsItems
     //startPoint = beginGate->pos();
+}
+*/
+
+Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
+    : QGraphicsLineItem(parent), myStartItem(startGate), myEndItem(endGate)
+{
+    value = 0;
+    setFlag(QGraphicsItem::ItemIsSelectable, true);
+    setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    ends.push_back(endGate);
+    spriteOffset.setX(25);
+    spriteOffset.setY(25);
+}
+
+
+/*
+QPainterPath Wire::shape() const
+{
+    QPainterPath path = QGraphicsLineItem::shape();
+    path.addPolygon(arrowHead);
+    return path;
+}
+*/
+
+void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
+                  QWidget *)
+{
+    QPen pen(myColor);
+      painter->setPen(pen);
+
+       // set the start to be the output place
+      QPointF startPoint = myStartItem->pos();
+       startPoint.setX(startPoint.x() + 100);
+       startPoint.setY(startPoint.y() + 25);
+      QPointF endPoint = myEndItem->pos();
+      endPoint.setX(endPoint.x() + 30);
+      endPoint.setY(endPoint.y() + 25);
+       //QLineF centerLine(startPoint, ends.at(0)->pos());
+       QLineF centerLine(startPoint, endPoint);
+
+       setLine(centerLine);
+       painter->drawLine(line());
 }
 
 // Updates value held on wire and updates entire circuit
@@ -47,12 +93,13 @@ QRectF Wire::boundingRect() const
             .adjusted(-extra, -extra, extra, extra);
 }
 
+
+
 // Update the wire when gate position is changed.
 void Wire::updatePosition()
 {
-//    Also waiting the gate class to inherit GraphicsItems
-//    QLineF line(mapFromItem(begin, 0, 0), mapFromItem(ends.at(0), 0, 0));
-//    setLine(line);
+    QLineF line(mapFromItem(myStartItem, 0, 0), mapFromItem(myEndItem, 0, 0));
+    setLine(line);
 }
 
 // Add the sub wire that is connecting to a new gate

@@ -12,6 +12,9 @@ class QMenu;
 class QPolygonF;
 QT_END_NAMESPACE
 
+
+class Arrow;
+
 //class Wire;
 
 class SceneItem : public QGraphicsPixmapItem
@@ -28,9 +31,9 @@ public:
 
     SceneItem(ItemType itemType, QMenu *contextMenu, QPixmap gateImage, QGraphicsItem *parent = nullptr);
 
-    //void removeWire(Wire *wire);
-    //void addWire(Wire *wire);
-    //void removeWires();
+    void removeWire(Arrow *wire);
+    void addWire(Arrow *wire);
+    void removeWires();
     ItemType itemType() const { return myType; }
     QPolygonF polygon() const { return myPolygon; }
     QImage gateImage() const { return myGateImage;};
@@ -45,7 +48,7 @@ private:
     QMenu *myContextMenu;
     QImage myGateImage;
     QRect *imageBounds();
-    //QList<Wire *> wires;
+    QList<Arrow *> wires;
 };
 
 #endif // SCENEITEM_H
