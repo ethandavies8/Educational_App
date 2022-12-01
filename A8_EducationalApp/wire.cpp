@@ -7,8 +7,9 @@
 #include <ostream>
 
 // Constructor for wire class
-/*
-Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLineItem(parent), begin(&beginGate) {
+
+
+Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLineItem(parent), startGate(&beginGate) {
     value = 0; // Preset wire's value to 0, won't care until update time
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -19,7 +20,7 @@ Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLin
     // waiting gate class inherit from GraphicsItems
     //startPoint = beginGate->pos();
 }
-*/
+
 
 Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
     : QGraphicsLineItem(parent), startGate(startGate), endGate(endGate)
@@ -156,8 +157,8 @@ void Wire::disconnect(Gate& gate) {
 
 // Remove all connections of this wire
 void Wire::removeConnections() {
-    if (begin)
-        begin->removeOutput();
+    if (startGate)
+        startGate->removeOutput();
 
     for (Gate* gate : ends) {
         if (gate)

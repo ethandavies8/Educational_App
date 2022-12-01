@@ -58,6 +58,7 @@ void GraphicScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void GraphicScene::insertItem(QGraphicsSceneMouseEvent *mouseEvent){
     Gate *item;
+
     switch(myItemType){
         case Gate::AND:
         item = new ANDGate(myItemType, myItemMenu, currentGate);
@@ -92,6 +93,7 @@ void GraphicScene::insertItem(QGraphicsSceneMouseEvent *mouseEvent){
     addItem(item);
     item->setPos(mouseEvent->scenePos());
     emit itemInserted(item);
+
 }
 
 void GraphicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -119,7 +121,7 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 
         if (startItems.count() > 0 && endItems.count() > 0 &&
-       //     startItems.first()->type() == Gate::Type &&
+            startItems.first()->type() == Gate::Type &&
             endItems.first()->type() == Gate::Type &&
             startItems.first() != endItems.first()) {
             Gate *startItem = qgraphicsitem_cast<Gate *>(startItems.first());

@@ -21,13 +21,14 @@ void testGatesAndWires();
 
 int main(int argc, char *argv[])
 {
-    testGatesAndWires();
-    srand(time(0));
+    //testGatesAndWires();
+    //srand(time(0));
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
     return a.exec();
 }
+
 
 // TESTING FUNCTIONS
 // Initial function that will print and call subsequent tests

@@ -49,9 +49,9 @@ private:
 // A source gate's output is true;
 class SourceGate : public Gate
 {
-    using Gate::Gate;
 
 public:
+    using Gate::Gate;
     void addInput();
     void setOutput();
     void setOutput(bool);
@@ -59,9 +59,9 @@ public:
 
 class OutputGate : public Gate
 {
-    using Gate::Gate;
 
 public:
+    using Gate::Gate;
     void addOutput();
     void addInput(Wire *wire);
     void setOutput();

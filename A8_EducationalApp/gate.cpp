@@ -50,6 +50,10 @@ Gate::GateType Gate::getType()
     return myType;
 }
 
+Gate::Gate(){
+
+}
+
 // Get rid of a wire.
 void Gate::removeOutput()
 {
@@ -161,36 +165,3 @@ void OutputGate::addInput(Wire *wire)
         inputs[0] = wire;
 }
 void OutputGate::addOutput() {}
-void OutputGate::setOutput() {}
-
-// Using template that uses "std::bit_and/or/xor" as the generic value.
-void ANDGate::setOutput()
-{
-    bool _and = applyOperator<std::bit_and<bool>>(inputs);
-    outputWire->updateValue(_and);
-}
-void NANDGate::setOutput()
-{
-    bool nand = !applyOperator<std::bit_and<bool>>(inputs);
-    outputWire->updateValue(nand);
-}
-void ORGate::setOutput()
-{
-    bool _or = applyOperator<std::bit_or<bool>>(inputs);
-    outputWire->updateValue(_or);
-}
-void NORGate::setOutput()
-{
-    bool nor = !applyOperator<std::bit_or<bool>>(inputs);
-    outputWire->updateValue(nor);
-}
-void XORGate::setOutput()
-{
-    bool _xor = applyOperator<std::bit_xor<bool>>(inputs);
-    outputWire->updateValue(_xor);
-}
-void XNORGate::setOutput()
-{
-    bool xnor = !applyOperator<std::bit_xor<bool>>(inputs);
-    outputWire->updateValue(xnor);
-}
