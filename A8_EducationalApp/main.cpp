@@ -18,6 +18,7 @@ QVector<bool> testBiggerGate();
 QVector<std::tuple<bool, bool>> testAdderCircuit();
 void testCases();
 void testGatesAndWires();
+void clearFlags(QVector<Gate*> gates);
 
 int main(int argc, char *argv[])
 {
@@ -530,10 +531,9 @@ void testCases() {
         Wire and1ToAnd2(andGate1, andGate2);
         Wire and2ToAnd1(andGate2, andGate1);
 
-        // Since this circuit will loop forever, we need to check if it will
-        //  before we try computing a truth table
+        // This circuit is circular, so it will crash if the test fails
 
-
-        std::cout << "  TEST FAILED" << std::endl;
+        input1.setOutput(true);
+        std::cout << "  TEST PASSED" << std::endl;
     }
 }

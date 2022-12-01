@@ -5,6 +5,8 @@
 //Operator template to avoid a lot of repeated code.
 //Does the generic op on input values and inverts if nott is true.
 template <typename op> void Gate:: applyOperator(bool nott){
+    hasBeenChecked = true;
+
     bool tempLogic;
     if(inputs.size() >= 2 && outputWire != nullptr){
         tempLogic = op()(inputs[0]->getValue(), inputs[1]->getValue());
@@ -40,6 +42,19 @@ void Gate::addOutput(Wire* wire){
     outputWire = wire;
 }
 
+// Clear the flag of this gate and previous gates
+void Gate::clearFlag() {
+
+    hasBeenChecked = false;
+
+    for (Wire* wire : inputs) {
+        if (wire) {
+            Gate* gateInput = wire->getBeginningOfWire();
+            if (gateInput->hasBeenChecked)
+                gateInput->clearFlag();
+        }
+    }
+}
 
 //Not gates and output gates can only have one input
 void NOTGate::addInput(Wire* wire){
@@ -56,6 +71,9 @@ void Gate::removeInput(Wire* wire){
 
 //SET OUTPUTS FOR GATE TYPES<<<<<
 void NOTGate::setOutput(){
+
+    hasBeenChecked = true;
+
     if(outputWire != nullptr){
         if(inputs.size() > 0)
             outputWire->updateValue(!inputs[0]->getValue());
@@ -66,7 +84,10 @@ void SourceGate::setOutput(bool output){
     if(outputWire != nullptr)
         outputWire->updateValue(output);
 }
-void OutputGate::setOutput(){}
+void OutputGate::setOutput(){
+    // When the output gate has been reached, no circular dependency has been found
+    clearFlag();
+}
 
 //Using template that uses "std::bit_and/or/xor" as the generic value,
 //and a bool value that tell if the result should be inverted.
@@ -97,6 +118,8 @@ void XNORGate::setOutput(){
 
 //SourceGate special methods
 void SourceGate::addInput(){}
+
+void SourceGate::clearFlag(){}
 
 //OutputGate special methods
 bool OutputGate::getOutput(){

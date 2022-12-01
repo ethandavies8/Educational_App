@@ -22,8 +22,10 @@ void Wire::updateValue(bool newValue) {
 
     // When this wire's value changes, all subsequent gate's outputs will change
     for (Gate* gate : ends) {
-        if (gate)
-            gate->setOutput();
+        if (gate) {
+            if (!(gate->gateHasBeenChecked()))
+                gate->setOutput();
+        }
     }
 }
 

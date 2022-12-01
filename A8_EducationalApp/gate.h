@@ -10,6 +10,7 @@ class Gate
 protected:
     std::vector<Wire*> inputs;
     Wire* outputWire = nullptr;
+    bool hasBeenChecked = false;
 
 public:
     template <typename op> void applyOperator(bool);
@@ -19,6 +20,8 @@ public:
     bool hasOutput();
     void removeOutput();
     void removeInput(Wire* wire);
+    void clearFlag();
+    bool gateHasBeenChecked() { return hasBeenChecked; }
     virtual void setOutput() = 0;
 };
 
@@ -28,6 +31,7 @@ public:
     void addInput();
     void setOutput();
     void setOutput(bool);
+    void clearFlag();
 };
 
 class OutputGate : public Gate{

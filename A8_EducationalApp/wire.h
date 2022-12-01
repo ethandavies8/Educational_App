@@ -16,6 +16,7 @@ public:
     void connect(Gate& gate);
     void disconnect(Gate& gate);
     void removeConnections();
+    Gate* getBeginningOfWire() { return begin; }
 
     QRectF boundingRect() const;
     void updatePosition();
