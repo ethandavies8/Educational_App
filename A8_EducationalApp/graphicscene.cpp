@@ -2,6 +2,8 @@
 #include "graphicscene.h"
 
 #include <QGraphicsSceneMouseEvent>
+#include <iostream>
+
 
 
 GraphicScene::GraphicScene(QMenu *itemMenu, QObject *parent)
@@ -32,16 +34,10 @@ void GraphicScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (mouseEvent->button() != Qt::LeftButton)
         return;
-    //SceneItem *item;
-    Gate *item;
     switch (myMode) {
         case InsertItem:
-            item = new Gate(myItemType, myItemMenu, currentGate);
-            addItem(item);
-            item->setPos(mouseEvent->scenePos());
-            emit itemInserted(item);
-            break;
-
+        insertItem(mouseEvent);
+        break;
         case InsertLine:
             line = new QGraphicsLineItem(QLineF(mouseEvent->scenePos(),
                                         mouseEvent->scenePos()));
@@ -58,6 +54,44 @@ void GraphicScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         ;
     }
     QGraphicsScene::mousePressEvent(mouseEvent);
+}
+
+void GraphicScene::insertItem(QGraphicsSceneMouseEvent *mouseEvent){
+    Gate *item;
+    switch(myItemType){
+        case Gate::AND:
+        item = new ANDGate(myItemType, myItemMenu, currentGate);
+        std::cout << "created and gate" <<std::endl;
+         break;
+    case Gate::OR:
+        item = new ORGate(myItemType, myItemMenu, currentGate);
+        std::cout << "created or gate" <<std::endl;
+         break;
+    case Gate::NOT:
+        item = new NOTGate(myItemType, myItemMenu, currentGate);
+        std::cout << "created not gate" <<std::endl;
+         break;
+    case Gate::NOR:
+        item = new NOTGate(myItemType, myItemMenu, currentGate);
+        std::cout << "created nor gate" <<std::endl;
+         break;
+    case Gate::NAND:
+        item = new NOTGate(myItemType, myItemMenu, currentGate);
+        std::cout << "created nand gate" <<std::endl;
+         break;
+    case Gate::XOR:
+        item = new NOTGate(myItemType, myItemMenu, currentGate);
+        std::cout << "created xor gate" <<std::endl;
+        break;
+    default:
+        item = new Gate(myItemType, myItemMenu, currentGate);
+        std::cout << "created default gate" <<std::endl;
+        break;
+    }
+
+    addItem(item);
+    item->setPos(mouseEvent->scenePos());
+    emit itemInserted(item);
 }
 
 void GraphicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)

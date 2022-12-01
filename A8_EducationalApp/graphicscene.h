@@ -41,6 +41,7 @@ protected:
 
 private:
     bool isItemChange(int type) const;
+    void insertItem(QGraphicsSceneMouseEvent *mouseEvent);
     Gate::GateType myItemType;
     QMenu *myItemMenu;
     Mode myMode;

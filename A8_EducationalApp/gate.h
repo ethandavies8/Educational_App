@@ -41,12 +41,14 @@ private:
 
 //A source gate's output is true;
 class SourceGate : public Gate{
+    using Gate::Gate;
     void addInput();
     void setOutput(bool);
     void setOutput();
 };
 
 class OutputGate : public Gate{
+    using Gate::Gate;
     void addOutput();
     void addInput(Wire* wire);
     void setOutput();
@@ -55,31 +57,38 @@ class OutputGate : public Gate{
 
 //Not gate can only have 1 input.
 class NOTGate : public Gate{
+    using Gate::Gate;
     void setOutput();
     void addInput(Wire* wire); //Overwrite addInput
 };
 
 class ANDGate : public Gate{
+    using Gate::Gate;
     void setOutput();
 };
 
 class NANDGate : public Gate{
+    using Gate::Gate;
     void setOutput();
 };
 
 class ORGate : public Gate{
+    using Gate::Gate;
     void setOutput();
 };
 
 class NORGate : public Gate{
+    using Gate::Gate;
     void setOutput();
 };
 
 class XORGate : public Gate{
+    using Gate::Gate;
     void setOutput();
 };
 
 class XNORGate : public Gate{
+    using Gate::Gate;
     void setOutput();
 };
 

@@ -6,6 +6,7 @@
 #include <Box2D/Box2D.h>
 #include <QGraphicsItem>
 #include "physicsscene.h"
+#include "gate.h"
 
 class GraphicScene;
 class Gate;
@@ -53,6 +54,7 @@ signals:
     void mainWindowResized();
     void deleteEvent();
     void changeSelectedGate(QPixmap map);
+    void changeItemType(Gate::GateType);
 
 private:
     Ui::MainWindow *ui;

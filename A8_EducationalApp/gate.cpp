@@ -1,6 +1,5 @@
 #include "gate.h"
 #include "wire.h"
-//#include "arrow.h"
 #include <algorithm>
 
 #include <QGraphicsScene>
@@ -25,15 +24,15 @@ Gate::Gate(GateType type, QMenu *contextMenu,QPixmap gateImage,
     : QGraphicsPixmapItem(parent), myType(type)
     , myContextMenu(contextMenu)
 {
-
+/*
     switch (myType) {
         case AND:
-    //ANDGATE gate;
+        //ANDGate *gate = new ANDGate(type, contextMenu, gateImage, parent);
             break;
         default:
-
             break;
     }
+    */
     setPixmap(gateImage);
     setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     setFlag(QGraphicsItem::ItemIsMovable, true);

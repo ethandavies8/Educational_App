@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
             this, &MainWindow::itemSelected);
 
     connect(this, &MainWindow::changeSelectedGate, scene, &GraphicScene::setGateImage);
+    connect(this, &MainWindow::changeItemType, scene, &GraphicScene::setItemType);
 
     QHBoxLayout *layout = new QHBoxLayout;
     //layout->addWidget(toolBox);
@@ -161,7 +162,6 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 }
 
 void MainWindow::refreshGameView(){
-    //dragWidget.clearChildren();
     scene->clear();
     std::cout << "refresh" << std::endl;
 }
@@ -169,9 +169,9 @@ void MainWindow::refreshGameView(){
 void MainWindow::ANDGateSelection()
 {
     currentTool = AND;
-    //dragWidget.AddItem(mouseIcons[AND]);
     std::cout << "select AND gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
+    emit changeItemType(Gate::AND);
     emit changeSelectedGate(mouseIcons[AND]);
 
 }
@@ -179,18 +179,19 @@ void MainWindow::ANDGateSelection()
 void MainWindow::NANDGateSelection()
 {
     currentTool = NAND;
-    //dragWidget.AddItem(mouseIcons[NAND]);
     std::cout << "select NAND gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
+    emit changeItemType(Gate::NAND);
     emit changeSelectedGate(mouseIcons[NAND]);
 }
 
 void MainWindow::ORGateSelection()
 {
     currentTool = OR;
-    //dragWidget.AddItem(mouseIcons[OR]);
     std::cout << "select OR gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
+
+    emit changeItemType(Gate::OR);
     emit changeSelectedGate(mouseIcons[OR]);
 }
 
@@ -204,19 +205,20 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::NOTGateSelection()
 {
     currentTool = NOT;
-    //dragWidget.AddItem(mouseIcons[NOT]);
     std::cout << "select NOT gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
+
+    emit changeItemType(Gate::NOT);
     emit changeSelectedGate(mouseIcons[NOT]);
 }
 
 void MainWindow::lineSelection()
 {
     currentTool = Wire;
-    //dragWidget.AddItem(mouseIcons[Wire]);
     std::cout << "select line" << std::endl;
+
+    emit changeItemType(Gate::NoSelection);
     scene->setMode(GraphicScene::InsertLine);
-    emit
 }
 
 void MainWindow::selectToolSelection()
@@ -224,23 +226,27 @@ void MainWindow::selectToolSelection()
     currentTool = Deselect;
     setCursor(Qt::ArrowCursor);
     std::cout << "select tool" << std::endl;
+
+    emit changeItemType(Gate::NoSelection);
     scene->setMode(GraphicScene::MoveItem);
 }
 
 void MainWindow::NORGateSelection()
 {
     currentTool = NOR;
-    //dragWidget.AddItem(mouseIcons[NOR]);
     std::cout << "select NOR gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
+
+    emit changeItemType(Gate::NOR);
     emit changeSelectedGate(mouseIcons[NOR]);
 }
 
 void MainWindow::XORGateSelection()
 {
     currentTool = XOR;
-    //dragWidget.AddItem(mouseIcons[XOR]);
     std::cout << "select XOR gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
+
+    emit changeItemType(Gate::XOR);
     emit changeSelectedGate(mouseIcons[XOR]);
 }
