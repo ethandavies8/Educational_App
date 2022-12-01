@@ -12,6 +12,7 @@ class Gate : public QGraphicsPixmapItem
 protected:
     std::vector<Wire *> inputs;
     Wire *outputWire = nullptr;
+    bool hasBeenChecked = false;
 
 public:
     enum GateType
@@ -36,14 +37,15 @@ public:
     void removeInput(Wire *wire);
     void setOutput();
     GateType getType();
-    void removeWire(Wire *wire);
-    void addWire(Wire *wire);
-    void removeWires();
 
 private:
     GateType myType;
     QMenu *myContextMenu;
     QList<Wire *> wires;
+    void removeInput(Wire *wire);
+    void clearFlag();
+    bool gateHasBeenChecked() { return hasBeenChecked; }
+    virtual void setOutput() = 0;
 };
 
 // A source gate's output is true;
@@ -55,6 +57,7 @@ public:
     void addInput();
     void setOutput();
     void setOutput(bool);
+    void clearFlag();
 };
 
 class OutputGate : public Gate
