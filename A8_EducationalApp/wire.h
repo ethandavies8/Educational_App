@@ -40,7 +40,12 @@ private:
     QList<QPointF> subLineStarting;
     Gate *startGate;
     Gate *endGate;
-    QPointF spriteOffset;
+    void setUpOffset();
+    //QPointF spriteOffset;x
+    double xStartOffset;
+    double yStartOffset;
+    double xEndOffset;
+    double yEndOffset;
 };
 
 #endif // WIRE_H

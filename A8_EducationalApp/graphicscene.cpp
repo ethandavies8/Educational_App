@@ -119,7 +119,7 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 
         if (startItems.count() > 0 && endItems.count() > 0 &&
-            startItems.first()->type() == Gate::Type &&
+       //     startItems.first()->type() == Gate::Type &&
             endItems.first()->type() == Gate::Type &&
             startItems.first() != endItems.first()) {
             Gate *startItem = qgraphicsitem_cast<Gate *>(startItems.first());
@@ -128,7 +128,7 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             Wire *wire = new Wire(startItem, endItem);
             wire->setColor(myLineColor);
-            //startItem->addWire(wire);
+
             startItem->addOutput(wire);
             endItem->addInput(wire);
             wire->setZValue(-1000.0);

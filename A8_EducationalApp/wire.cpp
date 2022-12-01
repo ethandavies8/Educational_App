@@ -4,6 +4,7 @@
 #include <QPen>
 #include <QPainter>
 #include <QtMath>
+#include <ostream>
 
 // Constructor for wire class
 /*
@@ -27,6 +28,77 @@ Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
     ends.push_back(endGate);
     //spriteOffset.setX(25);
     //spriteOffset.setY(25);
+
+
+    setUpOffset();
+}
+
+void Wire::setUpOffset(){
+    Gate::GateType startType = startGate->getType();
+    Gate::GateType endType = endGate->getType();
+
+    switch(startType){
+
+    case Gate::AND:
+        xStartOffset = 95;
+        yStartOffset = 25;
+     break;
+    case Gate::OR:
+        xStartOffset = 75;
+        yStartOffset = 35;
+     break;
+    case Gate::NOT:
+        xStartOffset = 95;
+        yStartOffset = 25;
+     break;
+    case Gate::NOR:
+
+        xStartOffset = 95;
+        yStartOffset = 25;
+     break;
+    case Gate::NAND:
+        xStartOffset = 95;
+        yStartOffset = 25;
+     break;
+    case Gate::XOR:
+        xStartOffset = 95;
+        yStartOffset = 25;
+    break;
+    default:
+    break;
+    }
+
+    switch(endType){
+
+    case Gate::AND:
+        xEndOffset = 30;
+        yEndOffset = 25;
+     break;
+    case Gate::OR:
+        xEndOffset = 24;
+        yEndOffset = 40;
+     break;
+    case Gate::NOT:
+        xEndOffset = 30;
+        yEndOffset = 25;
+     break;
+    case Gate::NOR:
+        xEndOffset = 30;
+        yEndOffset = 25;
+     break;
+    case Gate::NAND:
+        xEndOffset = 30;
+        yEndOffset = 25;
+     break;
+    case Gate::XOR:
+        xEndOffset = 30;
+        yEndOffset = 25;
+    break;
+    default:
+    break;
+    }
+
+
 }
 
 void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
@@ -36,12 +108,13 @@ void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
       painter->setPen(pen);
 
        // set the start to be the output place
+
       QPointF startPoint = startGate->pos();
-       startPoint.setX(startPoint.x() + 100);
-       startPoint.setY(startPoint.y() + 25);
+       startPoint.setX(startPoint.x() + xStartOffset);
+       startPoint.setY(startPoint.y() + yStartOffset);
       QPointF endPoint = endGate->pos();
-      endPoint.setX(endPoint.x() + 30);
-      endPoint.setY(endPoint.y() + 25);
+      endPoint.setX(endPoint.x() + xEndOffset);
+      endPoint.setY(endPoint.y() + yEndOffset);
        //QLineF centerLine(startPoint, ends.at(0)->pos());
        QLineF centerLine(startPoint, endPoint);
 

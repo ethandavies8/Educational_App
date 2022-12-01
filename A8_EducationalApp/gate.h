@@ -29,7 +29,7 @@ public:
     void addOutput(Wire* wire);
     void removeInput(Wire* wire);
     void setOutput();
-    //
+    GateType getType();
     void removeWire(Wire *wire);
     void addWire(Wire *wire);
     void removeWires();

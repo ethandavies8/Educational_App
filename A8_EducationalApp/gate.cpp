@@ -40,6 +40,10 @@ Gate::Gate(GateType type, QMenu *contextMenu,QPixmap gateImage,
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 }
 
+Gate::GateType Gate::getType(){
+    return myType;
+}
+
 /*
 void Gate::removeWire(Wire *wire)
 {
