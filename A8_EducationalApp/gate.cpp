@@ -25,7 +25,12 @@ Gate::Gate(){
 void Gate::removeOutput(){
     outputWire = nullptr;
 }
-
+bool Gate::hasOutput(){
+    if(outputWire == nullptr)
+        return false;
+    else
+        return true;
+}
 //Normal gates can have any number of inputs
 void Gate::addInput(Wire* wire){
     inputs.push_back(wire);

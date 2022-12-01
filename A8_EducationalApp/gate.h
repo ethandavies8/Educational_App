@@ -16,6 +16,7 @@ public:
     Gate();
     void addInput(Wire* wire);
     void addOutput(Wire* wire);
+    bool hasOutput();
     void removeOutput();
     void removeInput(Wire* wire);
     virtual void setOutput() = 0;
