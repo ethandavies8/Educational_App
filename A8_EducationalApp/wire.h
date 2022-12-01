@@ -16,7 +16,7 @@ public:
     Gate *startItem() const { return startGate; }
     Gate *endItem() const { return endGate; }
     void removeConnections();
-    Gate* getBeginningOfWire() { return begin; }
+    Gate* getBeginningOfWire() { return startGate; }
 
     void updateValue(bool newValue);                        // Updates this wire's value, then updates the next gates
     bool getValue() const { return value; }                 // Returns value currently on the wire

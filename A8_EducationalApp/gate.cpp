@@ -5,11 +5,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
 
-// Operator template to avoid a lot of repeated code.
-// Does the generic op on input values and inverts if nott is true.
-template <typename op>
-void Gate::applyOperator(bool nott)
-{
     // Operator template to avoid a lot of repeated code.
     // Does the generic op on input values and inverts if nott is true.
     template <typename op>
@@ -60,6 +55,8 @@ void Gate::applyOperator(bool nott)
     Gate::Gate()
     {
     }
+
+    void Gate::setOutput(){}
 
     // Get rid of a wire.
     void Gate::removeOutput()
@@ -139,7 +136,6 @@ void Gate::applyOperator(bool nott)
         // When the output gate has been reached, no circular dependency has been found
         clearFlag();
     }
-
     // Using template that uses "std::bit_and/or/xor" as the generic value,
     // and a bool value that tell if the result should be inverted.
     void ANDGate::setOutput()
