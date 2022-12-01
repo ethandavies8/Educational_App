@@ -9,7 +9,7 @@ class Gate
 {
 protected:
     std::vector<Wire*> inputs;
-    Wire* outputWire;
+    Wire* outputWire = nullptr;
 
 public:
     template <typename op> void applyOperator(bool);

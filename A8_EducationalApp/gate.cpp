@@ -40,6 +40,8 @@ void Gate::addOutput(Wire* wire){
 void NOTGate::addInput(Wire* wire){
     if(inputs.size() == 0)
         inputs.push_back(wire);
+    else
+        inputs[0] = wire;
 }
 
 //Remove a certain wire from the inputs list.
@@ -100,5 +102,7 @@ bool OutputGate::getOutput(){
 void OutputGate::addInput(Wire* wire){
     if(inputs.size() == 0)
         inputs.push_back(wire);
+    else
+        inputs[0] = wire;
 }
 void OutputGate::addOutput(){}
