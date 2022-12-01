@@ -5,34 +5,39 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
 
-//Operator template to avoid a lot of repeated code.
-template <typename op> bool applyOperator(std::vector<Wire*> inputs){
+// Operator template to avoid a lot of repeated code.
+// Does the generic op on input values and inverts if nott is true.
+template <typename op>
+void Gate::applyOperator(bool nott)
+{
     bool tempLogic;
-    if(inputs.size() >= 2){
-        tempLogic = op()(inputs[1]->getValue(), inputs[1]->getValue());
-        for(int i = 2; i < (int)inputs.size(); i++)
+    if (inputs.size() >= 2 && outputWire != nullptr)
+    {
+        tempLogic = op()(inputs[0]->getValue(), inputs[1]->getValue());
+        for (int i = 2; i < (int)inputs.size(); i++)
             tempLogic = op()(tempLogic, inputs[i]->getValue());
-        return tempLogic;
+
+        if (nott)
+            outputWire->updateValue(!tempLogic);
+        else
+            outputWire->updateValue(tempLogic);
     }
-    else
-        return false;
 }
 
-//Constructors for gates.
-Gate::Gate(GateType type, QMenu *contextMenu,QPixmap gateImage,
-                         QGraphicsItem *parent)
-    : QGraphicsPixmapItem(parent), myType(type)
-    , myContextMenu(contextMenu)
+// Constructors for gates.
+Gate::Gate(GateType type, QMenu *contextMenu, QPixmap gateImage,
+           QGraphicsItem *parent)
+    : QGraphicsPixmapItem(parent), myType(type), myContextMenu(contextMenu)
 {
-/*
-    switch (myType) {
-        case AND:
-        //ANDGate *gate = new ANDGate(type, contextMenu, gateImage, parent);
-            break;
-        default:
-            break;
-    }
-    */
+    /*
+        switch (myType) {
+            case AND:
+            //ANDGate *gate = new ANDGate(type, contextMenu, gateImage, parent);
+                break;
+            default:
+                break;
+        }
+        */
     setPixmap(gateImage);
     setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     setFlag(QGraphicsItem::ItemIsMovable, true);
@@ -40,110 +45,152 @@ Gate::Gate(GateType type, QMenu *contextMenu,QPixmap gateImage,
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 }
 
-Gate::GateType Gate::getType(){
+Gate::GateType Gate::getType()
+{
     return myType;
 }
 
-/*
-void Gate::removeWire(Wire *wire)
+// Get rid of a wire.
+void Gate::removeOutput()
 {
-    wires.removeAll(wire);
+    outputWire = nullptr;
 }
-
-void Gate::removeWires()
+bool Gate::hasOutput()
 {
-
-    const auto wiresCopy = wires;
-    for (Wire *wire : wiresCopy) {
-        wire->startItem()->removeWire(wire);
-        wire->endItem()->removeWire(wire);
-        scene()->removeItem(wire);
-        delete wire;
-    }
+    if (outputWire == nullptr)
+        return false;
+    else
+        return true;
 }
-
-void Gate::addWire(Wire *wire)
+// Normal gates can have any number of inputs
+void Gate::addInput(Wire *wire)
 {
-    wires.append(wire);
-}
-*/
-
-//Normal gates can have any number of inputs
-void Gate::addInput(Wire* wire){
     inputs.push_back(wire);
-    setOutput();
 }
-void Gate::addOutput(Wire* wire){
+// Set outputWire to a wire.
+void Gate::addOutput(Wire *wire)
+{
     outputWire = wire;
 }
 
-void Gate::setOutput(){
-
+void Gate::setOutput()
+{
 }
 
-//Not gates and output gates can only have one input
-void NOTGate::addInput(Wire* wire){
-    if(inputs.size() == 0)
+// Not gates and output gates can only have one input
+void NOTGate::addInput(Wire *wire)
+{
+    if (inputs.size() == 0)
         inputs.push_back(wire);
-    setOutput();
+    else
+        inputs[0] = wire;
 }
 
-//Remove a certain wire from the inputs list.
-void Gate::removeInput(Wire* wire){
+// Remove a certain wire from the inputs list.
+void Gate::removeInput(Wire *wire)
+{
     inputs.erase(std::remove(inputs.begin(), inputs.end(), wire), inputs.end());
 }
 
-//SET OUTPUTS FOR GATE TYPES<<<<<
-void NOTGate::setOutput(){
-    if(outputWire != nullptr){
-        if(inputs.size() > 0)
+// SET OUTPUTS FOR GATE TYPES<<<<<
+void NOTGate::setOutput()
+{
+    if (outputWire != nullptr)
+    {
+        if (inputs.size() > 0)
             outputWire->updateValue(!inputs[0]->getValue());
-        else
-            outputWire->updateValue(false);
     }
 }
-//SourceGate overwritten methods
-void SourceGate::setOutput(){}
-void SourceGate::setOutput(bool output){
-    outputWire->updateValue(output);
+void SourceGate::setOutput() {}
+void SourceGate::setOutput(bool output)
+{
+    if (outputWire != nullptr)
+        outputWire->updateValue(output);
 }
-void SourceGate::addInput(){}
+void OutputGate::setOutput() {}
 
-//OutputGate overwritten methods
-bool OutputGate::getOutput(){
-    if(inputs.size() == 1)
+// Using template that uses "std::bit_and/or/xor" as the generic value,
+// and a bool value that tell if the result should be inverted.
+void ANDGate::setOutput()
+{
+    // Apply a bit and on gate inputs
+    applyOperator<std::bit_and<bool>>(false);
+}
+void NANDGate::setOutput()
+{
+    // Apply a bit and on gate inputs then invert it because parameter is "true"
+    applyOperator<std::bit_and<bool>>(true);
+}
+void ORGate::setOutput()
+{
+    // Apply a bit or on gate inputs
+    applyOperator<std::bit_or<bool>>(false);
+}
+void NORGate::setOutput()
+{
+    // Apply a bit or on gate inputs and invert it.
+    applyOperator<std::bit_or<bool>>(true);
+}
+void XORGate::setOutput()
+{
+    // Apply a bit xor on gate inputs
+    applyOperator<std::bit_xor<bool>>(false);
+}
+void XNORGate::setOutput()
+{
+    // Apply a bit xor on gate inputs and invert it.
+    applyOperator<std::bit_xor<bool>>(true);
+}
+
+// SourceGate special methods
+void SourceGate::addInput() {}
+
+// OutputGate special methods
+bool OutputGate::getOutput()
+{
+    if (inputs.size() == 1)
         return inputs[0]->getValue();
-    else return false;
+    else
+        return false;
 }
-void OutputGate::addInput(Wire* wire){
-    if(inputs.size() == 0)
+void OutputGate::addInput(Wire *wire)
+{
+    if (inputs.size() == 0)
         inputs.push_back(wire);
+    else
+        inputs[0] = wire;
 }
-void OutputGate::addOutput(){}
-void OutputGate::setOutput(){}
+void OutputGate::addOutput() {}
+void OutputGate::setOutput() {}
 
-//Using template that uses "std::bit_and/or/xor" as the generic value.
-void ANDGate::setOutput(){
+// Using template that uses "std::bit_and/or/xor" as the generic value.
+void ANDGate::setOutput()
+{
     bool _and = applyOperator<std::bit_and<bool>>(inputs);
     outputWire->updateValue(_and);
 }
-void NANDGate::setOutput(){
+void NANDGate::setOutput()
+{
     bool nand = !applyOperator<std::bit_and<bool>>(inputs);
     outputWire->updateValue(nand);
 }
-void ORGate::setOutput(){
+void ORGate::setOutput()
+{
     bool _or = applyOperator<std::bit_or<bool>>(inputs);
     outputWire->updateValue(_or);
 }
-void NORGate::setOutput(){
+void NORGate::setOutput()
+{
     bool nor = !applyOperator<std::bit_or<bool>>(inputs);
     outputWire->updateValue(nor);
 }
-void XORGate::setOutput(){
+void XORGate::setOutput()
+{
     bool _xor = applyOperator<std::bit_xor<bool>>(inputs);
     outputWire->updateValue(_xor);
 }
-void XNORGate::setOutput(){
+void XNORGate::setOutput()
+{
     bool xnor = !applyOperator<std::bit_xor<bool>>(inputs);
     outputWire->updateValue(xnor);
 }
