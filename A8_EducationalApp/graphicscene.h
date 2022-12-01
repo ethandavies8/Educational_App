@@ -21,7 +21,7 @@ class GraphicScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    enum Mode { InsertItem, InsertLine, MoveItem };
+    enum Mode { InsertItem, InsertLine, MoveItem, RemoveItem };
 
     explicit GraphicScene(QMenu *itemMenu, QObject *parent = nullptr);
 

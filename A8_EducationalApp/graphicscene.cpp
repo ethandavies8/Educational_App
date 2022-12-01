@@ -51,6 +51,9 @@ void GraphicScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
        case MoveItem:
             //move logic
+
+        case RemoveItem:
+        //removeItem(item)
     default:
         ;
     }
@@ -91,8 +94,9 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             Wire *wire = new Wire(startItem, endItem);
             wire->setColor(myLineColor);
-            startItem->addWire(wire);
-            endItem->addWire(wire);
+            //startItem->addWire(wire);
+            startItem->addOutput(wire);
+            endItem->addInput(wire);
             wire->setZValue(-1000.0);
             addItem(wire);
             wire->updatePosition();

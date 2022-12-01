@@ -28,7 +28,7 @@ Gate::Gate(GateType type, QMenu *contextMenu,QPixmap gateImage,
 
     switch (myType) {
         case AND:
-
+    //ANDGATE gate;
             break;
         default:
 
@@ -41,6 +41,7 @@ Gate::Gate(GateType type, QMenu *contextMenu,QPixmap gateImage,
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
 }
 
+/*
 void Gate::removeWire(Wire *wire)
 {
     wires.removeAll(wire);
@@ -62,7 +63,7 @@ void Gate::addWire(Wire *wire)
 {
     wires.append(wire);
 }
-
+*/
 
 //Normal gates can have any number of inputs
 void Gate::addInput(Wire* wire){

@@ -81,7 +81,7 @@ void MainWindow::resetTool()
 void MainWindow::connectTools()
 {
     connect(ui->ANDGateButton, &QPushButton::pressed, this, &MainWindow::ANDGateSelection);
-    //connect(this, &MainWindow::deleteEvent, &dragWidget, &DragWidget::receiveDeleteKey);
+    //connect(this, &MainWindow::deleteEvent, this, &GraphicScene::setMode(GraphicScene::Del));
     connect(ui->NANDGateButton, &QPushButton::pressed, this, &MainWindow::NANDGateSelection);
     connect(ui->ORGateButton, &QPushButton::pressed, this, &MainWindow::ORGateSelection);
     connect(ui->NOTGateButton, &QPushButton::pressed, this, &MainWindow::NOTGateSelection);
@@ -162,6 +162,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 
 void MainWindow::refreshGameView(){
     //dragWidget.clearChildren();
+    scene->clear();
     std::cout << "refresh" << std::endl;
 }
 

@@ -25,8 +25,8 @@ Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     ends.push_back(endGate);
-    spriteOffset.setX(25);
-    spriteOffset.setY(25);
+    //spriteOffset.setX(25);
+    //spriteOffset.setY(25);
 }
 
 void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
