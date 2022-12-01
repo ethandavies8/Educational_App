@@ -4,8 +4,8 @@
 #include <QMainWindow>
 #include <QVector>
 #include <Box2D/Box2D.h>
+#include <QGraphicsItem>
 #include "physicsscene.h"
-#include "sceneitem.h"
 
 class GraphicScene;
 class Gate;

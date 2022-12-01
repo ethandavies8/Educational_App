@@ -55,14 +55,12 @@ SOURCES += \
     Box2D/Dynamics/b2World.cpp \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
-    arrow.cpp \
     gate.cpp \
     graphicscene.cpp \
     main.cpp \
     mainwindow.cpp \
     physicsobject.cpp \
     physicsscene.cpp \
-    sceneitem.cpp \
     wire.cpp
 
 HEADERS += \
@@ -113,13 +111,11 @@ HEADERS += \
     Box2D/Dynamics/b2World.h \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
-    arrow.h \
     gate.h \
     graphicscene.h \
     mainwindow.h \
     physicsobject.h \
     physicsscene.h \
-    sceneitem.h \
     wire.h
 
 FORMS += \

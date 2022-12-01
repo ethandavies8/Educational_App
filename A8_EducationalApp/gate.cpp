@@ -20,12 +20,6 @@ template <typename op> bool applyOperator(std::vector<Wire*> inputs){
 }
 
 //Constructors for gates.
-/*
-Gate::Gate(GateType type, QPixmap gateMap, QGraphicsItem *parent) : QGraphicsPixmapItem(parent){
-    myType = type;
-    setPixmap(gateMap);
-}
-*/
 Gate::Gate(GateType type, QMenu *contextMenu,QPixmap gateImage,
                          QGraphicsItem *parent)
     : QGraphicsPixmapItem(parent), myType(type)
@@ -149,22 +143,3 @@ void XNORGate::setOutput(){
     bool xnor = !applyOperator<std::bit_xor<bool>>(inputs);
     outputWire->updateValue(xnor);
 }
-
-
-void Gate::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
-{
-   // scene()->clearSelection();
-    //setSelected(true);
-    //myContextMenu->exec(event->screenPos());
-}
-
-QVariant Gate::itemChange(GraphicsItemChange change, const QVariant &value)
-{
-    //if (change == QGraphicsItem::ItemPositionChange) {
-      //  for (Arrow *arrow : qAsConst(wires))
-        //    arrow->updatePosition();
-    //}
-
-    return value;
-}
-

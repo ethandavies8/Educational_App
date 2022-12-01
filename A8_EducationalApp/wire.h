@@ -12,10 +12,9 @@ public:
     Wire(Gate *startItem, Gate *endItem, QGraphicsItem *parent = nullptr);
 
 int type() const override { return Type; }
-//QPainterPath shape() const override;
 void setColor(const QColor &color) { myColor = color; }
-Gate *startItem() const { return myStartItem; }
-Gate *endItem() const { return myEndItem; }
+Gate *startItem() const { return startGate; }
+Gate *endItem() const { return endGate; }
 
 
 void updateValue(bool newValue); // Updates this wire's value, then updates the next gates
@@ -24,7 +23,7 @@ int getConnectionCount() const { return ends.count(); } // Returns number of con
 void connect(Gate& gate);
 void disconnect(Gate& gate);
 
-QRectF boundingRect() const;
+QRectF boundingRect() const override;
 void updatePosition();
 void addSubLineStarting(QPointF);
 
@@ -33,18 +32,14 @@ void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
          QWidget *widget = nullptr) override;
 
 private:
-    Gate *begin;
     QPointF startPoint;
     QVector<Gate*> ends;
     bool value; // Each wire has a value of true or false (1 or 0)
     QPolygonF beginNode, endNode;
     QColor myColor = Qt::black;
     QList<QPointF> subLineStarting;
-    //void paint(QPainter *painter, const QStyleOptionGraphicsItem * option, QWidget *widget);
-
-    Gate *myStartItem;
-    Gate *myEndItem;
-    //QPolygonF arrowHead;
+    Gate *startGate;
+    Gate *endGate;
     QPointF spriteOffset;
 };
 

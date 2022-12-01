@@ -5,7 +5,6 @@
 #include <QGraphicsPolygonItem>
 
 class Wire;
-class Arrow;
 
 class Gate : public QGraphicsPixmapItem
 {
@@ -13,8 +12,6 @@ class Gate : public QGraphicsPixmapItem
 protected:
     std::vector<Wire*> inputs;
     Wire* outputWire;
-    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event) override;
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
 public:
     enum GateType {
@@ -32,14 +29,13 @@ public:
     void addOutput(Wire* wire);
     void removeInput(Wire* wire);
     void setOutput();
-
+    //
     void removeWire(Wire *wire);
     void addWire(Wire *wire);
     void removeWires();
 private:
     GateType myType;
     QMenu *myContextMenu;
-
     QList<Wire *> wires;
 };
 

@@ -19,7 +19,7 @@ Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLin
 */
 
 Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
-    : QGraphicsLineItem(parent), myStartItem(startGate), myEndItem(endGate)
+    : QGraphicsLineItem(parent), startGate(startGate), endGate(endGate)
 {
     value = 0;
     setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -29,16 +29,6 @@ Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
     spriteOffset.setY(25);
 }
 
-
-/*
-QPainterPath Wire::shape() const
-{
-    QPainterPath path = QGraphicsLineItem::shape();
-    path.addPolygon(arrowHead);
-    return path;
-}
-*/
-
 void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
                   QWidget *)
 {
@@ -46,10 +36,10 @@ void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
       painter->setPen(pen);
 
        // set the start to be the output place
-      QPointF startPoint = myStartItem->pos();
+      QPointF startPoint = startGate->pos();
        startPoint.setX(startPoint.x() + 100);
        startPoint.setY(startPoint.y() + 25);
-      QPointF endPoint = myEndItem->pos();
+      QPointF endPoint = endGate->pos();
       endPoint.setX(endPoint.x() + 30);
       endPoint.setY(endPoint.y() + 25);
        //QLineF centerLine(startPoint, ends.at(0)->pos());
@@ -57,6 +47,12 @@ void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 
        setLine(centerLine);
        painter->drawLine(line());
+
+       //    for(int i = 0; i < subLineStarting.count(); i++){
+       //        QLineF subLine(subLineStarting[i], ends.at(i+1)->pos());
+       //        setLine(subLine);
+       //        painter->drawLine(line());
+       //    }
 }
 
 // Updates value held on wire and updates entire circuit
@@ -98,7 +94,7 @@ QRectF Wire::boundingRect() const
 // Update the wire when gate position is changed.
 void Wire::updatePosition()
 {
-    QLineF line(mapFromItem(myStartItem, 0, 0), mapFromItem(myEndItem, 0, 0));
+    QLineF line(mapFromItem(startGate, 0, 0), mapFromItem(endGate, 0, 0));
     setLine(line);
 }
 
@@ -107,28 +103,4 @@ void Wire::addSubLineStarting(QPointF newSubLineStarting)
 {
     subLineStarting.append(newSubLineStarting);
 }
-
-// Drawing on the gamescene, comment out because gate class is not inherit GraphicsItems
-// so is not happy with begin->pos();
-//void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-//{
-//    QPen pen(myColor);
-//    painter->setPen(pen);
-
-//    // set the start to be the output place
-//    QPointF startPoint = begin->pos();
-//    startPoint.setX(startPoint.x() + 100);
-//    startPoint.setY(startPoint.y() + 50);
-
-//    QLineF centerLine(startPoint, ends.at(0)->pos());
-
-//    setLine(centerLine);
-//    painter->drawLine(line());
-
-//    for(int i = 0; i < subLineStarting.count(); i++){
-//        QLineF subLine(subLineStarting[i], ends.at(i+1)->pos());
-//        setLine(subLine);
-//        painter->drawLine(line());
-//    }
-//}
 

@@ -1,6 +1,5 @@
 
 #include "graphicscene.h"
-//#include "arrow.h"
 
 #include <QGraphicsSceneMouseEvent>
 
@@ -37,10 +36,7 @@ void GraphicScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     Gate *item;
     switch (myMode) {
         case InsertItem:
-            //item = new Gate(myItemType, currentGate);
             item = new Gate(myItemType, myItemMenu, currentGate);
-            //item = new SceneItem(myItemType, myItemMenu, currentGate);
-            //item->setBrush(myItemColor);
             addItem(item);
             item->setPos(mouseEvent->scenePos());
             emit itemInserted(item);

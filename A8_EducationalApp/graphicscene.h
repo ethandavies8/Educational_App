@@ -2,7 +2,6 @@
 #ifndef GRAPHICSCENE_H
 #define GRAPHICSCENE_H
 
-#include "sceneitem.h"
 
 #include "wire.h"
 #include "gate.h"
@@ -42,7 +41,6 @@ protected:
 
 private:
     bool isItemChange(int type) const;
-    //SceneItem::ItemType myItemType;
     Gate::GateType myItemType;
     QMenu *myItemMenu;
     Mode myMode;
