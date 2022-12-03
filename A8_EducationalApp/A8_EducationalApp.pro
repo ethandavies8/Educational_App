@@ -56,6 +56,7 @@ SOURCES += \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
     dragwidget.cpp \
+    fallingstackedframe.cpp \
     gate.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -112,6 +113,7 @@ HEADERS += \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
     dragwidget.h \
+    fallingstackedframe.h \
     gate.h \
     mainwindow.h \
     physicsobject.h \

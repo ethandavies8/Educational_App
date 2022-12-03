@@ -15,16 +15,22 @@ MainWindow::MainWindow(QWidget *parent)
 {
     QFontDatabase::addApplicationFont(":/title/fonts/OCRAEXT.TTF");
     ui->setupUi(this);
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(this->mainMenuIndex);
+    ui->stackedWidget->setWindowOpacity(0.0);
     connectActions();
     connectTitle();
-    setUpTitle();
+    this->fallFrame = new FallingStackedFrame(ui->stackedWidget,this);
+    connect(this,&MainWindow::fallTo,this->fallFrame,&FallingStackedFrame::FallTo);
+    setUpTitleFall();
     connectTools();
 
     // QGroupBox *drawingTools = new QGroupBox(ui->groupBox);
     // QHBoxLayout *verticalLayout = new QHBoxLayout(ui->drawingWidget);
     ui->toolLayout->addWidget(&dragWidget);
     // ui->toolLayout->addWidget(new DragWidget);
+    QTimer::singleShot(1,this,&MainWindow::GoToMainMenue);
+    QTimer::singleShot(10000,this,&MainWindow::GoToMainMenue);
+    QTimer::singleShot(10000,this,&MainWindow::GoToMainMenue);
 
     setupMouseIcons();
 }
@@ -32,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete this->physicsScene;
+    delete this->fallFrame;
 }
 
 void MainWindow::connectTitle()
@@ -68,19 +74,16 @@ void MainWindow::connectTools()
     connect(ui->XORGateButton, &QPushButton::pressed, this, &MainWindow::XORGateSelection);
 }
 
-void MainWindow::setUpTitle()
+void MainWindow::setUpTitleFall()
 {
-    this->physicsScene = new PhysicsScene(this);
-    this->physicsScene->addBody(ui->TitleBackround);
-    this->physicsScene->addBody(ui->TitleForground, 0.35f);
-    this->physicsScene->addBody(ui->helpTitleButton, 0.35);
-    this->physicsScene->addBody(ui->learnTitleButton, 0.35);
-    this->physicsScene->addBody(ui->playTitleButton, 0.4f);
-
-    connect(this, &MainWindow::titleFallIn, this->physicsScene, &PhysicsScene::fallIn);
-    connect(this, &MainWindow::titleFallOut, this->physicsScene, &PhysicsScene::fallOut);
-
-    emit titleFallIn();
+    PhysicsScene* ps = new PhysicsScene(this);
+    ps->addBody(ui->TitleBackround);
+    ps->addBody(ui->TitleForground, 0.35f);
+    ps->addBody(ui->helpTitleButton, 0.35);
+    ps->addBody(ui->learnTitleButton, 0.35);
+    ps->addBody(ui->playTitleButton, 0.4f);
+    this->fallFrame->setPhysicsScene(this->mainMenuIndex,ps);
+//    emit fallTo(this->mainMenuIndex);
 }
 
 void MainWindow::setupMouseIcons()
@@ -97,25 +100,29 @@ void MainWindow::setupMouseIcons()
 
 void MainWindow::PressedPlay()
 {
-    emit titleFallOut();
-    ui->stackedWidget->setCurrentIndex(firstLevelIndex);
+    emit fallTo(this->firstLevelIndex);
+//    emit titleFallOut();
+//    ui->stackedWidget->setCurrentIndex(firstLevelIndex);
 }
 
 void MainWindow::PressedInfo()
 {
-    emit titleFallIn();
-    ui->stackedWidget->setCurrentIndex(infoIndex);
+    emit fallTo(this->infoIndex);
+//    emit titleFallIn();
+//    ui->stackedWidget->setCurrentIndex(infoIndex);
 }
 
 void MainWindow::PressedHelp()
 {
-    emit titleFallIn();
-    ui->stackedWidget->setCurrentIndex(helpIndex);
+    emit fallTo(this->helpIndex);
+//    emit titleFallIn();
+//    ui->stackedWidget->setCurrentIndex(helpIndex);
 }
 
 void MainWindow::GoToMainMenue()
 {
-    emit titleFallIn();
+    emit fallTo(this->mainMenuIndex);
+//    emit titleFallIn();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

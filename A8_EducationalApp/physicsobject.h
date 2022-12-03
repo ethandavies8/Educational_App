@@ -18,7 +18,9 @@ private:
     QPoint    worldToGuiPos(QPointF pos);
     QPointF   guiToWorldPos(QPoint pos);
     void      setWorldChannel(int channel);
+    bool      isfallingIn();
 
+    bool      fallingIn;
     QWidget*  widget;
     QPoint    home;
     b2Body*   body;

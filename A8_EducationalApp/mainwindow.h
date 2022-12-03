@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QVector>
 #include <Box2D/Box2D.h>
-#include "physicsscene.h"
+#include "fallingstackedframe.h"
 #include "dragwidget.h"
 
 QT_BEGIN_NAMESPACE
@@ -40,19 +40,20 @@ public slots:
     void lineSelection();
     void selectToolSelection();
 signals:
+    void fallTo(int frame);
     void titleFallOut();
     void titleFallIn();
     void mainWindowResized();
     void deleteEvent();
 
 private:
+    FallingStackedFrame* fallFrame;
     Ui::MainWindow *ui;
-    void setUpTitle();
+    void setUpTitleFall();
     void connectTitle();
     void connectActions();
     void connectTools();
     void setupMouseIcons();
-    PhysicsScene *physicsScene;
     b2World *world;
     int mainMenuIndex = 0;
     int infoIndex = 1;
