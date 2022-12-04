@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QVector>
 #include <Box2D/Box2D.h>
+#include "fallingstackedframe.h"
 #include <QGraphicsItem>
 #include "physicsscene.h"
 #include "gate.h"
@@ -49,6 +50,7 @@ public slots:
     void itemSelected(QGraphicsItem *item);
     void itemInserted(Gate *item);
 signals:
+    void fallTo(int frame);
     void titleFallOut();
     void titleFallIn();
     void mainWindowResized();
@@ -57,7 +59,9 @@ signals:
     void changeItemType(Gate::GateType);
 
 private:
+    FallingStackedFrame* fallFrame;
     Ui::MainWindow *ui;
+    void setUpTitleFall();
     GraphicScene *scene;
     QGraphicsView *view;
     void setUpTitle();
@@ -65,7 +69,7 @@ private:
     void connectActions();
     void connectTools();
     void setupMouseIcons();
-    PhysicsScene *physicsScene;
+    void removeBackground(QWidget* widget);
     b2World *world;
     int mainMenuIndex = 0;
     int infoIndex = 1;
@@ -88,5 +92,9 @@ private:
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     QHash<Tool, QPixmap> mouseIcons;
+private slots:
+    void on_HelpHome_clicked();
+    void on_learnHome_clicked();
+    void on_Level1Home_clicked();
 };
 #endif // MAINWINDOW_H

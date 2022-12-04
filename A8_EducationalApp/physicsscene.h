@@ -17,6 +17,7 @@ public:
 public slots:
     void fallIn();
     void fallOut();
+    void setOut();
 private slots:
     void updateWorld();
 
@@ -24,6 +25,7 @@ signals:
     void postSimulation();
     void TriggerFallIn();
     void TriggerFallOut();
+    void TriggersetOut();
 private:
     int frameHeight;
     b2World* world;

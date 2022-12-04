@@ -16,10 +16,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     QFontDatabase::addApplicationFont(":/title/fonts/OCRAEXT.TTF");
     ui->setupUi(this);
-    ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(this->mainMenuIndex);
     connectActions();
     connectTitle();
-    setUpTitle();
+    this->fallFrame = new FallingStackedFrame(ui->stackedWidget,this);
+    connect(this,&MainWindow::fallTo,this->fallFrame,&FallingStackedFrame::FallTo);
+    setUpTitleFall();
     connectTools();
 
     scene = new GraphicScene(itemMenu, this);
@@ -50,12 +52,14 @@ MainWindow::MainWindow(QWidget *parent)
     //ui->toolLayout->addWidget(new DragWidget);
 
     setupMouseIcons();
+//    qApp->setStyleSheet("QWidget { border: 1px solid red; }");
+    this->GoToMainMenue();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete this->physicsScene;
+    delete this->fallFrame;
 }
 
 void MainWindow::connectTitle()
@@ -93,19 +97,22 @@ void MainWindow::connectTools()
 
 }
 
-void MainWindow::setUpTitle()
+void MainWindow::setUpTitleFall()
 {
-    this->physicsScene = new PhysicsScene(this);
-    this->physicsScene->addBody(ui->TitleBackround);
-    this->physicsScene->addBody(ui->TitleForground, 0.35f);
-    this->physicsScene->addBody(ui->helpTitleButton, 0.35);
-    this->physicsScene->addBody(ui->learnTitleButton, 0.35);
-    this->physicsScene->addBody(ui->playTitleButton, 0.4f);
+    removeBackground(ui->TitleBackround);
+    removeBackground(ui->TitleForground);
 
-    connect(this, &MainWindow::titleFallIn, this->physicsScene, &PhysicsScene::fallIn);
-    connect(this, &MainWindow::titleFallOut, this->physicsScene, &PhysicsScene::fallOut);
-
-    emit titleFallIn();
+    PhysicsScene* ps = new PhysicsScene(this);
+    ps->addBody(ui->TitleBackround);
+    ps->addBody(ui->TitleForground, 0.35f);
+    ps->addBody(ui->helpTitleButton, 0.35);
+    ps->addBody(ui->learnTitleButton, 0.35);
+    ps->addBody(ui->playTitleButton, 0.4f);
+    this->fallFrame->setPhysicsScene(this->mainMenuIndex,ps);
+}
+void MainWindow::removeBackground(QWidget* widget) {
+    widget->setAttribute(Qt::WA_NoSystemBackground);
+    widget->setAttribute(Qt::WA_TranslucentBackground);
 }
 
 void MainWindow::setupMouseIcons()
@@ -134,25 +141,23 @@ void MainWindow::itemSelected(QGraphicsItem *item)
 }
 void MainWindow::PressedPlay()
 {
-    emit titleFallOut();
-    ui->stackedWidget->setCurrentIndex(firstLevelIndex);
+    emit fallTo(this->firstLevelIndex);
 }
 
 void MainWindow::PressedInfo()
 {
-    emit titleFallIn();
-    ui->stackedWidget->setCurrentIndex(infoIndex);
+    emit fallTo(this->infoIndex);
 }
 
 void MainWindow::PressedHelp()
 {
-    emit titleFallIn();
-    ui->stackedWidget->setCurrentIndex(helpIndex);
+    emit fallTo(this->helpIndex);
 }
 
 void MainWindow::GoToMainMenue()
 {
-    emit titleFallIn();
+    emit fallTo(this->mainMenuIndex);
+//    emit titleFallIn();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -250,3 +255,21 @@ void MainWindow::XORGateSelection()
     emit changeItemType(Gate::XOR);
     emit changeSelectedGate(mouseIcons[XOR]);
 }
+
+void MainWindow::on_HelpHome_clicked()
+{
+    GoToMainMenue();
+}
+
+
+void MainWindow::on_learnHome_clicked()
+{
+    GoToMainMenue();
+}
+
+
+void MainWindow::on_Level1Home_clicked()
+{
+    GoToMainMenue();
+}
+

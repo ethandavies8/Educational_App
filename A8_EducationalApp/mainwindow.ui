@@ -13,6 +13,12 @@
     <height>710</height>
    </rect>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="acceptDrops">
+   <bool>false</bool>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -539,6 +545,22 @@
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
       </property>
      </widget>
+     <widget class="QPushButton" name="learnHome">
+      <property name="geometry">
+       <rect>
+        <x>690</x>
+        <y>20</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Home</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="helpWidget">
      <widget class="QLabel" name="helpPageTitle">
@@ -570,6 +592,22 @@
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="HelpHome">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>20</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Home</string>
       </property>
      </widget>
     </widget>
@@ -863,31 +901,24 @@
        <string>Clear</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="Level1Home">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>10</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Home</string>
+      </property>
+     </widget>
     </widget>
    </widget>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>19</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
-   </property>
-   <widget class="QMenu" name="menuHome">
-    <property name="title">
-     <string>Home</string>
-    </property>
-    <addaction name="homeMenu"/>
-    <addaction name="helpPage"/>
-    <addaction name="learnPage"/>
-   </widget>
-   <addaction name="menuHome"/>
   </widget>
   <action name="actiontitle">
    <property name="enabled">
@@ -921,6 +952,11 @@
   <action name="learnPage">
    <property name="text">
     <string>Learn Page</string>
+   </property>
+  </action>
+  <action name="actionHi">
+   <property name="text">
+    <string>Hi</string>
    </property>
   </action>
  </widget>
