@@ -1,16 +1,134 @@
 #include "wire.h"
+#include "gate.h"
 
 #include <QPen>
+#include <QPainter>
+#include <QtMath>
+#include <ostream>
 
 // Constructor for wire class
-Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLineItem(parent), begin(&beginGate) {
+
+
+Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLineItem(parent), startGate(&beginGate) {
     value = 0; // Preset wire's value to 0, won't care until update time
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     ends.push_back(&endGate);
+    beginGate.addOutput(this);
+    endGate.addInput(this);
 
     // waiting gate class inherit from GraphicsItems
     //startPoint = beginGate->pos();
+}
+
+
+Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
+    : QGraphicsLineItem(parent), startGate(startGate), endGate(endGate)
+{
+    value = 0;
+    setFlag(QGraphicsItem::ItemIsSelectable, true);
+    setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    ends.push_back(endGate);
+    //spriteOffset.setX(25);
+    //spriteOffset.setY(25);
+
+
+    setUpOffset();
+}
+
+void Wire::setUpOffset(){
+    Gate::GateType startType = startGate->getType();
+    Gate::GateType endType = endGate->getType();
+
+    switch(startType){
+
+    case Gate::AND:
+        xStartOffset = 95;
+        yStartOffset = 25;
+     break;
+    case Gate::OR:
+        xStartOffset = 75;
+        yStartOffset = 35;
+     break;
+    case Gate::NOT:
+        xStartOffset = 95;
+        yStartOffset = 25;
+     break;
+    case Gate::NOR:
+
+        xStartOffset = 95;
+        yStartOffset = 25;
+     break;
+    case Gate::NAND:
+        xStartOffset = 95;
+        yStartOffset = 25;
+     break;
+    case Gate::XOR:
+        xStartOffset = 95;
+        yStartOffset = 25;
+    break;
+    default:
+    break;
+    }
+
+    switch(endType){
+
+    case Gate::AND:
+        xEndOffset = 30;
+        yEndOffset = 25;
+     break;
+    case Gate::OR:
+        xEndOffset = 24;
+        yEndOffset = 40;
+     break;
+    case Gate::NOT:
+        xEndOffset = 30;
+        yEndOffset = 25;
+     break;
+    case Gate::NOR:
+        xEndOffset = 30;
+        yEndOffset = 25;
+     break;
+    case Gate::NAND:
+        xEndOffset = 30;
+        yEndOffset = 25;
+     break;
+    case Gate::XOR:
+        xEndOffset = 30;
+        yEndOffset = 25;
+    break;
+    default:
+    break;
+    }
+
+
+}
+
+void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
+                  QWidget *)
+{
+    QPen pen(myColor);
+      painter->setPen(pen);
+
+       // set the start to be the output place
+
+      QPointF startPoint = startGate->pos();
+       startPoint.setX(startPoint.x() + xStartOffset);
+       startPoint.setY(startPoint.y() + yStartOffset);
+      QPointF endPoint = endGate->pos();
+      endPoint.setX(endPoint.x() + xEndOffset);
+      endPoint.setY(endPoint.y() + yEndOffset);
+       //QLineF centerLine(startPoint, ends.at(0)->pos());
+       QLineF centerLine(startPoint, endPoint);
+
+       setLine(centerLine);
+       painter->drawLine(line());
+
+       //    for(int i = 0; i < subLineStarting.count(); i++){
+       //        QLineF subLine(subLineStarting[i], ends.at(i+1)->pos());
+       //        setLine(subLine);
+       //        painter->drawLine(line());
+       //    }
 }
 
 // Updates value held on wire and updates entire circuit
@@ -20,7 +138,10 @@ void Wire::updateValue(bool newValue) {
 
     // When this wire's value changes, all subsequent gate's outputs will change
     for (Gate* gate : ends) {
-        gate->setOutput();
+        if (gate) {
+            if (!(gate->gateHasBeenChecked()))
+                gate->setOutput();
+        }
     }
 }
 
@@ -36,6 +157,17 @@ void Wire::disconnect(Gate& gate) {
     gate.removeInput(this);
 }
 
+// Remove all connections of this wire
+void Wire::removeConnections() {
+    if (startGate)
+        startGate->removeOutput();
+
+    for (Gate* gate : ends) {
+        if (gate)
+            gate->removeInput(this);
+    }
+}
+
 // Telling the scene, how big is the wire
 QRectF Wire::boundingRect() const
 {
@@ -47,12 +179,13 @@ QRectF Wire::boundingRect() const
             .adjusted(-extra, -extra, extra, extra);
 }
 
+
+
 // Update the wire when gate position is changed.
 void Wire::updatePosition()
 {
-//    Also waiting the gate class to inherit GraphicsItems
-//    QLineF line(mapFromItem(begin, 0, 0), mapFromItem(ends.at(0), 0, 0));
-//    setLine(line);
+    QLineF line(mapFromItem(startGate, 0, 0), mapFromItem(endGate, 0, 0));
+    setLine(line);
 }
 
 // Add the sub wire that is connecting to a new gate
@@ -60,28 +193,4 @@ void Wire::addSubLineStarting(QPointF newSubLineStarting)
 {
     subLineStarting.append(newSubLineStarting);
 }
-
-// Drawing on the gamescene, comment out because gate class is not inherit GraphicsItems
-// so is not happy with begin->pos();
-//void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-//{
-//    QPen pen(myColor);
-//    painter->setPen(pen);
-
-//    // set the start to be the output place
-//    QPointF startPoint = begin->pos();
-//    startPoint.setX(startPoint.x() + 100);
-//    startPoint.setY(startPoint.y() + 50);
-
-//    QLineF centerLine(startPoint, ends.at(0)->pos());
-
-//    setLine(centerLine);
-//    painter->drawLine(line());
-
-//    for(int i = 0; i < subLineStarting.count(); i++){
-//        QLineF subLine(subLineStarting[i], ends.at(i+1)->pos());
-//        setLine(subLine);
-//        painter->drawLine(line());
-//    }
-//}
 

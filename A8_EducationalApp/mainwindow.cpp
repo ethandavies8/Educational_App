@@ -7,9 +7,9 @@
 #include <QFontDatabase>
 #include <QMouseEvent>
 #include <QHBoxLayout>
-#include <QDebug>
+#include <QtWidgets>
 
-#include "dragwidget.h"
+#include "graphicscene.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -24,10 +24,32 @@ MainWindow::MainWindow(QWidget *parent)
     setUpTitleFall();
     connectTools();
 
-    ui->toolLayout->addWidget(&dragWidget);
-//    QTimer::singleShot(1,this,&MainWindow::GoToMainMenue);
-//    QTimer::singleShot(10000,this,&MainWindow::GoToMainMenue);
-//    QTimer::singleShot(10000,this,&MainWindow::GoToMainMenue);
+    scene = new GraphicScene(itemMenu, this);
+    scene->setSceneRect(QRectF(0, 0, 250, 250));
+
+    connect(scene, &GraphicScene::itemInserted,
+            this, &MainWindow::itemInserted);
+    connect(scene, &GraphicScene::itemSelected,
+            this, &MainWindow::itemSelected);
+
+    connect(this, &MainWindow::changeSelectedGate, scene, &GraphicScene::setGateImage);
+    connect(this, &MainWindow::changeItemType, scene, &GraphicScene::setItemType);
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    //layout->addWidget(toolBox);
+    view = new QGraphicsView(scene);
+    layout->addWidget(view);
+
+    QWidget *widget = new QWidget;
+    widget->setLayout(layout);
+
+
+    ui->toolLayout->addWidget(widget);
+
+    //QGroupBox *drawingTools = new QGroupBox(ui->groupBox);
+    //QHBoxLayout *verticalLayout = new QHBoxLayout(ui->drawingWidget);
+    //ui->toolLayout->addWidget(&sceneWidget);
+    //ui->toolLayout->addWidget(new DragWidget);
 
     setupMouseIcons();
 //    qApp->setStyleSheet("QWidget { border: 1px solid red; }");
@@ -50,8 +72,9 @@ void MainWindow::connectTitle()
 void MainWindow::connectActions()
 {
     connect(ui->actiontitle, &QAction::triggered, this, &MainWindow::GoToMainMenue); // TODO replace with more
-    connect(&dragWidget, &DragWidget::resetTool, this, &MainWindow::resetTool);
+    //connect(&dragWidget, &DragWidget::resetTool, this, &MainWindow::resetTool);
     connect(ui->clearButton, &QPushButton::clicked, this, &MainWindow::refreshGameView);
+
 }
 
 void MainWindow::resetTool()
@@ -63,7 +86,7 @@ void MainWindow::resetTool()
 void MainWindow::connectTools()
 {
     connect(ui->ANDGateButton, &QPushButton::pressed, this, &MainWindow::ANDGateSelection);
-    connect(this, &MainWindow::deleteEvent, &dragWidget, &DragWidget::receiveDeleteKey);
+    //connect(this, &MainWindow::deleteEvent, this, &GraphicScene::setMode(GraphicScene::Del));
     connect(ui->NANDGateButton, &QPushButton::pressed, this, &MainWindow::NANDGateSelection);
     connect(ui->ORGateButton, &QPushButton::pressed, this, &MainWindow::ORGateSelection);
     connect(ui->NOTGateButton, &QPushButton::pressed, this, &MainWindow::NOTGateSelection);
@@ -71,6 +94,7 @@ void MainWindow::connectTools()
     connect(ui->selectionButton, &QPushButton::pressed, this, &MainWindow::selectToolSelection);
     connect(ui->NORGateButton, &QPushButton::pressed, this, &MainWindow::NORGateSelection);
     connect(ui->XORGateButton, &QPushButton::pressed, this, &MainWindow::XORGateSelection);
+
 }
 
 void MainWindow::setUpTitleFall()
@@ -103,6 +127,18 @@ void MainWindow::setupMouseIcons()
     mouseIcons.insert(Deselect, QPixmap(":/icons/mousePointer.png"));
 }
 
+
+void MainWindow::itemInserted(Gate *item)
+{
+
+}
+
+
+void MainWindow::itemSelected(QGraphicsItem *item)
+{
+
+
+}
 void MainWindow::PressedPlay()
 {
     emit fallTo(this->firstLevelIndex);
@@ -131,29 +167,37 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 }
 
 void MainWindow::refreshGameView(){
-    dragWidget.clearChildren();
+    scene->clear();
     std::cout << "refresh" << std::endl;
 }
 
 void MainWindow::ANDGateSelection()
 {
     currentTool = AND;
-    dragWidget.AddItem(mouseIcons[AND]);
     std::cout << "select AND gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+    emit changeItemType(Gate::AND);
+    emit changeSelectedGate(mouseIcons[AND]);
+
 }
 
 void MainWindow::NANDGateSelection()
 {
     currentTool = NAND;
-    dragWidget.AddItem(mouseIcons[NAND]);
     std::cout << "select NAND gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+    emit changeItemType(Gate::NAND);
+    emit changeSelectedGate(mouseIcons[NAND]);
 }
 
 void MainWindow::ORGateSelection()
 {
     currentTool = OR;
-    dragWidget.AddItem(mouseIcons[OR]);
     std::cout << "select OR gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+
+    emit changeItemType(Gate::OR);
+    emit changeSelectedGate(mouseIcons[OR]);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
@@ -166,15 +210,20 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::NOTGateSelection()
 {
     currentTool = NOT;
-    dragWidget.AddItem(mouseIcons[NOT]);
     std::cout << "select NOT gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+
+    emit changeItemType(Gate::NOT);
+    emit changeSelectedGate(mouseIcons[NOT]);
 }
 
 void MainWindow::lineSelection()
 {
     currentTool = Wire;
-    dragWidget.AddItem(mouseIcons[Wire]);
     std::cout << "select line" << std::endl;
+
+    emit changeItemType(Gate::NoSelection);
+    scene->setMode(GraphicScene::InsertLine);
 }
 
 void MainWindow::selectToolSelection()
@@ -182,20 +231,29 @@ void MainWindow::selectToolSelection()
     currentTool = Deselect;
     setCursor(Qt::ArrowCursor);
     std::cout << "select tool" << std::endl;
+
+    emit changeItemType(Gate::NoSelection);
+    scene->setMode(GraphicScene::MoveItem);
 }
 
 void MainWindow::NORGateSelection()
 {
     currentTool = NOR;
-    dragWidget.AddItem(mouseIcons[NOR]);
     std::cout << "select NOR gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+
+    emit changeItemType(Gate::NOR);
+    emit changeSelectedGate(mouseIcons[NOR]);
 }
 
 void MainWindow::XORGateSelection()
 {
     currentTool = XOR;
-    dragWidget.AddItem(mouseIcons[XOR]);
     std::cout << "select XOR gate" << std::endl;
+    scene->setMode(GraphicScene::InsertItem);
+
+    emit changeItemType(Gate::XOR);
+    emit changeSelectedGate(mouseIcons[XOR]);
 }
 
 void MainWindow::on_HelpHome_clicked()

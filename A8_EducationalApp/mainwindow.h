@@ -5,14 +5,23 @@
 #include <QVector>
 #include <Box2D/Box2D.h>
 #include "fallingstackedframe.h"
-#include "dragwidget.h"
+#include <QGraphicsItem>
+#include "physicsscene.h"
+#include "gate.h"
+
+class GraphicScene;
+class Gate;
 
 QT_BEGIN_NAMESPACE
+class QGraphicsView;
 namespace Ui
 {
     class MainWindow;
 }
+
 QT_END_NAMESPACE
+
+
 
 class MainWindow : public QMainWindow
 {
@@ -20,7 +29,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    DragWidget dragWidget;
     void resizeEvent(QResizeEvent *event);
 
 public slots:
@@ -39,17 +47,24 @@ public slots:
     void XORGateSelection();
     void lineSelection();
     void selectToolSelection();
+    void itemSelected(QGraphicsItem *item);
+    void itemInserted(Gate *item);
 signals:
     void fallTo(int frame);
     void titleFallOut();
     void titleFallIn();
     void mainWindowResized();
     void deleteEvent();
+    void changeSelectedGate(QPixmap map);
+    void changeItemType(Gate::GateType);
 
 private:
     FallingStackedFrame* fallFrame;
     Ui::MainWindow *ui;
     void setUpTitleFall();
+    GraphicScene *scene;
+    QGraphicsView *view;
+    void setUpTitle();
     void connectTitle();
     void connectActions();
     void connectTools();
@@ -60,6 +75,7 @@ private:
     int infoIndex = 1;
     int helpIndex = 2;
     int firstLevelIndex = 3;
+    QMenu *itemMenu;
     enum Tool
     {
         AND,
