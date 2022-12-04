@@ -55,7 +55,7 @@ void PhysicsObject::UpdateGuiPosition(){
 
         QRect geometry = this->widget->geometry();
         geometry.moveTo(guiPos);
-        std::cout<<"widget:"<<this->body->IsAwake()<<" X:"<<pos.x<<" Y:"<<pos.y<<" W:"<<geometry.width()<<" H:"<<geometry.height()<<std::endl;
+//        std::cout<<"widget:"<<this->body->IsAwake()<<" X:"<<pos.x<<" Y:"<<pos.y<<" W:"<<geometry.width()<<" H:"<<geometry.height()<<std::endl;
 
 //        if(!this->body->IsAwake() && !this->isfallingIn()){
 //            this->setVisible(false);
@@ -87,11 +87,11 @@ void PhysicsObject::setWorldChannel(int channel){
 }
 
 void PhysicsObject::fallIn(){
-    std::cout<<"Trigger fall in "<<this->parent()->objectName().toStdString()<<std::endl;
+//    std::cout<<"Trigger fall in "<<this->parent()->objectName().toStdString()<<std::endl;
 //    this->setVisible(true);
     this->fallingIn = true;
     b2Transform transform = this->body->GetTransform();
-    transform.p.y = -5;
+    transform.p.y = -10;
     this->body->SetTransform(transform.p,transform.q.GetAngle());
     this->body->SetActive(true);
     this->body->SetAwake(true);
@@ -102,13 +102,26 @@ void PhysicsObject::fallIn(){
 }
 
 void PhysicsObject::fallOut(){
-    std::cout<<"Trigger fall out "<<std::endl;
+//    std::cout<<"Trigger fall out "<<std::endl;
     this->fallingIn = false;
     b2Transform transform = this->body->GetTransform();
     transform.p.y = -10;
     this->body->SetTransform(transform.p,transform.q.GetAngle());
-
+    this->body->SetActive(true);
     this->body->SetAwake(true);
+    this->offset.setY(-this->home.y()-1000);
+}
+
+void PhysicsObject::setOut(){
+    this->fallingIn = false;
+    b2Transform transform = this->body->GetTransform();
+    transform.p.y = 0;
+    this->body->SetTransform(transform.p,transform.q.GetAngle());
+    this->body->SetActive(true);
+    this->body->SetAwake(true);
+//    this->show();
+//    this->activateWindow();
+//    this->raise();
     this->offset.setY(-this->home.y()-1000);
 }
 

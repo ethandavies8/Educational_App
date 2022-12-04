@@ -16,8 +16,9 @@ FallingStackedFrame::FallingStackedFrame(QStackedWidget *core,QObject* parent)
     }
     if( QStackedLayout* layout = dynamic_cast<QStackedLayout*>(core->layout()) )
     {
+        this->corelayout = layout;
         layout->setStackingMode(QStackedLayout::StackAll);
-        layout->setCurrentIndex(1);
+        layout->setCurrentIndex(0);
     }else{
         std::cout<<"Shit"<<std::endl;
 
@@ -25,7 +26,7 @@ FallingStackedFrame::FallingStackedFrame(QStackedWidget *core,QObject* parent)
     for (int i = 0; i < core->count(); ++i) {
         PhysicsScene* s = this->BuildScene(i);
         this->scenes.append(s);
-        scenes.at(i)->fallOut();
+        scenes.at(i)->setOut();
     }
     scenes.at(0)->fallIn();
 }
@@ -44,14 +45,15 @@ void FallingStackedFrame::setPhysicsScene(int scene, PhysicsScene* PSptr){
 }
 
 void FallingStackedFrame::FallTo(int scene){
+    scenes.at(scene)->setVisible(true);
     scenes.at(this->currentScene)->fallOut();
     scenes.at(scene)->fallIn();
-    this->core->setCurrentIndex(scene);
+    this->corelayout->setCurrentIndex(scene);
+//    this->core->setCurrentIndex(scene);
 //    scenes.at(this->currentScene)->setVisible(false);
 //    scenes.at(scene)->setVisible(true);
 
 
-    scenes.at(scene)->setVisible(true);
     this->currentScene = scene;
 }
 
@@ -59,10 +61,11 @@ PhysicsScene* FallingStackedFrame::BuildScene(int scene){
         QWidget* frame = this->core->widget(scene);
         PhysicsScene* ps = new PhysicsScene(frame);
         QList children = frame->children();
-//        frame->show();
-//        frame->activateWindow();
-//        frame->raise();
+//        scenes.at(scene)->setVisible(false);
+//        frame->setVisible(false);
         frame->setWindowOpacity(0.0);
+        frame->setAttribute(Qt::WA_NoSystemBackground);
+        frame->setAttribute(Qt::WA_TranslucentBackground);
         std::cout<<"posX:"<<frame->pos().x()<<" posY:" <<frame->pos().y() << std::endl;
         for (int i = 0; i < children.count(); ++i) {
             if( QWidget* widget = dynamic_cast<QWidget*>(children.at(i)) )

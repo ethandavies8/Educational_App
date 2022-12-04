@@ -5,7 +5,7 @@
 #include <QObject>
 #include "physicsscene.h"
 #include <QStackedWidget>
-
+#include <QStackedLayout>
 
 class FallingStackedFrame : public QObject
 {
@@ -21,6 +21,7 @@ private:
     QVector<PhysicsScene*> scenes;
     int currentScene = 0;
     QStackedWidget* core;
+    QStackedLayout* corelayout;
 };
 
 #endif // FALLINGSTACKEDFRAME_H

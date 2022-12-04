@@ -46,6 +46,7 @@ PhysicsScene::PhysicsScene(QWidget *parent)
     connect(worldCalc, &QTimer::timeout, this, &PhysicsScene::updateWorld);
     worldCalc->start(20);
     // Initialize bodies
+    setOut();
 }
 PhysicsScene::~PhysicsScene()
 {
@@ -68,6 +69,7 @@ void PhysicsScene::addBody(QWidget* widget,float bounce){
     connect(this,&PhysicsScene::postSimulation,this->bodies.value(bodyCount),&PhysicsObject::UpdateGuiPosition);
     connect(this,&PhysicsScene::TriggerFallIn,this->bodies.value(bodyCount),&PhysicsObject::fallIn);
     connect(this,&PhysicsScene::TriggerFallOut,this->bodies.value(bodyCount),&PhysicsObject::fallOut);
+    connect(this,&PhysicsScene::TriggersetOut,this->bodies.value(bodyCount),&PhysicsObject::setOut);
 }
 
 void PhysicsScene::fallIn(){
@@ -76,4 +78,8 @@ void PhysicsScene::fallIn(){
 
 void PhysicsScene::fallOut(){
     emit TriggerFallOut();
+}
+
+void PhysicsScene::setOut(){
+    emit TriggersetOut();
 }

@@ -14,6 +14,7 @@ public slots:
     void UpdateGuiPosition();
     void fallIn();
     void fallOut();
+    void setOut();
 private:
     QPoint    worldToGuiPos(QPointF pos);
     QPointF   guiToWorldPos(QPoint pos);

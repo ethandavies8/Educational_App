@@ -54,6 +54,7 @@ private:
     void connectActions();
     void connectTools();
     void setupMouseIcons();
+    void removeBackground(QWidget* widget);
     b2World *world;
     int mainMenuIndex = 0;
     int infoIndex = 1;
@@ -75,5 +76,9 @@ private:
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     QHash<Tool, QPixmap> mouseIcons;
+private slots:
+    void on_HelpHome_clicked();
+    void on_learnHome_clicked();
+    void on_Level1Home_clicked();
 };
 #endif // MAINWINDOW_H
