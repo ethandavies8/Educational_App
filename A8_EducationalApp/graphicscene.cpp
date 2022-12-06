@@ -183,5 +183,24 @@ void GraphicScene::testLevelOne(){
         emit rowCorrect(3);
 }
 
+void GraphicScene::testLevelTwo(){
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(false);
+    if(!output->getOutput())
+        emit rowCorrect(0);
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(false);
+    if(output->getOutput())
+        emit rowCorrect(1);
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(true);
+    if(output->getOutput())
+        emit rowCorrect(2);
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(true);
+    if(output->getOutput())
+        emit rowCorrect(3);
+}
+
 
 

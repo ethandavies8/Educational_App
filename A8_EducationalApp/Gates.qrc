@@ -10,5 +10,6 @@
         <file>NORGate.png</file>
         <file>XORGate.png</file>
         <file>ANDORExample.png</file>
+        <file>logicTableLevelHelp.jpg</file>
     </qresource>
 </RCC>

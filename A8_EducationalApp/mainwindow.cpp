@@ -68,7 +68,9 @@ void MainWindow::connectScene(){
     connect(this, &MainWindow::changeSelectedGate, scene, &GraphicScene::setGateImage);
     connect(this, &MainWindow::changeItemType, scene, &GraphicScene::setItemType);
     connect(this, &MainWindow::checkLevelOne, scene, &GraphicScene::testLevelOne);
+    connect(this, &MainWindow::checkLevelTwo, scene, &GraphicScene::testLevelTwo);
     connect(scene, &GraphicScene::rowCorrect, this, &MainWindow::truthTableRowCorrect);
+    connect(ui->levelCompleteButton, &QPushButton::clicked, this, &MainWindow::nextLevel);
 }
 
 void MainWindow::connectActions()
@@ -135,6 +137,7 @@ void MainWindow::testCircuit(){
         emit checkLevelOne();
         break;
     case(4):
+        emit checkLevelTwo();
         break;
     default:
         break;
@@ -156,7 +159,6 @@ void MainWindow::truthTableRowCorrect(int row){
         ui->truthTable->item(3, 3)->setCheckState(Qt::Checked);
         break;
     }
-
     if(ui->truthTable->item(0,3)->checkState() == Qt::Checked &&
             ui->truthTable->item(1,3)->checkState() == Qt::Checked &&
             ui->truthTable->item(2,3)->checkState() == Qt::Checked &&
@@ -164,6 +166,31 @@ void MainWindow::truthTableRowCorrect(int row){
         ui->levelCompleteButton->show();
         ui->levelCompleteButton->setEnabled(true);
     }
+}
+
+void MainWindow::nextLevel(){
+    currentLevelIndex++;
+    switch(currentLevelIndex){
+    case(1):
+        makeLevelTwo();
+        break;
+    default:
+        break;
+    }
+}
+
+void MainWindow::makeLevelTwo(){
+    for(int i = 0; i < 4; i++){
+        ui->truthTable->item(i, 3)->setCheckState(Qt::Unchecked);
+    }
+    ui->truthTable->item(0, 2)->setText("0");
+    ui->truthTable->item(1, 2)->setText("1");
+    ui->truthTable->item(2, 2)->setText("1");
+    ui->truthTable->item(3, 2)->setText("1");
+
+    ui->levelCompleteButton->hide();
+    ui->levelCompleteButton->setEnabled(false);
+    refreshGameView();
 }
 
 void MainWindow::PressedPlay()
@@ -200,6 +227,7 @@ void MainWindow::refreshGameView(){
         scene->setUpLevelOne();
         break;
     default:
+        scene->setUpLevelOne();
         break;
     }
 

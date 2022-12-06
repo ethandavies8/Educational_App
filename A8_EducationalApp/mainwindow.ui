@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1369</width>
-    <height>862</height>
+    <height>962</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -32,7 +32,7 @@
       <x>0</x>
       <y>0</y>
       <width>1361</width>
-      <height>861</height>
+      <height>941</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -1121,7 +1121,7 @@ background-color: rgb(100, 100, 100);</string>
       </property>
       <property name="geometry">
        <rect>
-        <x>1000</x>
+        <x>980</x>
         <y>400</y>
         <width>311</width>
         <height>151</height>
@@ -1160,10 +1160,10 @@ color: rgb(0, 0, 0);</string>
       </property>
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>680</y>
-        <width>301</width>
-        <height>171</height>
+        <x>10</x>
+        <y>660</y>
+        <width>691</width>
+        <height>261</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1177,7 +1177,7 @@ color: rgb(0, 0, 0);</string>
       </property>
       <property name="icon">
        <iconset resource="Gates.qrc">
-        <normaloff>:/icons/ANDORExample.png</normaloff>:/icons/ANDORExample.png</iconset>
+        <normaloff>:/icons/logicTableLevelHelp.jpg</normaloff>:/icons/logicTableLevelHelp.jpg</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -1187,6 +1187,7 @@ color: rgb(0, 0, 0);</string>
       </property>
      </widget>
     </widget>
+    <widget class="QWidget" name="page"/>
    </widget>
   </widget>
   <action name="actiontitle">

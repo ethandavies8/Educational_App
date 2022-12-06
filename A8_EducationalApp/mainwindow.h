@@ -49,6 +49,7 @@ public slots:
     void selectToolSelection();
     void testCircuit();
     void truthTableRowCorrect(int);
+    void nextLevel();
 signals:
     void fallTo(int frame);
     void titleFallOut();
@@ -58,6 +59,7 @@ signals:
     void changeSelectedGate(QPixmap map);
     void changeItemType(Gate::GateType);
     void checkLevelOne();
+    void checkLevelTwo();
 
 private:
     FallingStackedFrame* fallFrame;
@@ -72,6 +74,7 @@ private:
     void connectScene();
     void setupMouseIcons();
     void removeBackground(QWidget* widget);
+    void makeLevelTwo();
     b2World *world;
     int mainMenuIndex = 0;
     int infoIndex = 1;

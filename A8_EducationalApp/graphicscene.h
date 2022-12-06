@@ -31,6 +31,7 @@ public slots:
     void setGateImage(QPixmap gateImage);
     void setUpLevelOne();
     void testLevelOne();
+    void testLevelTwo();
 
 signals:
     void itemInserted(Gate *item);
