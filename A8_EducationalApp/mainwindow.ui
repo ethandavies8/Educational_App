@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1369</width>
-    <height>710</height>
+    <height>792</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -31,8 +31,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1341</width>
-      <height>661</height>
+      <width>1361</width>
+      <height>781</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -895,7 +895,8 @@
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
+       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(100, 100, 100);</string>
       </property>
       <property name="text">
        <string>Clear</string>
@@ -927,7 +928,8 @@
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
+       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(100, 100, 100);</string>
       </property>
       <property name="text">
        <string>Test Circuit</string>
@@ -936,8 +938,8 @@
      <widget class="QTableWidget" name="truthTable">
       <property name="geometry">
        <rect>
-        <x>790</x>
-        <y>60</y>
+        <x>810</x>
+        <y>130</y>
         <width>501</width>
         <height>171</height>
        </rect>
@@ -947,6 +949,9 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::Box</enum>
@@ -960,13 +965,34 @@
       <property name="showGrid">
        <bool>true</bool>
       </property>
+      <property name="cornerButtonEnabled">
+       <bool>false</bool>
+      </property>
       <property name="rowCount">
        <number>4</number>
       </property>
       <property name="columnCount">
        <number>4</number>
       </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>125</number>
+      </attribute>
+      <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="horizontalHeaderStretchLastSection">
+       <bool>false</bool>
+      </attribute>
       <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="verticalHeaderHighlightSections">
        <bool>false</bool>
       </attribute>
       <row/>
@@ -1003,6 +1029,11 @@
         <string>0</string>
        </property>
       </item>
+      <item row="0" column="2">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
       <item row="0" column="3">
        <property name="text">
         <string/>
@@ -1021,6 +1052,11 @@
         <string>1</string>
        </property>
       </item>
+      <item row="1" column="2">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
       <item row="1" column="3">
        <property name="text">
         <string/>
@@ -1035,6 +1071,11 @@
        </property>
       </item>
       <item row="2" column="1">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="2" column="2">
        <property name="text">
         <string>0</string>
        </property>
@@ -1060,6 +1101,11 @@
         <set>ItemIsEnabled</set>
        </property>
       </item>
+      <item row="3" column="2">
+       <property name="text">
+        <string>1</string>
+       </property>
+      </item>
       <item row="3" column="3">
        <property name="text">
         <string/>
@@ -1069,20 +1115,43 @@
        </property>
       </item>
      </widget>
-     <widget class="QPushButton" name="testCompleteButton">
+     <widget class="QPushButton" name="levelCompleteButton">
       <property name="enabled">
        <bool>false</bool>
       </property>
       <property name="geometry">
        <rect>
-        <x>980</x>
-        <y>390</y>
+        <x>1000</x>
+        <y>400</y>
         <width>311</width>
         <height>151</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(0, 0, 0);</string>
+      </property>
       <property name="text">
        <string>Level Complete! Click for next level</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="truthTableLabel">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>60</y>
+        <width>491</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Construct a circuit that corresponds to the truth table by connecting gates and wires between the source and end gates</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>

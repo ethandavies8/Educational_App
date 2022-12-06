@@ -27,13 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     scene = new GraphicScene(itemMenu, this);
     scene->setSceneRect(QRectF(0, 0, 250, 250));
 
-    connect(scene, &GraphicScene::itemInserted,
-            this, &MainWindow::itemInserted);
-    connect(scene, &GraphicScene::itemSelected,
-            this, &MainWindow::itemSelected);
-
-    connect(this, &MainWindow::changeSelectedGate, scene, &GraphicScene::setGateImage);
-    connect(this, &MainWindow::changeItemType, scene, &GraphicScene::setItemType);
+    connectScene();
 
     QHBoxLayout *layout = new QHBoxLayout;
     //layout->addWidget(toolBox);
@@ -45,12 +39,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     ui->toolLayout->addWidget(widget);
-    ui->testCompleteButton->hide();
+    ui->levelCompleteButton->hide();
 
-    //QGroupBox *drawingTools = new QGroupBox(ui->groupBox);
-    //QHBoxLayout *verticalLayout = new QHBoxLayout(ui->drawingWidget);
-    //ui->toolLayout->addWidget(&sceneWidget);
-    //ui->toolLayout->addWidget(new DragWidget);
+    ui->truthTable->setStyleSheet("QTableView::item:selected { color:white; background:#000000;}"
+                                  "QTableCornerButton::section { background-color:#232326; }"
+                                  "QHeaderView::section { color:white; background-color:#232326; }"
+                                  "QTableView::item {color:white;}");
 
     setupMouseIcons();
 //    qApp->setStyleSheet("QWidget { border: 1px solid red; }");
@@ -70,12 +64,18 @@ void MainWindow::connectTitle()
     connect(ui->helpTitleButton, &QPushButton::clicked, this, &MainWindow::PressedHelp);
 }
 
+void MainWindow::connectScene(){
+    connect(this, &MainWindow::changeSelectedGate, scene, &GraphicScene::setGateImage);
+    connect(this, &MainWindow::changeItemType, scene, &GraphicScene::setItemType);
+    connect(this, &MainWindow::checkLevelOne, scene, &GraphicScene::testLevelOne);
+    connect(scene, &GraphicScene::rowCorrect, this, &MainWindow::truthTableRowCorrect);
+}
+
 void MainWindow::connectActions()
 {
     connect(ui->actiontitle, &QAction::triggered, this, &MainWindow::GoToMainMenue); // TODO replace with more
-    //connect(&dragWidget, &DragWidget::resetTool, this, &MainWindow::resetTool);
     connect(ui->clearButton, &QPushButton::clicked, this, &MainWindow::refreshGameView);
-
+    connect(ui->testResultsButton, &QPushButton::clicked, this, &MainWindow::testCircuit);
 }
 
 void MainWindow::resetTool()
@@ -129,17 +129,43 @@ void MainWindow::setupMouseIcons()
 }
 
 
-void MainWindow::itemInserted(Gate *item)
-{
-
+void MainWindow::testCircuit(){
+    switch(currentLevelIndex + firstLevelIndex){
+    case(3):
+        emit checkLevelOne();
+        break;
+    case(4):
+        break;
+    default:
+        break;
+    }
 }
 
+void MainWindow::truthTableRowCorrect(int row){
+    switch(row){
+    case(0):
+        ui->truthTable->item(0, 3)->setCheckState(Qt::Checked);
+        break;
+    case(1):
+        ui->truthTable->item(1, 3)->setCheckState(Qt::Checked);
+        break;
+    case(2):
+        ui->truthTable->item(2, 3)->setCheckState(Qt::Checked);
+        break;
+    case(3):
+        ui->truthTable->item(3, 3)->setCheckState(Qt::Checked);
+        break;
+    }
 
-void MainWindow::itemSelected(QGraphicsItem *item)
-{
-
-
+    if(ui->truthTable->item(0,3)->checkState() == Qt::Checked &&
+            ui->truthTable->item(1,3)->checkState() == Qt::Checked &&
+            ui->truthTable->item(2,3)->checkState() == Qt::Checked &&
+            ui->truthTable->item(3,3)->checkState() == Qt::Checked){
+        ui->levelCompleteButton->show();
+        ui->levelCompleteButton->setEnabled(true);
+    }
 }
+
 void MainWindow::PressedPlay()
 {
     emit fallTo(this->firstLevelIndex);
@@ -169,6 +195,14 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 
 void MainWindow::refreshGameView(){
     scene->clear();
+    switch(currentLevelIndex){
+    case(0):
+        scene->setUpLevelOne();
+        break;
+    default:
+        break;
+    }
+
     std::cout << "refresh" << std::endl;
 }
 
@@ -272,5 +306,9 @@ void MainWindow::on_learnHome_clicked()
 void MainWindow::on_Level1Home_clicked()
 {
     GoToMainMenue();
+    refreshGameView();
+    emit changeItemType(Gate::NoSelection);
+    scene->setMode(GraphicScene::MoveItem);
+
 }
 

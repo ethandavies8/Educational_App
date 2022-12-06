@@ -30,10 +30,12 @@ public slots:
     void setItemType(Gate::GateType type);
     void setGateImage(QPixmap gateImage);
     void setUpLevelOne();
+    void testLevelOne();
 
 signals:
     void itemInserted(Gate *item);
     void itemSelected(QGraphicsItem *item);
+    void rowCorrect(int);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;

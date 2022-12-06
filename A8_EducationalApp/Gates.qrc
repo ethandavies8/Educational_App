@@ -9,5 +9,6 @@
         <file>LogicTruthTables.png</file>
         <file>NORGate.png</file>
         <file>XORGate.png</file>
+        <file>ANDORExample.png</file>
     </qresource>
 </RCC>

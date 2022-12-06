@@ -32,6 +32,7 @@ Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
         value = 0;
         ends.push_back(endGate);
         startGate->addOutput(this);
+        endGate->addInput(this);
     }
 
     setFlag(QGraphicsItem::ItemIsSelectable, true);

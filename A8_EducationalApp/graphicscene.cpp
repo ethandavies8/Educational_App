@@ -164,5 +164,24 @@ bool GraphicScene::isItemChange(int type) const
     return std::find_if(items.begin(), items.end(), cb) != items.end();
 }
 
+void GraphicScene::testLevelOne(){
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(false);
+    if(!output->getOutput())
+        emit rowCorrect(0);
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(false);
+    if(!output->getOutput())
+        emit rowCorrect(1);
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(true);
+    if(!output->getOutput())
+        emit rowCorrect(2);
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(true);
+    if(output->getOutput())
+        emit rowCorrect(3);
+}
+
 
 
