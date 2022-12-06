@@ -1165,7 +1165,7 @@ color: rgb(0, 0, 0);</string>
       </property>
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>100</x>
         <y>660</y>
         <width>691</width>
         <height>261</height>
