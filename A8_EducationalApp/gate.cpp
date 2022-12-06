@@ -31,18 +31,23 @@
                QGraphicsItem * parent)
         : QGraphicsPixmapItem(parent), myType(type), myContextMenu(contextMenu)
     {
-        /*
-            switch (myType) {
-                case AND:
-                //ANDGate *gate = new ANDGate(type, contextMenu, gateImage, parent);
-                    break;
-                default:
-                    break;
-            }
-            */
-        setPixmap(gateImage);
+        QPixmap *map;
+        switch(type){
+        case(Source):
+            map = new QPixmap(":/icons/line.png");
+            setPixmap(*map);
+        break;
+        case(Output):
+            map = new QPixmap(":/icons/line.png");
+            setPixmap(*map);
+            break;
+        default:
+            setPixmap(gateImage);
+            setFlag(QGraphicsItem::ItemIsMovable, true);
+            break;
+        }
+
         setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
-        setFlag(QGraphicsItem::ItemIsMovable, true);
         setFlag(QGraphicsItem::ItemIsSelectable, true);
         setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
     }

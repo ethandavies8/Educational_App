@@ -11,7 +11,6 @@ class Gate : public QGraphicsPixmapItem
 
 protected:
     std::vector<Wire *> inputs;
-    Wire *outputWire = nullptr;
 
 public:
     enum GateType
@@ -23,6 +22,8 @@ public:
         NOR,
         XOR,
         NoSelection,
+        Output,
+        Source,
     };
     // Gate(GateType, QPixmap, QGraphicsItem *parent);
     Gate(GateType itemType, QMenu *contextMenu, QPixmap gateImage, QGraphicsItem *parent = nullptr);
@@ -34,11 +35,13 @@ public:
     bool hasOutput();
     void removeOutput();
     void removeInput(Wire *wire);
-    void setOutput();
+    virtual void setOutput();
     GateType getType();
     bool hasBeenChecked = false;
     void clearFlag();
     bool gateHasBeenChecked() { return hasBeenChecked; }
+
+    Wire *outputWire = nullptr;
 
 private:
     GateType myType;

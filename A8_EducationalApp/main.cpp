@@ -22,11 +22,12 @@ void clearFlags(QVector<Gate *> gates);
 
 int main(int argc, char *argv[])
 {
-    // testGatesAndWires();
-    // srand(time(0));
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
+    testGatesAndWires();
+    srand(time(0));
     return a.exec();
 }
 
@@ -356,13 +357,13 @@ QVector<std::tuple<bool, bool>> testAdderCircuit()
     ORGate aXORbANDcin_OR_aANDb;
     OutputGate outputS, outputCout;
     Wire inputAOut(inputA, a_XOR_b);
-    inputAOut.connect(a_AND_b);
+    inputAOut.connect(&a_AND_b);
     Wire inputBOut(inputB, a_XOR_b);
-    inputBOut.connect(a_AND_b);
+    inputBOut.connect(&a_AND_b);
     Wire inputCinOut(inputCin, aXORb_XOR_cin);
-    inputCinOut.connect(aXORb_AND_cin);
+    inputCinOut.connect(&aXORb_AND_cin);
     Wire a_XOR_bOut(a_XOR_b, aXORb_XOR_cin);
-    a_XOR_bOut.connect(aXORb_AND_cin);
+    a_XOR_bOut.connect(&aXORb_AND_cin);
     Wire aXORb_XOR_cinOut(aXORb_XOR_cin, outputS);
     Wire aXORb_AND_cinOut(aXORb_AND_cin, aXORbANDcin_OR_aANDb);
     Wire a_AND_bOut(a_AND_b, aXORbANDcin_OR_aANDb);
@@ -427,7 +428,7 @@ void testCases()
         ANDGate andGate;
         OutputGate output;
         Wire input1ToAnd(input1, andGate);
-        input1ToAnd.connect(andGate);
+        input1ToAnd.connect(&andGate);
         Wire andToOutput(andGate, output);
 
         QVector<bool> result;
@@ -459,7 +460,7 @@ void testCases()
         OutputGate output;
         Wire input1Out(input1, orGate);
         Wire input2Out(input2, orGate);
-        input2Out.connect(notGate);
+        input2Out.connect(&notGate);
         Wire orToOutput(orGate, output);
 
         QVector<bool> result;

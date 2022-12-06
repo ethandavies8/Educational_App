@@ -14,6 +14,22 @@ GraphicScene::GraphicScene(QMenu *itemMenu, QObject *parent)
     myItemType = Gate::NoSelection;
     line = nullptr;
     myLineColor = Qt::black;
+    setUpLevelOne();
+}
+
+void GraphicScene::setUpLevelOne(){
+
+    sourceOne = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceOne);
+    sourceOne->setPos(-200, -100);
+
+    sourceTwo = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceTwo);
+    sourceTwo->setPos(-200, 100);
+
+    output = new OutputGate(Gate::Output, myItemMenu, currentGate);
+    addItem(output);
+    output->setPos(300, 0);
 }
 
 void GraphicScene::setMode(Mode mode)
@@ -130,9 +146,6 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             Wire *wire = new Wire(startItem, endItem);
             wire->setColor(myLineColor);
-
-            startItem->addOutput(wire);
-            endItem->addInput(wire);
             wire->setZValue(-1000.0);
             addItem(wire);
             wire->updatePosition();
@@ -149,6 +162,44 @@ bool GraphicScene::isItemChange(int type) const
     const QList<QGraphicsItem *> items = selectedItems();
     const auto cb = [type](const QGraphicsItem *item) { return item->type() == type; };
     return std::find_if(items.begin(), items.end(), cb) != items.end();
+}
+
+void GraphicScene::testLevelOne(){
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(false);
+    if(!output->getOutput())
+        emit rowCorrect(0);
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(false);
+    if(!output->getOutput())
+        emit rowCorrect(1);
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(true);
+    if(!output->getOutput())
+        emit rowCorrect(2);
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(true);
+    if(output->getOutput())
+        emit rowCorrect(3);
+}
+
+void GraphicScene::testLevelTwo(){
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(false);
+    if(!output->getOutput())
+        emit rowCorrect(0);
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(false);
+    if(output->getOutput())
+        emit rowCorrect(1);
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(true);
+    if(output->getOutput())
+        emit rowCorrect(2);
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(true);
+    if(output->getOutput())
+        emit rowCorrect(3);
 }
 
 
