@@ -20,6 +20,9 @@ PhysicsObject::PhysicsObject(QWidget *parent,b2World* world,int worldChannel,flo
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(homef.x(), -5);
     body = world->CreateBody(&bodyDef);
+//    std::cout<< parent->objectName().toStdString()<<" -> X:"<<home.x() <<" Y:"<<home.y() <<std::endl;
+//    std::cout<< parent->objectName().toStdString()<<" -> X:"<<homef.x()<<" Y:"<<homef.y()<<std::endl;
+
 
     // Define another box shape for our dynamic body.
     b2PolygonShape dynamicBox;
@@ -52,7 +55,8 @@ void PhysicsObject::UpdateGuiPosition(){
         b2Vec2 pos = this->body->GetPosition();
 
         QPoint guiPos = worldToGuiPos(QPointF(pos.x,pos.y));
-
+        guiPos.setX(home.x());
+//        std::cout<< this->parent()->objectName().toStdString()<<" -> X:"<<guiPos.x()<<" Y:"<<guiPos.y()<<std::endl;
         QRect geometry = this->widget->geometry();
         geometry.moveTo(guiPos);
 //        std::cout<<"widget:"<<this->body->IsAwake()<<" X:"<<pos.x<<" Y:"<<pos.y<<" W:"<<geometry.width()<<" H:"<<geometry.height()<<std::endl;
