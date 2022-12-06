@@ -190,6 +190,7 @@ void MainWindow::makeLevelTwo(){
 
     ui->levelCompleteButton->hide();
     ui->levelCompleteButton->setEnabled(false);
+    ui->levelLabel->setText("Level 2");
     refreshGameView();
 }
 
