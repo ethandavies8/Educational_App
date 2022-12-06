@@ -45,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     ui->toolLayout->addWidget(widget);
+    ui->testCompleteButton->hide();
 
     //QGroupBox *drawingTools = new QGroupBox(ui->groupBox);
     //QHBoxLayout *verticalLayout = new QHBoxLayout(ui->drawingWidget);

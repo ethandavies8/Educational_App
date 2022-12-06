@@ -25,14 +25,17 @@ Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLin
 Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
     : QGraphicsLineItem(parent), startGate(startGate), endGate(endGate)
 {
-    value = 0;
+
+    if(startGate->hasOutput()){
+        startGate->outputWire->connect(endGate);
+    }else{
+        value = 0;
+        ends.push_back(endGate);
+        startGate->addOutput(this);
+    }
+
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-    ends.push_back(endGate);
-    //spriteOffset.setX(25);
-    //spriteOffset.setY(25);
-
-
     setUpOffset();
 }
 
@@ -55,7 +58,6 @@ void Wire::setUpOffset(){
         yStartOffset = 25;
      break;
     case Gate::NOR:
-
         xStartOffset = 95;
         yStartOffset = 25;
      break;
@@ -68,6 +70,8 @@ void Wire::setUpOffset(){
         yStartOffset = 25;
     break;
     default:
+        xStartOffset = 50;
+        yStartOffset = 25;
     break;
     }
 
@@ -98,6 +102,8 @@ void Wire::setUpOffset(){
         yEndOffset = 25;
     break;
     default:
+        xStartOffset = 50;
+        yStartOffset = 25;
     break;
     }
 
@@ -146,15 +152,15 @@ void Wire::updateValue(bool newValue) {
 }
 
 // Add a gate to the end of this wire
-void Wire::connect(Gate& gate) {
-    ends.push_back(&gate);
-    gate.addInput(this);
+void Wire::connect(Gate* gate) {
+    ends.push_back(gate);
+    gate->addInput(this);
 }
 
 // Remove a connection between this wire and a gate
-void Wire::disconnect(Gate& gate) {
-    ends.erase(std::remove(ends.begin(), ends.end(), &gate), ends.end()); // Remove gate from vector
-    gate.removeInput(this);
+void Wire::disconnect(Gate* gate) {
+    ends.erase(std::remove(ends.begin(), ends.end(), gate), ends.end()); // Remove gate from vector
+    gate->removeInput(this);
 }
 
 // Remove all connections of this wire

@@ -26,9 +26,10 @@ public:
     explicit GraphicScene(QMenu *itemMenu, QObject *parent = nullptr);
 
 public slots:
-    void setMode(Mode mode);
+    void setMode(GraphicScene::Mode mode);
     void setItemType(Gate::GateType type);
     void setGateImage(QPixmap gateImage);
+    void setUpLevelOne();
 
 signals:
     void itemInserted(Gate *item);
@@ -50,6 +51,9 @@ private:
     QGraphicsLineItem *line;
     QColor myLineColor ;
     QPixmap currentGate;
+    SourceGate *sourceOne;
+    SourceGate *sourceTwo;
+    OutputGate *output;
 };
 
 #endif // GRAPHICSCENE_H
