@@ -43,12 +43,11 @@
             break;
         default:
             setPixmap(gateImage.scaled(90,55));
-            height = 55;
-            width = 90;
             setFlag(QGraphicsItem::ItemIsMovable, true);
             break;
-        }
-
+        }        
+        height = 55;
+        width = 90;
         setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
         setFlag(QGraphicsItem::ItemIsSelectable, true);
         setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
@@ -65,7 +64,7 @@
 
     int Gate::returnWirePlace(Wire *wire)
     {
-        for(int i = 0; i < inputs.size(); i++) {
+        for(int i = 0; i < (int)inputs.size(); i++) {
             if(wire == inputs[i])
                 return i+1;
         }

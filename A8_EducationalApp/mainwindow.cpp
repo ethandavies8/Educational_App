@@ -332,6 +332,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 
 void MainWindow::refreshGameView(){
     scene->clear();
+    scene->update();
     switch(currentLevelIndex){
     case(0):
         //scene->setUpThreeGateLevel();
