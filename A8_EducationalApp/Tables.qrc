@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/Tables">
+        <file>AndTable.png</file>
+        <file>OrTable.png</file>
+        <file>NotTable.png</file>
+    </qresource>
+</RCC>

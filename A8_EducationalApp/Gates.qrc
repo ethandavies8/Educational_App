@@ -14,5 +14,8 @@
         <file>nand.png</file>
         <file>nor.png</file>
         <file>xor.png</file>
+        <file>and.png</file>
+        <file>or.png</file>
+        <file>not.png</file>
     </qresource>
 </RCC>
