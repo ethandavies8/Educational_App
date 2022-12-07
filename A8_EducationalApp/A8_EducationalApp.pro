@@ -119,6 +119,9 @@ HEADERS += \
     wire.h
 
 FORMS += \
+    AND.ui \
+    NOT.ui \
+    OR.ui \
     mainwindow.ui
 
 # Default rules for deployment.
@@ -129,7 +132,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     Fonts.qrc \
     Gates.qrc \
-    Images.qrc
+    Images.qrc \
+    Tables.qrc
 
 DISTFILES += \
     Box2D/Box2DConfig.cmake \
