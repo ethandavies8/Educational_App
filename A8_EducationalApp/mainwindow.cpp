@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *layout = new QHBoxLayout;
     //layout->addWidget(toolBox);
     view = new QGraphicsView(scene);
+    view->setBackgroundBrush(Qt::gray);
     layout->addWidget(view);
 
     QWidget *widget = new QWidget;
