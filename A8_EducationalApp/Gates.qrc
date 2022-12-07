@@ -9,5 +9,8 @@
         <file>LogicTruthTables.png</file>
         <file>NORGate.png</file>
         <file>XORGate.png</file>
+        <file>and.png</file>
+        <file>or.png</file>
+        <file>not.png</file>
     </qresource>
 </RCC>

@@ -7,8 +7,13 @@
 #include <QFontDatabase>
 #include <QMouseEvent>
 #include <QHBoxLayout>
+#include <QDialog>
+#include "ui_AND.h"
+#include "ui_OR.h"
+#include "ui_NOT.h"
 
 #include "dragwidget.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -39,7 +44,10 @@ void MainWindow::connectTitle()
 {
     connect(ui->playTitleButton, &QPushButton::clicked, this, &MainWindow::PressedPlay);
     connect(ui->learnTitleButton, &QPushButton::clicked, this, &MainWindow::PressedInfo);
-    connect(ui->helpTitleButton, &QPushButton::clicked, this, &MainWindow::PressedHelp);
+    connect(ui->helpTitleButton, &QPushButton::clicked, this, &MainWindow::ShowANDialog);
+    connect(ui->andPushButton, &QPushButton::clicked, this, &MainWindow::ShowANDialog);
+    connect(ui->orPushButton, &QPushButton::clicked, this, &MainWindow::ShowORDialog);
+    connect(ui->notPushButton, &QPushButton::clicked, this, &MainWindow::ShowNOTDialog);
 }
 
 void MainWindow::connectActions()
@@ -190,4 +198,35 @@ void MainWindow::XORGateSelection()
     currentTool = XOR;
     dragWidget.AddItem(mouseIcons[XOR]);
     std::cout << "select XOR gate" << std::endl;
+}
+
+
+void MainWindow::ShowANDialog()
+{
+    QDialog* aboutAnd = new QDialog();
+
+    Ui_And_Dialog aboutAndUI;
+    aboutAndUI.setupUi(aboutAnd);
+
+    aboutAnd->show();
+}
+
+void MainWindow::ShowORDialog()
+{
+    QDialog* aboutOR = new QDialog();
+
+    Ui_Or_Dialog aboutOrUI;
+    aboutOrUI.setupUi(aboutOR);
+
+    aboutOR->show();
+}
+
+void MainWindow::ShowNOTDialog()
+{
+    QDialog* aboutNOT = new QDialog();
+
+    Ui_Not_Dialog aboutNotUI;
+    aboutNotUI.setupUi(aboutNOT);
+
+    aboutNOT->show();
 }

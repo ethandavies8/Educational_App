@@ -29,8 +29,126 @@
       <height>651</height>
      </rect>
     </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>46</red>
+          <green>46</green>
+          <blue>46</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>46</red>
+          <green>46</green>
+          <blue>46</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>46</red>
+          <green>46</green>
+          <blue>46</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>240</green>
+          <blue>240</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>0</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>240</green>
+          <blue>240</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Button">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>46</red>
+          <green>46</green>
+          <blue>46</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="ButtonText">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>120</red>
+          <green>120</green>
+          <blue>120</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Base">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>46</red>
+          <green>46</green>
+          <blue>46</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>46</red>
+          <green>46</green>
+          <blue>46</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
+    </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="titleScreen">
      <widget class="QPushButton" name="learnTitleButton">
@@ -47,7 +165,7 @@
       </property>
       <property name="icon">
        <iconset resource="Images.qrc">
-        <normaloff>:/library.png</normaloff>:/library.png</iconset>
+        <normaloff>:/buttonIcons/library.png</normaloff>:/buttonIcons/library.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -73,7 +191,7 @@
       </property>
       <property name="icon">
        <iconset resource="Images.qrc">
-        <normaloff>:/Play.png</normaloff>:/Play.png</iconset>
+        <normaloff>:/buttonIcons/PlayPressed.png</normaloff>:/buttonIcons/PlayPressed.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -105,7 +223,7 @@
       </property>
       <property name="icon">
        <iconset resource="Images.qrc">
-        <normaloff>:/info.png</normaloff>:/info.png</iconset>
+        <normaloff>:/buttonIcons/info.png</normaloff>:/buttonIcons/info.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -178,9 +296,9 @@
      <widget class="QLabel" name="learningLogicLabel">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>91</x>
         <y>0</y>
-        <width>561</width>
+        <width>621</width>
         <height>51</height>
        </rect>
       </property>
@@ -193,7 +311,7 @@
       <property name="font">
        <font>
         <family>OCR A Extended</family>
-        <pointsize>28</pointsize>
+        <pointsize>31</pointsize>
        </font>
       </property>
       <property name="styleSheet">
@@ -206,337 +324,424 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QGroupBox" name="learningLogicBox">
+     <widget class="QPushButton" name="notPushButton">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>80</y>
-        <width>75</width>
-        <height>570</height>
+        <x>80</x>
+        <y>180</y>
+        <width>151</width>
+        <height>151</height>
        </rect>
       </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>240</red>
+            <green>240</green>
+            <blue>240</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>240</red>
+            <green>240</green>
+            <blue>240</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>120</red>
+            <green>120</green>
+            <blue>120</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
       </property>
-      <property name="title">
-       <string/>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-      </property>
-      <widget class="QPushButton" name="ANDDisplayButton">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>75</width>
-         <height>75</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(100, 100, 100);</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>:/icons/ANDGate.png</normaloff>:/icons/ANDGate.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>90</width>
-         <height>100</height>
-        </size>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="ORDisplayButton">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>100</y>
-         <width>75</width>
-         <height>75</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(100, 100, 100);</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>:/icons/ORGate.png</normaloff>:/icons/ORGate.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>80</width>
-         <height>100</height>
-        </size>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="NOTDisplayButton">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>200</y>
-         <width>75</width>
-         <height>75</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(100, 100, 100);</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>:/icons/NOTGate.png</normaloff>:/icons/NOTGate.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>80</width>
-         <height>100</height>
-        </size>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="NANDDisplayButton">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>300</y>
-         <width>75</width>
-         <height>75</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(100, 100, 100);</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>:/icons/NANDGate.png</normaloff>:/icons/NANDGate.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>80</width>
-         <height>100</height>
-        </size>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="NORDisplayButton">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>400</y>
-         <width>75</width>
-         <height>75</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(100, 100, 100);</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>:/icons/NORGate.png</normaloff>:/icons/NORGate.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>200</width>
-         <height>200</height>
-        </size>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="XORDisplayButton">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>500</y>
-         <width>75</width>
-         <height>75</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(100, 100, 100);</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>:/icons/XORGate.png</normaloff>:/icons/XORGate.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>70</width>
-         <height>75</height>
-        </size>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QLabel" name="andHelpLabel">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>80</y>
-        <width>211</width>
-        <height>91</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
+      <property name="font">
+       <font>
+        <family>OCR A Extended</family>
+        <pointsize>36</pointsize>
+       </font>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;And Gate: ouput is &amp;quot;high&amp;quot; only &lt;/p&gt;&lt;p&gt;if first input and second input&lt;/p&gt;&lt;p&gt; are both &amp;quot;high&amp;quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>NOT</string>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      <property name="flat">
+       <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="truthTableButton">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
+     <widget class="QPushButton" name="andPushButton">
       <property name="geometry">
        <rect>
         <x>320</x>
-        <y>80</y>
-        <width>481</width>
-        <height>451</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>:/icons/LogicTruthTables.png</normaloff>:/icons/LogicTruthTables.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>500</width>
-        <height>450</height>
-       </size>
-      </property>
-     </widget>
-     <widget class="QLabel" name="orHelpLabel">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
         <y>180</y>
-        <width>221</width>
-        <height>101</height>
+        <width>151</width>
+        <height>151</height>
        </rect>
       </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>240</red>
+            <green>240</green>
+            <blue>240</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>240</red>
+            <green>240</green>
+            <blue>240</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>120</red>
+            <green>120</green>
+            <blue>120</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <property name="font">
+       <font>
+        <family>OCR A Extended</family>
+        <pointsize>36</pointsize>
+       </font>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Or Gate: ouput is &amp;quot;high&amp;quot; if &lt;/p&gt;&lt;p&gt;first input or second &lt;/p&gt;&lt;p&gt;input is &amp;quot;high&amp;quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>AND</string>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      <property name="flat">
+       <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="notHelpLabel">
+     <widget class="QPushButton" name="orPushButton">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>280</y>
-        <width>211</width>
-        <height>71</height>
+        <x>560</x>
+        <y>180</y>
+        <width>151</width>
+        <height>151</height>
        </rect>
       </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>240</red>
+            <green>240</green>
+            <blue>240</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>240</red>
+            <green>240</green>
+            <blue>240</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>120</red>
+            <green>120</green>
+            <blue>120</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>46</red>
+            <green>46</green>
+            <blue>46</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <property name="font">
+       <font>
+        <family>OCR A Extended</family>
+        <pointsize>36</pointsize>
+       </font>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Not Gate:&lt;/p&gt;&lt;p&gt;negates current signal&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>OR</string>
       </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="nandHelpLabel">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>380</y>
-        <width>211</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nand gate:&lt;/p&gt;&lt;p&gt;Negated and gate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="norHelpLabel">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>480</y>
-        <width>211</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nor Gate:&lt;/p&gt;&lt;p&gt;Negated or gate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="xorHelpLabel">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>580</y>
-        <width>431</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Xor Gate:&lt;/p&gt;&lt;p&gt;Give a &amp;quot;high&amp;quot; output if either, but not both inputs are &amp;quot;high&amp;quot;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      <property name="flat">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -593,9 +798,9 @@
      <widget class="QGroupBox" name="groupBox">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>14</x>
         <y>30</y>
-        <width>75</width>
+        <width>81</width>
         <height>621</height>
        </rect>
       </property>
@@ -624,7 +829,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Gates.qrc">
          <normaloff>:/icons/line.png</normaloff>:/icons/line.png</iconset>
        </property>
        <property name="iconSize">
@@ -650,13 +855,13 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Gates.qrc">
          <normaloff>:/icons/ANDGate.png</normaloff>:/icons/ANDGate.png</iconset>
        </property>
        <property name="iconSize">
         <size>
-         <width>90</width>
-         <height>100</height>
+         <width>75</width>
+         <height>111</height>
         </size>
        </property>
       </widget>
@@ -676,7 +881,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Gates.qrc">
          <normaloff>:/icons/ORGate.png</normaloff>:/icons/ORGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -702,7 +907,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Gates.qrc">
          <normaloff>:/icons/NOTGate.png</normaloff>:/icons/NOTGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -728,7 +933,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Gates.qrc">
          <normaloff>:/icons/NANDGate.png</normaloff>:/icons/NANDGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -754,7 +959,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Gates.qrc">
          <normaloff>:/icons/mousePointer.png</normaloff>:/icons/mousePointer.png</iconset>
        </property>
        <property name="iconSize">
@@ -780,7 +985,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Gates.qrc">
          <normaloff>:/icons/NORGate.png</normaloff>:/icons/NORGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -806,7 +1011,7 @@
         <string/>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="Gates.qrc">
          <normaloff>:/icons/XORGate.png</normaloff>:/icons/XORGate.png</iconset>
        </property>
        <property name="iconSize">
@@ -873,7 +1078,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -925,6 +1130,7 @@
   </action>
  </widget>
  <resources>
+  <include location="Gates.qrc"/>
   <include location="Images.qrc"/>
  </resources>
  <connections/>
