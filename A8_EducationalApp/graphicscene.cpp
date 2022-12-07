@@ -130,6 +130,7 @@ void GraphicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     } else if (myMode == MoveItem) {
         QGraphicsScene::mouseMoveEvent(mouseEvent);
     }
+    this->update();
 }
 
 void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -170,7 +171,7 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                }
            }
        }
-
+       this->update();
        line = nullptr;
        QGraphicsScene::mouseReleaseEvent(mouseEvent);
    }
