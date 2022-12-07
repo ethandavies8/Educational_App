@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
                                   "QTableCornerButton::section { background-color:#232326; }"
                                   "QHeaderView::section { color:white; background-color:#232326; }"
                                   "QTableView::item {color:white;}");
+    ui->truthTableLabel->setText("A NOT Gate will take an input and reverse it in the output.");
 
     setupMouseIcons();
 //    qApp->setStyleSheet("QWidget { border: 1px solid red; }");
@@ -68,8 +69,9 @@ void MainWindow::connectTitle()
 void MainWindow::connectScene(){
     connect(this, &MainWindow::changeSelectedGate, scene, &GraphicScene::setGateImage);
     connect(this, &MainWindow::changeItemType, scene, &GraphicScene::setItemType);
-    connect(this, &MainWindow::checkLevelOne, scene, &GraphicScene::testLevelOne);
-    connect(this, &MainWindow::checkLevelTwo, scene, &GraphicScene::testLevelTwo);
+    connect(this, &MainWindow::checkTwoGateLevel, scene, &GraphicScene::testTwoGates);
+    connect(this, &MainWindow::checkThreeGateLevel, scene, &GraphicScene::testThreeGateLevel);
+    connect(this, &MainWindow::checkThreeGateLevel, scene, &GraphicScene::testThreeGateLevel);
     connect(scene, &GraphicScene::rowCorrect, this, &MainWindow::truthTableRowCorrect);
     connect(ui->levelCompleteButton, &QPushButton::clicked, this, &MainWindow::nextLevel);
 }
@@ -133,9 +135,15 @@ void MainWindow::setupMouseIcons()
 
 
 void MainWindow::testCircuit(){
+    if(currentLevelIndex == 0){
+        emit checkTwoGateLevel();
+    }
+    else if(currentLevelIndex < 10){
+        emit checkThreeGateLevel(currentLevelIndex);
+    }
+    /*
     switch(currentLevelIndex + firstLevelIndex){
     case(3):
-        emit checkLevelOne();
         break;
     case(4):
         emit checkLevelTwo();
@@ -143,6 +151,7 @@ void MainWindow::testCircuit(){
     default:
         break;
     }
+    */
 }
 
 void MainWindow::truthTableRowCorrect(int row){
@@ -167,6 +176,11 @@ void MainWindow::truthTableRowCorrect(int row){
         ui->levelCompleteButton->show();
         ui->levelCompleteButton->setEnabled(true);
     }
+    else if(currentLevelIndex == 0 && ui->truthTable->item(0,3)->checkState() == Qt::Checked &&
+            ui->truthTable->item(1,3)->checkState() == Qt::Checked){
+        ui->levelCompleteButton->show();
+        ui->levelCompleteButton->setEnabled(true);
+    }
 }
 
 void MainWindow::nextLevel(){
@@ -175,24 +189,118 @@ void MainWindow::nextLevel(){
     case(1):
         makeLevelTwo();
         break;
+    case(2):
+        makeLevelThree();
+        break;
+    case(3):
+        makeLevelFour();
+        break;
+    case(4):
+        makeLevelFive();
+        break;
+    case(5):
+        makeLevelSix();
+        break;
     default:
         break;
     }
 }
+void MainWindow::clearPreviousLevel(){
 
-void MainWindow::makeLevelTwo(){
     for(int i = 0; i < 4; i++){
         ui->truthTable->item(i, 3)->setCheckState(Qt::Unchecked);
     }
+    ui->levelCompleteButton->hide();
+    ui->levelCompleteButton->setEnabled(false);
+    refreshGameView();
+}
+
+void MainWindow::makeLevelTwo(){
+    //setup for 2 gates
+    ui->truthTable->item(0, 1)->setText("0");
+    ui->truthTable->item(1, 1)->setText("0");
+    ui->truthTable->item(2, 1)->setText("1");
+    ui->truthTable->item(3, 1)->setText("1");
+
+    ui->truthTable->item(0, 0)->setText("0");
+    ui->truthTable->item(1, 0)->setText("1");
+    ui->truthTable->item(2, 0)->setText("0");
+    ui->truthTable->item(3, 0)->setText("1");
+
+
+    //update outputs
+    ui->truthTable->item(0, 2)->setText("0");
+    ui->truthTable->item(1, 2)->setText("0");
+    ui->truthTable->item(2, 2)->setText("0");
+    ui->truthTable->item(3, 2)->setText("1");
+    ui->levelLabel->setText("Level 2");
+
+    //update level description and unlock next gate
+    ui->truthTableLabel->setText("An AND Gate will take inputs and only output 1 if both inputs are 1.");
+    ui->ANDGateButton->setEnabled(true);
+
+    clearPreviousLevel();
+}
+
+void MainWindow::makeLevelThree(){
+    //update outputs
     ui->truthTable->item(0, 2)->setText("0");
     ui->truthTable->item(1, 2)->setText("1");
     ui->truthTable->item(2, 2)->setText("1");
     ui->truthTable->item(3, 2)->setText("1");
+    ui->levelLabel->setText("Level 3");
 
-    ui->levelCompleteButton->hide();
-    ui->levelCompleteButton->setEnabled(false);
-    ui->levelLabel->setText("Level 2");
-    refreshGameView();
+    //update level description and unlock next gate
+    ui->truthTableLabel->setText(
+                "An OR Gate will take inputs and only output 1 if either or all inputs are 1.");
+    ui->ORGateButton->setEnabled(true);
+    clearPreviousLevel();
+}
+
+void MainWindow::makeLevelFour(){
+    ui->truthTable->item(0, 2)->setText("0");
+    ui->truthTable->item(1, 2)->setText("1");
+    ui->truthTable->item(2, 2)->setText("1");
+    ui->truthTable->item(3, 2)->setText("0");
+    ui->levelLabel->setText("Level 4");
+
+    //update level description and unlock next gate
+    ui->truthTableLabel->setText(
+                "An XOR Gate will take inputs and only output 1 if only one input is 1.");
+    ui->XORGateButton->setEnabled(true);
+    clearPreviousLevel();
+
+}
+
+void MainWindow::makeLevelFive(){
+    ui->truthTable->item(0, 2)->setText("1");
+    ui->truthTable->item(1, 2)->setText("1");
+    ui->truthTable->item(2, 2)->setText("1");
+    ui->truthTable->item(3, 2)->setText("0");
+    ui->levelLabel->setText("Level 5");
+
+    ui->truthTableLabel->setText("The NAND and NOR Gates are opposites of their respective Gates. "
+                                 "The NAND Gate will only output 1 if both inputs aren't 1. The NOR Gate will "
+                                 "only output 1 if both inputs are 0."
+                                 " Using this information, try to match the not version of the gate to the truth table below");
+    //unlock remaining gates
+    ui->NANDGateButton->setEnabled(true);
+    ui->NORGateButton->setEnabled(true);
+    clearPreviousLevel();
+}
+
+void MainWindow::makeLevelSix(){
+    ui->truthTable->item(0, 2)->setText("1");
+    ui->truthTable->item(1, 2)->setText("0");
+    ui->truthTable->item(2, 2)->setText("0");
+    ui->truthTable->item(3, 2)->setText("0");
+    ui->levelLabel->setText("Level 6");
+
+    ui->truthTableLabel->setText("The NAND and NOR Gates are opposites of their respective Gates. "
+                                 "The NAND Gate will only output 1 if both inputs aren't 1. The NOR Gate will "
+                                 "only output 1 if both inputs are 0."
+                                 " Using this information, try to match the not version of the gate to the truth table below");
+    clearPreviousLevel();
 }
 
 void MainWindow::PressedPlay()
@@ -226,10 +334,10 @@ void MainWindow::refreshGameView(){
     scene->clear();
     switch(currentLevelIndex){
     case(0):
-        scene->setUpLevelOne();
+        //scene->setUpThreeGateLevel();
         break;
     default:
-        scene->setUpLevelOne();
+        scene->setUpThreeGates();
         break;
     }
 

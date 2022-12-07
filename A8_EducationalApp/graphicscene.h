@@ -29,13 +29,15 @@ public slots:
     void setMode(GraphicScene::Mode mode);
     void setItemType(Gate::GateType type);
     void setGateImage(QPixmap gateImage);
-    void setUpLevelOne();
-    void testLevelOne();
-    void testLevelTwo();
+    void setUpTwoGates();
+    void setUpThreeGates();
+    void testTwoGates();
+    void testThreeGateLevel(int);
+    //void testLevelTwo();
 
 signals:
-    void itemInserted(Gate *item);
-    void itemSelected(QGraphicsItem *item);
+    //void itemInserted(Gate *item);
+    //void itemSelected(QGraphicsItem *item);
     void rowCorrect(int);
 
 protected:

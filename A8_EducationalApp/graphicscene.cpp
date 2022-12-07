@@ -14,10 +14,20 @@ GraphicScene::GraphicScene(QMenu *itemMenu, QObject *parent)
     myItemType = Gate::NoSelection;
     line = nullptr;
     myLineColor = Qt::black;
-    setUpLevelOne();
+    setUpTwoGates();
 }
 
-void GraphicScene::setUpLevelOne(){
+void GraphicScene::setUpTwoGates(){
+    sourceOne = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceOne);
+    sourceOne->setPos(-200, 0);
+
+    output = new OutputGate(Gate::Output, myItemMenu, currentGate);
+    addItem(output);
+    output->setPos(300, 0);
+}
+
+void GraphicScene::setUpThreeGates(){
 
     sourceOne = new SourceGate(Gate::Source, myItemMenu, currentGate);
     addItem(sourceOne);
@@ -89,15 +99,15 @@ void GraphicScene::insertItem(QGraphicsSceneMouseEvent *mouseEvent){
         std::cout << "created not gate" <<std::endl;
          break;
     case Gate::NOR:
-        item = new NOTGate(myItemType, myItemMenu, currentGate);
+        item = new NORGate(myItemType, myItemMenu, currentGate);
         std::cout << "created nor gate" <<std::endl;
          break;
     case Gate::NAND:
-        item = new NOTGate(myItemType, myItemMenu, currentGate);
+        item = new NANDGate(myItemType, myItemMenu, currentGate);
         std::cout << "created nand gate" <<std::endl;
          break;
     case Gate::XOR:
-        item = new NOTGate(myItemType, myItemMenu, currentGate);
+        item = new XORGate(myItemType, myItemMenu, currentGate);
         std::cout << "created xor gate" <<std::endl;
         break;
     default:
@@ -108,7 +118,7 @@ void GraphicScene::insertItem(QGraphicsSceneMouseEvent *mouseEvent){
 
     addItem(item);
     item->setPos(mouseEvent->scenePos());
-    emit itemInserted(item);
+    //emit itemInserted(item);
 
 }
 
@@ -134,7 +144,6 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
            removeItem(line);
            delete line;
-
 
            if (startItems.count() > 0 && endItems.count() > 0 &&
                startItems.first()->type() == Gate::Type &&
@@ -166,51 +175,79 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
        QGraphicsScene::mouseReleaseEvent(mouseEvent);
    }
 
-
+/*
 bool GraphicScene::isItemChange(int type) const
 {
     const QList<QGraphicsItem *> items = selectedItems();
     const auto cb = [type](const QGraphicsItem *item) { return item->type() == type; };
     return std::find_if(items.begin(), items.end(), cb) != items.end();
 }
+*/
 
-void GraphicScene::testLevelOne(){
+void GraphicScene::testTwoGates(){
     sourceOne->setOutput(false);
-    sourceTwo->setOutput(false);
-    if(!output->getOutput())
+    if(output->getOutput()){
         emit rowCorrect(0);
+    }
     sourceOne->setOutput(true);
-    sourceTwo->setOutput(false);
-    if(!output->getOutput())
+    if(!output->getOutput()){
         emit rowCorrect(1);
-    sourceOne->setOutput(false);
-    sourceTwo->setOutput(true);
-    if(!output->getOutput())
-        emit rowCorrect(2);
-    sourceOne->setOutput(true);
-    sourceTwo->setOutput(true);
-    if(output->getOutput())
-        emit rowCorrect(3);
-}
-
-void GraphicScene::testLevelTwo(){
-    sourceOne->setOutput(false);
-    sourceTwo->setOutput(false);
-    if(!output->getOutput())
-        emit rowCorrect(0);
-    sourceOne->setOutput(true);
-    sourceTwo->setOutput(false);
-    if(output->getOutput())
-        emit rowCorrect(1);
-    sourceOne->setOutput(false);
-    sourceTwo->setOutput(true);
-    if(output->getOutput())
-        emit rowCorrect(2);
-    sourceOne->setOutput(true);
-    sourceTwo->setOutput(true);
-    if(output->getOutput())
-        emit rowCorrect(3);
+    }
 }
 
 
+void GraphicScene::testThreeGateLevel(int levelIndex){
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(false);
+    //if true for input 0,0
+    if(output->getOutput()){
+        if(levelIndex == 4 || levelIndex == 5){
+            emit rowCorrect(0);
+        }
+    }
+    else{
+        if(levelIndex == 1 || levelIndex == 2 || levelIndex == 3){
+            emit rowCorrect(0);
+        }
+    }
 
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(false);
+    //if true for input 1, 0
+    if(output->getOutput()){
+        if(levelIndex == 2 || levelIndex == 3 || levelIndex == 4){
+            emit rowCorrect(1);
+        }
+    }
+    else{
+        if(levelIndex == 1 || levelIndex == 5){
+            emit rowCorrect(1);
+        }
+    }
+
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(true);
+    //if true for input 0, 1
+    if(output->getOutput()){
+        if(levelIndex == 2 || levelIndex == 3 || levelIndex == 4){
+            emit rowCorrect(2);
+        }
+    }
+    else{
+        if(levelIndex == 1 || levelIndex == 5)
+        emit rowCorrect(2);
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(true);
+    if(output->getOutput()){
+        if(levelIndex == 1 || levelIndex == 2){
+            emit rowCorrect(3);
+        }
+    }
+    else{
+        if(levelIndex == 3 || levelIndex == 4|| levelIndex == 5){
+            emit rowCorrect(3);
+        }
+    }
+}

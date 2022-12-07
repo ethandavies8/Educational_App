@@ -58,8 +58,9 @@ signals:
     void deleteEvent();
     void changeSelectedGate(QPixmap map);
     void changeItemType(Gate::GateType);
-    void checkLevelOne();
-    void checkLevelTwo();
+    void checkTwoGateLevel();
+    void checkThreeGateLevel(int);
+    //void checkLevelTwo();
 
 private:
     FallingStackedFrame* fallFrame;
@@ -73,8 +74,16 @@ private:
     void connectTools();
     void connectScene();
     void setupMouseIcons();
+    void clearPreviousLevel();
+
     void removeBackground(QWidget* widget);
+
     void makeLevelTwo();
+    void makeLevelThree();
+    void makeLevelFour();
+    void makeLevelFive();
+    void makeLevelSix();
+
     b2World *world;
     int mainMenuIndex = 0;
     int infoIndex = 1;
