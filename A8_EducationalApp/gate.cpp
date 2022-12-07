@@ -42,7 +42,9 @@
             setPixmap(*map);
             break;
         default:
-            setPixmap(gateImage);
+            setPixmap(gateImage.scaled(90,55));
+            height = 55;
+            width = 90;
             setFlag(QGraphicsItem::ItemIsMovable, true);
             break;
         }
@@ -59,6 +61,15 @@
 
     Gate::Gate()
     {
+    }
+
+    int Gate::returnWirePlace(Wire *wire)
+    {
+        for(int i = 0; i < inputs.size(); i++) {
+            if(wire == inputs[i])
+                return i+1;
+        }
+        return 1;
     }
 
     void Gate::setOutput(){}

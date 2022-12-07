@@ -26,7 +26,6 @@ public:
 
     QRectF boundingRect() const override;
     void updatePosition();
-    void addSubLineStarting(QPointF);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -38,7 +37,6 @@ private:
     bool value; // Each wire has a value of true or false (1 or 0)
     QPolygonF beginNode, endNode;
     QColor myColor = Qt::black;
-    QList<QPointF> subLineStarting;
     Gate *startGate;
     Gate *endGate;
     void setUpOffset();

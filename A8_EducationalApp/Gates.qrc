@@ -1,8 +1,5 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>ANDGate.png</file>
-        <file>ORGate.png</file>
-        <file>NOTGate.png</file>
         <file>NANDGate.png</file>
         <file>line.png</file>
         <file>mousePointer.png</file>
@@ -11,5 +8,8 @@
         <file>XORGate.png</file>
         <file>ANDORExample.png</file>
         <file>logicTableLevelHelp.jpg</file>
+        <file>ANDGate.png</file>
+        <file>NOTGate.png</file>
+        <file>ORGate.png</file>
     </qresource>
 </RCC>

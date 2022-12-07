@@ -42,11 +42,17 @@ public:
     bool gateHasBeenChecked() { return hasBeenChecked; }
 
     Wire *outputWire = nullptr;
+    int getHeight() { return height; }
+    int getWidth() { return width; }
+    int wireConnectedCount() { return inputs.size(); }
+    int returnWirePlace(Wire *wire);
 
 private:
     GateType myType;
     QMenu *myContextMenu;
     QList<Wire *> wires;
+    int height;
+    int width;
 };
 
 // A source gate's output is true;

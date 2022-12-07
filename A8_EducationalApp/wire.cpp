@@ -17,8 +17,6 @@ Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLin
     beginGate.addOutput(this);
     endGate.addInput(this);
 
-    // waiting gate class inherit from GraphicsItems
-    //startPoint = beginGate->pos();
 }
 
 
@@ -26,14 +24,9 @@ Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
     : QGraphicsLineItem(parent), startGate(startGate), endGate(endGate)
 {
 
-    if(startGate->hasOutput()){
-        startGate->outputWire->connect(endGate);
-    }else{
-        value = 0;
-        ends.push_back(endGate);
-        startGate->addOutput(this);
-        endGate->addInput(this);
-    }
+    value = 0;
+    startGate->addOutput(this);
+    connect(endGate);
 
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -119,23 +112,23 @@ void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 
        // set the start to be the output place
 
-      QPointF startPoint = startGate->pos();
-       startPoint.setX(startPoint.x() + xStartOffset);
-       startPoint.setY(startPoint.y() + yStartOffset);
-      QPointF endPoint = endGate->pos();
-      endPoint.setX(endPoint.x() + xEndOffset);
-      endPoint.setY(endPoint.y() + yEndOffset);
-       //QLineF centerLine(startPoint, ends.at(0)->pos());
-       QLineF centerLine(startPoint, endPoint);
+      for(int i = 0; i < ends.count(); i++) {
+          QPointF startPoint = startGate->pos();
+          startPoint.setX(startPoint.x() + startGate->getWidth());
+          startPoint.setY(startPoint.y() + startGate->getHeight() / 2);
+          QPointF endPoint = ends[i]->pos();
+          if(ends[i]->getType() == Gate::OR || ends[i]->getType() == Gate::XOR || ends[i]->getType() == Gate::NOR)
+          {
+              endPoint.setX(endPoint.x() + 20);
+          }
+          endPoint.setY(endPoint.y() + ends[i]->getHeight() / (ends[i]->wireConnectedCount() + 1) * ends[i]->returnWirePlace(this));
+          //QLineF centerLine(startPoint, ends.at(0)->pos());
 
-       setLine(centerLine);
-       painter->drawLine(line());
+          QLineF centerLine(startPoint, endPoint);
 
-       //    for(int i = 0; i < subLineStarting.count(); i++){
-       //        QLineF subLine(subLineStarting[i], ends.at(i+1)->pos());
-       //        setLine(subLine);
-       //        painter->drawLine(line());
-       //    }
+          setLine(centerLine);
+          painter->drawLine(line());
+      }
 }
 
 // Updates value held on wire and updates entire circuit
@@ -191,13 +184,9 @@ QRectF Wire::boundingRect() const
 // Update the wire when gate position is changed.
 void Wire::updatePosition()
 {
-    QLineF line(mapFromItem(startGate, 0, 0), mapFromItem(endGate, 0, 0));
-    setLine(line);
-}
-
-// Add the sub wire that is connecting to a new gate
-void Wire::addSubLineStarting(QPointF newSubLineStarting)
-{
-    subLineStarting.append(newSubLineStarting);
+    for(int i = 0; i < ends.size(); i++){
+        QLineF line(mapFromItem(startGate, 0, 0), mapFromItem(ends[i], 0, 0));
+        setLine(line);
+    }
 }
 

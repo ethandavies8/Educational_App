@@ -125,36 +125,46 @@ void GraphicScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (line != nullptr && myMode == InsertLine) {
-        QList<QGraphicsItem *> startItems = items(line->line().p1());
-        if (startItems.count() && startItems.first() == line)
-            startItems.removeFirst();
-        QList<QGraphicsItem *> endItems = items(line->line().p2());
-        if (endItems.count() && endItems.first() == line)
-            endItems.removeFirst();
+           QList<QGraphicsItem *> startItems = items(line->line().p1());
+           if (startItems.count() && startItems.first() == line)
+               startItems.removeFirst();
+           QList<QGraphicsItem *> endItems = items(line->line().p2());
+           if (endItems.count() && endItems.first() == line)
+               endItems.removeFirst();
 
-        removeItem(line);
-        delete line;
-
-
-        if (startItems.count() > 0 && endItems.count() > 0 &&
-            startItems.first()->type() == Gate::Type &&
-            endItems.first()->type() == Gate::Type &&
-            startItems.first() != endItems.first()) {
-            Gate *startItem = qgraphicsitem_cast<Gate *>(startItems.first());
-            Gate *endItem = qgraphicsitem_cast<Gate *>(endItems.first());
+           removeItem(line);
+           delete line;
 
 
-            Wire *wire = new Wire(startItem, endItem);
-            wire->setColor(myLineColor);
-            wire->setZValue(-1000.0);
-            addItem(wire);
-            wire->updatePosition();
-        }
-    }
+           if (startItems.count() > 0 && endItems.count() > 0 &&
+               startItems.first()->type() == Gate::Type &&
+               endItems.first()->type() == Gate::Type &&
+               startItems.first() != endItems.first()) {
+               Gate *startItem = qgraphicsitem_cast<Gate *>(startItems.first());
+               Gate *endItem = qgraphicsitem_cast<Gate *>(endItems.first());
 
-    line = nullptr;
-    QGraphicsScene::mouseReleaseEvent(mouseEvent);
-}
+               if(startItem->hasOutput() == false) {
+                   Wire *wire = new Wire(startItem, endItem);
+                   wire->setColor(myLineColor);
+
+                   wire->setZValue(-1000.0);
+                   addItem(wire);
+                   wire->updatePosition();
+               }else {
+                   Wire *wire = startItem->outputWire;
+                   wire->setColor(myLineColor);
+
+                   wire->connect(endItem);
+                   wire->setZValue(-1000.0);
+                   addItem(wire);
+                   wire->updatePosition();
+               }
+           }
+       }
+
+       line = nullptr;
+       QGraphicsScene::mouseReleaseEvent(mouseEvent);
+   }
 
 
 bool GraphicScene::isItemChange(int type) const
