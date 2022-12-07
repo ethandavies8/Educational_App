@@ -11,5 +11,8 @@
         <file>ANDGate.png</file>
         <file>NOTGate.png</file>
         <file>ORGate.png</file>
+        <file>nand.png</file>
+        <file>nor.png</file>
+        <file>xor.png</file>
     </qresource>
 </RCC>
