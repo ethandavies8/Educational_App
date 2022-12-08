@@ -20,8 +20,6 @@ FallingStackedFrame::FallingStackedFrame(QStackedWidget *core,QObject* parent)
         layout->setStackingMode(QStackedLayout::StackAll);
         layout->setCurrentIndex(0);
     }else{
-        std::cout<<"Shit"<<std::endl;
-
     }
     for (int i = 0; i < core->count(); ++i) {
         PhysicsScene* s = this->BuildScene(i);
@@ -31,50 +29,46 @@ FallingStackedFrame::FallingStackedFrame(QStackedWidget *core,QObject* parent)
     scenes.at(0)->fallIn();
 }
 
+/// @brief The only heap space allocated by FallingStackedFrame are the instances of PhysicsScene stored in scenes
 FallingStackedFrame::~FallingStackedFrame(){
     for (int i = 0; i < this->scenes.count(); ++i) {
         delete this->scenes.at(i);
     }
 }
 
-
+/// @brief This method allows for manual replacement of a PhysicsScene, this allows for specific bounce values 
+/// @param scene Index of the stacked frame to replace.
+/// @param PSptr pointer to the new PhysicsScene, this class takes full responsibilty for deleting PSptr from the heap
 void FallingStackedFrame::setPhysicsScene(int scene, PhysicsScene* PSptr){
     PhysicsScene* s = this->scenes.at(scene);
     this->scenes.replace(scene,PSptr);
-    delete s;
+    delete s; // clean up old scene 
 }
 
+/// @brief triggers to fall to a specific scene in the stacked widget.
+/// @param scene index of the desired scene
 void FallingStackedFrame::FallTo(int scene){
     scenes.at(scene)->setVisible(true);
     scenes.at(this->currentScene)->fallOut();
     scenes.at(scene)->fallIn();
     this->corelayout->setCurrentIndex(scene);
-//    this->core->setCurrentIndex(scene);
-//    scenes.at(this->currentScene)->setVisible(false);
-//    scenes.at(scene)->setVisible(true);
-
-
     this->currentScene = scene;
 }
 
+/// @brief This creates a default Physics scene for the given scene.
+/// @param scene index to the scene that needs a connected physics scene
+/// @return A pointer to the new physics scene.
 PhysicsScene* FallingStackedFrame::BuildScene(int scene){
         QWidget* frame = this->core->widget(scene);
         PhysicsScene* ps = new PhysicsScene(frame);
         QList children = frame->children();
-//        scenes.at(scene)->setVisible(false);
-//        frame->setVisible(false);
         frame->setWindowOpacity(0.0);
         frame->setAttribute(Qt::WA_NoSystemBackground);
         frame->setAttribute(Qt::WA_TranslucentBackground);
-        std::cout<<"posX:"<<frame->pos().x()<<" posY:" <<frame->pos().y() << std::endl;
         for (int i = 0; i < children.count(); ++i) {
             if( QWidget* widget = dynamic_cast<QWidget*>(children.at(i)) )
             {
-                ps->addBody(widget,((rand()%10)/100.0)+0.30);
-//                std::cout<<"posX:"<<widget->pos().x()<<" posY:" <<widget->pos().y() << std::endl;
-//                widget->show();
-//                widget->activateWindow();
-//                widget->raise();
+                ps->addBody(widget,((rand()%10)/100.0)+0.20);
             }else{
                 std::cout<<"Non QWidget in "<<frame->accessibleName().toStdString()<<std::endl;
             }

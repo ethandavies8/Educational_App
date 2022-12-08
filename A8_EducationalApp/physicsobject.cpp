@@ -20,9 +20,6 @@ PhysicsObject::PhysicsObject(QWidget *parent,b2World* world,int worldChannel,flo
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(homef.x(), -5);
     body = world->CreateBody(&bodyDef);
-//    std::cout<< parent->objectName().toStdString()<<" -> X:"<<home.x() <<" Y:"<<home.y() <<std::endl;
-//    std::cout<< parent->objectName().toStdString()<<" -> X:"<<homef.x()<<" Y:"<<homef.y()<<std::endl;
-
 
     // Define another box shape for our dynamic body.
     b2PolygonShape dynamicBox;
@@ -45,33 +42,28 @@ PhysicsObject::PhysicsObject(QWidget *parent,b2World* world,int worldChannel,flo
 
 }
 
-
+/// @brief  No memory responsibilities
 PhysicsObject::~PhysicsObject(){
-    // Both of the pointers in the class are managed elsewere, the body's memory is cleared with the world. and the widget is removed with the parent(main Window).
+    // Both of the pointers in the class are managed elsewhere, the body's memory is cleared with the world. and the widget is removed with the parent(main Window).
 }
 
+/// @brief Reads the bodies position and updates the gui to reflect any changes.
 void PhysicsObject::UpdateGuiPosition(){
     if(this->body->IsAwake()){
         b2Vec2 pos = this->body->GetPosition();
 
         QPoint guiPos = worldToGuiPos(QPointF(pos.x,pos.y));
         guiPos.setX(home.x());
-//        std::cout<< this->parent()->objectName().toStdString()<<" -> X:"<<guiPos.x()<<" Y:"<<guiPos.y()<<std::endl;
         QRect geometry = this->widget->geometry();
         geometry.moveTo(guiPos);
-//        std::cout<<"widget:"<<this->body->IsAwake()<<" X:"<<pos.x<<" Y:"<<pos.y<<" W:"<<geometry.width()<<" H:"<<geometry.height()<<std::endl;
-
-//        if(!this->body->IsAwake() && !this->isfallingIn()){
-//            this->setVisible(false);
-//        }
         this->widget->setGeometry(geometry);
     }
 
 }
-//void PhysicsObject::resize(QRect rect){
 
-//}
-
+/// @brief Converts a world relative position to a gui relative position
+/// @param pos world position
+/// @return    gui position 
 QPoint PhysicsObject::worldToGuiPos(QPointF pos){
     int x = (int)(pos.x()*100) - this->offset.x();
     int y = (int)(pos.y()*100) - this->offset.y();
@@ -79,6 +71,9 @@ QPoint PhysicsObject::worldToGuiPos(QPointF pos){
     return QPoint(x,y);
 }
 
+/// @brief Converts a gui relative position to a world relative position
+/// @param pos gui position
+/// @return    world position 
 QPointF PhysicsObject::guiToWorldPos(QPoint pos){
     qreal x = ((pos.x() + this->offset.x())/100.0);
     qreal y = ((pos.y() + this->offset.y())/100.0);
@@ -86,27 +81,25 @@ QPointF PhysicsObject::guiToWorldPos(QPoint pos){
     return QPointF(x,y);
 }
 
+/// @brief sets the bodies channel in the world Used to avoid collisions between widgets
+/// @param channel an unused channel
 void PhysicsObject::setWorldChannel(int channel){
     this->offset.setX(channel*5*100);
 }
 
+/// @brief Starts the fall in processes for the body
 void PhysicsObject::fallIn(){
-//    std::cout<<"Trigger fall in "<<this->parent()->objectName().toStdString()<<std::endl;
-//    this->setVisible(true);
     this->fallingIn = true;
     b2Transform transform = this->body->GetTransform();
     transform.p.y = -10;
     this->body->SetTransform(transform.p,transform.q.GetAngle());
     this->body->SetActive(true);
     this->body->SetAwake(true);
-//    this->show();
-//    this->activateWindow();
-//    this->raise();
     this->offset.setY(-this->home.y());
 }
 
+/// @brief Starts the fall out processes for the body
 void PhysicsObject::fallOut(){
-//    std::cout<<"Trigger fall out "<<std::endl;
     this->fallingIn = false;
     b2Transform transform = this->body->GetTransform();
     transform.p.y = -10;
@@ -116,6 +109,7 @@ void PhysicsObject::fallOut(){
     this->offset.setY(-this->home.y()-1000);
 }
 
+/// @brief sets the body out of view hidden from the user.
 void PhysicsObject::setOut(){
     this->fallingIn = false;
     b2Transform transform = this->body->GetTransform();
@@ -123,12 +117,11 @@ void PhysicsObject::setOut(){
     this->body->SetTransform(transform.p,transform.q.GetAngle());
     this->body->SetActive(true);
     this->body->SetAwake(true);
-//    this->show();
-//    this->activateWindow();
-//    this->raise();
     this->offset.setY(-this->home.y()-1000);
 }
 
+/// @brief Check if the body is falling in or out.
+/// @return true if the body is falling in.
 bool PhysicsObject::isfallingIn(){
     return this->fallingIn;
 }

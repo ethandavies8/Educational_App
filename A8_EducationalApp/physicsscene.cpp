@@ -48,6 +48,7 @@ PhysicsScene::PhysicsScene(QWidget *parent)
     // Initialize bodies
     setOut();
 }
+/// @brief Each physics scene is responsible for the physics world and any physics bodies it created.
 PhysicsScene::~PhysicsScene()
 {
     int count = this->bodies.count();
@@ -56,11 +57,18 @@ PhysicsScene::~PhysicsScene()
     }
     delete this->world;
 }
+
+/// @brief This should be called on a regular interval to update all physics bodies positions on the
+///             gui according to the location in the physics world.
 void PhysicsScene::updateWorld(){
     world->Step(timeStep, velocityIterations, positionIterations);
     emit postSimulation();
 }
 
+/// @brief This adds a new physics body that is connected to a specific widget.
+/// @param widget The widget to be simulated.
+/// @param bounce The coefficient of restoration for the new widget, determines how much "bounce" the
+///                 the new widget has.
 void PhysicsScene::addBody(QWidget* widget,float bounce){
     int bodyCount = this->bodies.count();
     // add the body to the world
@@ -72,14 +80,17 @@ void PhysicsScene::addBody(QWidget* widget,float bounce){
     connect(this,&PhysicsScene::TriggersetOut,this->bodies.value(bodyCount),&PhysicsObject::setOut);
 }
 
+/// @brief  Triggers all bodies in the scene to begin a fall in
 void PhysicsScene::fallIn(){
     emit TriggerFallIn();
 }
 
+/// @brief  Triggers all bodies in the scene to begin a fall out
 void PhysicsScene::fallOut(){
     emit TriggerFallOut();
 }
 
+/// @brief tells all the bodies in the scene to Move themselves off screen so they are not visible.
 void PhysicsScene::setOut(){
     emit TriggersetOut();
 }
