@@ -13,7 +13,7 @@ GraphicScene::GraphicScene(QMenu *itemMenu, QObject *parent)
     myMode = MoveItem;
     myItemType = Gate::NoSelection;
     line = nullptr;
-    myLineColor = Qt::black;
+    myLineColor = Qt::white;
     setUpTwoGates();
 }
 
@@ -42,6 +42,48 @@ void GraphicScene::setUpThreeGates(){
     output->setPos(300, 0);
 }
 
+void GraphicScene::setUpFourGates(){
+
+    sourceOne = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceOne);
+    sourceOne->setPos(-200, -100);
+
+    sourceTwo = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceTwo);
+    sourceTwo->setPos(-200, 100);
+
+    sourceThree = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceThree);
+    sourceThree->setPos(-200, 300);
+
+    output = new OutputGate(Gate::Output, myItemMenu, currentGate);
+    addItem(output);
+    output->setPos(300, 100);
+}
+
+void GraphicScene::setUpChallengeGates(){
+    sourceOne = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceOne);
+    sourceOne->setPos(-200, -100);
+
+    sourceTwo = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceTwo);
+    sourceTwo->setPos(-200, 100);
+
+    sourceThree = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceThree);
+    sourceThree->setPos(-200, 300);
+
+    output = new OutputGate(Gate::Output, myItemMenu, currentGate);
+    addItem(output);
+    output->setToolTip("Sum");
+    output->setPos(300, 0);
+
+    sum = new OutputGate(Gate::Output, myItemMenu, currentGate);
+    addItem(sum);
+    sum->setToolTip("Carry out");
+    sum->setPos(300, 200);
+}
 void GraphicScene::setMode(Mode mode)
 {
     myMode = mode;
@@ -154,20 +196,35 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                Gate *endItem = qgraphicsitem_cast<Gate *>(endItems.first());
 
                if(startItem->hasOutput() == false) {
-                   Wire *wire = new Wire(startItem, endItem);
-                   wire->setColor(myLineColor);
+                   if(endItem->hasOutput())
+                   {
+                       if(endItem->outputWire->containGate(startItem) == false) {
+                           Wire *wire = new Wire(startItem, endItem);
+                           wire->setColor(myLineColor);
 
-                   wire->setZValue(-1000.0);
-                   addItem(wire);
-                   wire->updatePosition();
+                           wire->setZValue(-1000.0);
+                           addItem(wire);
+                           wire->updatePosition();
+                       }
+                   } else {
+                       Wire *wire = new Wire(startItem, endItem);
+                       wire->setColor(myLineColor);
+
+                       wire->setZValue(-1000.0);
+                       addItem(wire);
+                       wire->updatePosition();
+                   }
                }else {
                    Wire *wire = startItem->outputWire;
-                   wire->setColor(myLineColor);
+                   if(wire->containGate(endItem) == false)
+                   {
+                       wire->setColor(myLineColor);
 
-                   wire->connect(endItem);
-                   wire->setZValue(-1000.0);
-                   addItem(wire);
-                   wire->updatePosition();
+                       wire->connect(endItem);
+                       wire->setZValue(-1000.0);
+                       addItem(wire);
+                       wire->updatePosition();
+                   }
                }
            }
        }
@@ -175,15 +232,6 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
        line = nullptr;
        QGraphicsScene::mouseReleaseEvent(mouseEvent);
    }
-
-/*
-bool GraphicScene::isItemChange(int type) const
-{
-    const QList<QGraphicsItem *> items = selectedItems();
-    const auto cb = [type](const QGraphicsItem *item) { return item->type() == type; };
-    return std::find_if(items.begin(), items.end(), cb) != items.end();
-}
-*/
 
 void GraphicScene::testTwoGates(){
     sourceOne->setOutput(false);
@@ -211,7 +259,6 @@ void GraphicScene::testThreeGateLevel(int levelIndex){
             emit rowCorrect(0);
         }
     }
-
     sourceOne->setOutput(true);
     sourceTwo->setOutput(false);
     //if true for input 1, 0
@@ -250,5 +297,189 @@ void GraphicScene::testThreeGateLevel(int levelIndex){
         if(levelIndex == 3 || levelIndex == 4|| levelIndex == 5){
             emit rowCorrect(3);
         }
+    }
+}
+
+void GraphicScene::testFourGateLevel(int levelIndex){
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(false);
+    //if true for input 0,0,0
+    if(output->getOutput()){
+        if(levelIndex == 7 || levelIndex == 8){
+            emit rowCorrect(0);
+        }
+    }
+    else{
+        if(levelIndex == 6){
+            emit rowCorrect(0);
+        }
+    }
+
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(true);
+    //if true for input 0,0, 1
+    if(output->getOutput()){
+        if(levelIndex == 6){
+            emit rowCorrect(1);
+        }
+    }
+    else{
+        if(levelIndex == 7 || levelIndex == 8){
+            emit rowCorrect(1);
+        }
+    }
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(false);
+    //if true for input 0,1,0
+    if(output->getOutput()){
+        if(levelIndex == 6 || levelIndex == 8){
+            emit rowCorrect(2);
+        }
+    }
+    else{
+        if(levelIndex == 7){
+            emit rowCorrect(2);
+        }
+    }
+
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(true);
+    //if true for input 0,1,1
+    if(output->getOutput()){
+        if(levelIndex == 7 || levelIndex == 8){
+            emit rowCorrect(3);
+        }
+    }
+    else{
+        if(levelIndex == 6){
+            emit rowCorrect(3);
+        }
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(false);
+    //if true for input 1,0,0
+    if(output->getOutput()){
+        if(levelIndex == 6 || levelIndex == 8){
+            emit rowCorrect(4);
+        }
+    }
+    else{
+        if(levelIndex == 7){
+            emit rowCorrect(4);
+        }
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(true);
+    //if true for input 1,0,1
+    if(output->getOutput()){
+    }
+    else{
+        if(levelIndex == 6 || levelIndex == 7 || levelIndex == 8){
+            emit rowCorrect(5);
+        }
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(false);
+    //if true for input 1,1,0
+    if(output->getOutput()){
+        if(levelIndex == 7){
+            emit rowCorrect(6);
+        }
+    }
+    else{
+        if(levelIndex == 6 || levelIndex == 8){
+            emit rowCorrect(6);
+        }
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(true);
+    //if true for input 1,1,1
+    if(output->getOutput()){
+        if(levelIndex == 6 || levelIndex == 7){
+            emit rowCorrect(7);
+        }
+    }
+    else{
+        if(levelIndex == 8){
+            emit rowCorrect(7);
+        }
+    }
+}
+
+void GraphicScene::testChallengeLevel(){
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(false);
+    //if true for input 0,0,0
+    if(!output->getOutput() && !sum->getOutput()){
+        emit rowCorrect(0);
+    }
+
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(true);
+    //if true for input 0,0,1
+    if(output->getOutput() && !sum->getOutput()){
+        emit rowCorrect(1);
+    }
+
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(false);
+    //if true for input 0,1,0
+    if(output->getOutput() && !sum->getOutput()){
+        emit rowCorrect(2);
+    }
+
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(true);
+    //if true for input 0,1,1
+    if(!output->getOutput() && sum->getOutput()){
+        emit rowCorrect(3);
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(false);
+    //if true for input 1,0,0
+    if(output->getOutput() && !sum->getOutput()){
+        emit rowCorrect(4);
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(true);
+    //if true for input 1,0,1
+    if(!output->getOutput() && sum->getOutput()){
+        emit rowCorrect(5);
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(false);
+    //if true for input 1,1,0
+    if(!output->getOutput() && sum->getOutput()){
+        emit rowCorrect(6);
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(true);
+    //if true for input 1,1,1
+    if(output->getOutput() && sum->getOutput()){
+        emit rowCorrect(7);
     }
 }

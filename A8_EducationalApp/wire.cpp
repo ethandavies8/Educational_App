@@ -7,8 +7,6 @@
 #include <ostream>
 
 // Constructor for wire class
-
-
 Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLineItem(parent), startGate(&beginGate) {
     value = 0; // Preset wire's value to 0, won't care until update time
     setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -19,7 +17,7 @@ Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLin
 
 }
 
-
+// Constructor for wire class
 Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
     : QGraphicsLineItem(parent), startGate(startGate), endGate(endGate)
 {
@@ -30,87 +28,14 @@ Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
 
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-    setUpOffset();
 }
 
-void Wire::setUpOffset(){
-    Gate::GateType startType = startGate->getType();
-    Gate::GateType endType = endGate->getType();
-
-    switch(startType){
-
-    case Gate::AND:
-        xStartOffset = 95;
-        yStartOffset = 25;
-     break;
-    case Gate::OR:
-        xStartOffset = 75;
-        yStartOffset = 35;
-     break;
-    case Gate::NOT:
-        xStartOffset = 95;
-        yStartOffset = 25;
-     break;
-    case Gate::NOR:
-        xStartOffset = 95;
-        yStartOffset = 25;
-     break;
-    case Gate::NAND:
-        xStartOffset = 95;
-        yStartOffset = 25;
-     break;
-    case Gate::XOR:
-        xStartOffset = 95;
-        yStartOffset = 25;
-    break;
-    default:
-        xStartOffset = 50;
-        yStartOffset = 25;
-    break;
-    }
-
-    switch(endType){
-
-    case Gate::AND:
-        xEndOffset = 30;
-        yEndOffset = 25;
-     break;
-    case Gate::OR:
-        xEndOffset = 24;
-        yEndOffset = 40;
-     break;
-    case Gate::NOT:
-        xEndOffset = 30;
-        yEndOffset = 25;
-     break;
-    case Gate::NOR:
-        xEndOffset = 30;
-        yEndOffset = 25;
-     break;
-    case Gate::NAND:
-        xEndOffset = 30;
-        yEndOffset = 25;
-     break;
-    case Gate::XOR:
-        xEndOffset = 30;
-        yEndOffset = 25;
-    break;
-    default:
-        xStartOffset = 50;
-        yStartOffset = 25;
-    break;
-    }
-
-
-}
-
+// Draw wires
 void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
                   QWidget *)
 {
     QPen pen(myColor);
       painter->setPen(pen);
-
-       // set the start to be the output place
 
       for(int i = 0; i < ends.count(); i++) {
           QPointF startPoint = startGate->pos();
@@ -122,13 +47,22 @@ void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
               endPoint.setX(endPoint.x() + 20);
           }
           endPoint.setY(endPoint.y() + ends[i]->getHeight() / (ends[i]->wireConnectedCount() + 1) * ends[i]->returnWirePlace(this));
-          //QLineF centerLine(startPoint, ends.at(0)->pos());
 
           QLineF centerLine(startPoint, endPoint);
 
           setLine(centerLine);
           painter->drawLine(line());
       }
+}
+
+// Find if the gate is already connected or not
+bool Wire::containGate(Gate *gateToCheck)
+{
+    for(Gate* gate : ends) {
+        if(gate == gateToCheck)
+            return true;
+    }
+    return false;
 }
 
 // Updates value held on wire and updates entire circuit
@@ -184,9 +118,10 @@ QRectF Wire::boundingRect() const
 // Update the wire when gate position is changed.
 void Wire::updatePosition()
 {
-    for(int i = 0; i < ends.size(); i++){
+    for(int i = 0; i < ends.size(); i++) {
         QLineF line(mapFromItem(startGate, 0, 0), mapFromItem(ends[i], 0, 0));
         setLine(line);
     }
 }
+
 

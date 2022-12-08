@@ -31,8 +31,12 @@ public slots:
     void setGateImage(QPixmap gateImage);
     void setUpTwoGates();
     void setUpThreeGates();
+    void setUpFourGates();
+    void setUpChallengeGates();
     void testTwoGates();
     void testThreeGateLevel(int);
+    void testFourGateLevel(int);
+    void testChallengeLevel();
     //void testLevelTwo();
 
 signals:
@@ -58,7 +62,9 @@ private:
     QPixmap currentGate;
     SourceGate *sourceOne;
     SourceGate *sourceTwo;
+    SourceGate *sourceThree;
     OutputGate *output;
+    OutputGate *sum;
 };
 
 #endif // GRAPHICSCENE_H

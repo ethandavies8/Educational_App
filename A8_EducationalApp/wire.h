@@ -26,6 +26,7 @@ public:
 
     QRectF boundingRect() const override;
     void updatePosition();
+    bool containGate(Gate*);
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
@@ -39,12 +40,7 @@ private:
     QColor myColor = Qt::black;
     Gate *startGate;
     Gate *endGate;
-    void setUpOffset();
-    // QPointF spriteOffset;x
-    double xStartOffset;
-    double yStartOffset;
-    double xEndOffset;
-    double yEndOffset;
+
 };
 
 #endif // WIRE_H
