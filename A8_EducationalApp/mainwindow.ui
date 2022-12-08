@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1321</width>
+    <width>1445</width>
     <height>690</height>
    </rect>
   </property>
@@ -31,7 +31,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1321</width>
+      <width>1431</width>
       <height>671</height>
      </rect>
     </property>
@@ -615,6 +615,53 @@
        <string>Home</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="helpMenuStartGame">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>1040</x>
+        <y>430</y>
+        <width>311</width>
+        <height>151</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>PMingLiU-ExtB</family>
+        <pointsize>30</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(0, 170, 0);
+color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>Click to Begin</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="helpMenuTitle">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>60</y>
+        <width>371</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>18</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Welcome to Logica! The game of learning logic gates and constructing circuits from truth tables. Here I will put more game instructions later</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="levelOne">
      <widget class="QLabel" name="levelLabel">
@@ -636,9 +683,9 @@
      <widget class="QGroupBox" name="groupBox">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>4</x>
         <y>30</y>
-        <width>75</width>
+        <width>91</width>
         <height>621</height>
        </rect>
       </property>
@@ -649,12 +696,12 @@
        <string>Tools</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       <set>Qt::AlignCenter</set>
       </property>
       <widget class="QPushButton" name="lineButton">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>95</y>
          <width>75</width>
          <height>75</height>
@@ -690,7 +737,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>245</y>
          <width>75</width>
          <height>75</height>
@@ -726,7 +773,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>320</y>
          <width>75</width>
          <height>75</height>
@@ -759,7 +806,7 @@ color: rgb(0, 0, 0);</string>
       <widget class="QPushButton" name="NOTGateButton">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>170</y>
          <width>75</width>
          <height>75</height>
@@ -795,7 +842,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>470</y>
          <width>75</width>
          <height>75</height>
@@ -816,7 +863,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="icon">
         <iconset resource="Gates.qrc">
-         <normaloff>:/icons/NANDGate.png</normaloff>:/icons/NANDGate.png</iconset>
+         <normaloff>:/icons/nand.png</normaloff>:/icons/nand.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -828,7 +875,7 @@ color: rgb(0, 0, 0);</string>
       <widget class="QPushButton" name="selectionButton">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>20</y>
          <width>75</width>
          <height>75</height>
@@ -864,7 +911,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>540</y>
          <width>75</width>
          <height>75</height>
@@ -885,7 +932,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="icon">
         <iconset resource="Gates.qrc">
-         <normaloff>:/icons/NORGate.png</normaloff>:/icons/NORGate.png</iconset>
+         <normaloff>:/icons/nor.png</normaloff>:/icons/nor.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -900,7 +947,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>395</y>
          <width>75</width>
          <height>75</height>
@@ -921,7 +968,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="icon">
         <iconset resource="Gates.qrc">
-         <normaloff>:/icons/XORGate.png</normaloff>:/icons/XORGate.png</iconset>
+         <normaloff>:/icons/xor.png</normaloff>:/icons/xor.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -965,9 +1012,9 @@ color: rgb(0, 0, 0);</string>
       <property name="geometry">
        <rect>
         <x>810</x>
-        <y>310</y>
-        <width>150</width>
-        <height>150</height>
+        <y>440</y>
+        <width>100</width>
+        <height>100</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -987,6 +1034,9 @@ background-color: rgb(100, 100, 100);</string>
         <height>24</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Return to home menu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="styleSheet">
        <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
@@ -998,9 +1048,9 @@ background-color: rgb(100, 100, 100);</string>
       <property name="geometry">
        <rect>
         <x>810</x>
-        <y>490</y>
-        <width>150</width>
-        <height>150</height>
+        <y>550</y>
+        <width>100</width>
+        <height>100</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1017,10 +1067,10 @@ background-color: rgb(100, 100, 100);</string>
       </property>
       <property name="geometry">
        <rect>
-        <x>810</x>
-        <y>130</y>
-        <width>511</width>
-        <height>161</height>
+        <x>800</x>
+        <y>110</y>
+        <width>631</width>
+        <height>291</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1029,11 +1079,17 @@ background-color: rgb(100, 100, 100);</string>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="styleSheet">
        <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Box</enum>
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
       </property>
       <property name="verticalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -1048,10 +1104,10 @@ background-color: rgb(100, 100, 100);</string>
        <bool>false</bool>
       </property>
       <property name="rowCount">
-       <number>4</number>
+       <number>8</number>
       </property>
       <property name="columnCount">
-       <number>4</number>
+       <number>5</number>
       </property>
       <attribute name="horizontalHeaderVisible">
        <bool>true</bool>
@@ -1078,6 +1134,10 @@ background-color: rgb(100, 100, 100);</string>
       <row/>
       <row/>
       <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
       <column>
        <property name="text">
         <string>Input 1</string>
@@ -1090,12 +1150,17 @@ background-color: rgb(100, 100, 100);</string>
       </column>
       <column>
        <property name="text">
+        <string>Input 3</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
         <string>Output</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Correct?</string>
+        <string>Carry output</string>
        </property>
       </column>
       <item row="0" column="0">
@@ -1110,15 +1175,17 @@ background-color: rgb(100, 100, 100);</string>
       </item>
       <item row="0" column="2">
        <property name="text">
-        <string>1</string>
+        <string>0</string>
        </property>
       </item>
       <item row="0" column="3">
        <property name="text">
-        <string/>
+        <string>1</string>
        </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
+      </item>
+      <item row="0" column="4">
+       <property name="text">
+        <string>0</string>
        </property>
       </item>
       <item row="1" column="0">
@@ -1138,10 +1205,12 @@ background-color: rgb(100, 100, 100);</string>
       </item>
       <item row="1" column="3">
        <property name="text">
-        <string/>
+        <string>0</string>
        </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
+      </item>
+      <item row="1" column="4">
+       <property name="text">
+        <string>0</string>
        </property>
       </item>
       <item row="2" column="0">
@@ -1156,15 +1225,17 @@ background-color: rgb(100, 100, 100);</string>
       </item>
       <item row="2" column="2">
        <property name="text">
-        <string/>
+        <string>0</string>
        </property>
       </item>
       <item row="2" column="3">
        <property name="text">
         <string/>
        </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
+      </item>
+      <item row="2" column="4">
+       <property name="text">
+        <string>0</string>
        </property>
       </item>
       <item row="3" column="0">
@@ -1182,15 +1253,117 @@ background-color: rgb(100, 100, 100);</string>
       </item>
       <item row="3" column="2">
        <property name="text">
-        <string/>
+        <string>0</string>
        </property>
       </item>
       <item row="3" column="3">
        <property name="text">
         <string/>
        </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
+      </item>
+      <item row="3" column="4">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="4" column="0">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="4" column="1">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="4" column="2">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="4" column="3">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="4" column="4">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="5" column="0">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="5" column="1">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="5" column="2">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="5" column="3">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="5" column="4">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="6" column="0">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="6" column="1">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="6" column="2">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="6" column="3">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="6" column="4">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="7" column="0">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="7" column="1">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="7" column="2">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="7" column="3">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="7" column="4">
+       <property name="text">
+        <string>0</string>
        </property>
       </item>
      </widget>
@@ -1200,8 +1373,8 @@ background-color: rgb(100, 100, 100);</string>
       </property>
       <property name="geometry">
        <rect>
-        <x>980</x>
-        <y>400</y>
+        <x>930</x>
+        <y>470</y>
         <width>311</width>
         <height>151</height>
        </rect>
@@ -1217,8 +1390,8 @@ color: rgb(0, 0, 0);</string>
      <widget class="QLabel" name="truthTableLabel">
       <property name="geometry">
        <rect>
-        <x>820</x>
-        <y>60</y>
+        <x>800</x>
+        <y>40</y>
         <width>491</width>
         <height>61</height>
        </rect>
@@ -1233,7 +1406,7 @@ color: rgb(0, 0, 0);</string>
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="helpButton">
+     <widget class="QPushButton" name="learnButton">
       <property name="geometry">
        <rect>
         <x>200</x>
@@ -1258,11 +1431,296 @@ color: rgb(0, 0, 0);</string>
        <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
+       <string>Learn</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="helpButton">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>30</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="mouseTracking">
+       <bool>true</bool>
+      </property>
+      <property name="tabletTracking">
+       <bool>true</bool>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Return to help menu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="toolTipDuration">
+       <number>-1</number>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
        <string>Help</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="levelSelectButton">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>30</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>level select menu</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Level Select</string>
+      </property>
+     </widget>
     </widget>
-    <widget class="QWidget" name="page"/>
+    <widget class="QWidget" name="levelSelect">
+     <widget class="QLabel" name="levelSelectTitle">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>40</y>
+        <width>261</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>38</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Level Select</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="levelSelectHome">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>70</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Return to home menu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Home</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="level1Button">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>170</y>
+        <width>80</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="level2Button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>170</y>
+        <width>80</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>2</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="level3Button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>170</y>
+        <width>80</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>3</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="level4Button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>170</y>
+        <width>80</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>4</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="level5Button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>170</y>
+        <width>80</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>5</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="level6Button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>260</y>
+        <width>80</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>6</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="level7Button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>260</y>
+        <width>80</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>7</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="level8Button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>260</y>
+        <width>80</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>8</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="level9Button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>260</y>
+        <width>80</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>9</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="level10Button">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>260</y>
+        <width>80</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>10 (Challenge)</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="unlockAllLevelsCheck">
+      <property name="geometry">
+       <rect>
+        <x>860</x>
+        <y>80</y>
+        <width>131</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Unlock All Levels</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <action name="actiontitle">
