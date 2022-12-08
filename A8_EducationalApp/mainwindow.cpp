@@ -163,40 +163,58 @@ void MainWindow::truthTableRowCorrect(int row){
     switch(row){
     case(0):
         ui->truthTable->item(0, 3)->setBackground(Qt::darkGreen);
+        if(currentLevelIndex== 9)
+            ui->truthTable->item(0, 4)->setBackground(Qt::darkGreen);
         break;
     case(1):
         ui->truthTable->item(1, 3)->setBackground(Qt::darkGreen);
+        if(currentLevelIndex== 9)
+            ui->truthTable->item(1, 4)->setBackground(Qt::darkGreen);
         break;
     case(2):
         ui->truthTable->item(2, 3)->setBackground(Qt::darkGreen);
+        if(currentLevelIndex== 9)
+            ui->truthTable->item(2, 4)->setBackground(Qt::darkGreen);
         break;
     case(3):
         ui->truthTable->item(3, 3)->setBackground(Qt::darkGreen);
+        if(currentLevelIndex== 9)
+            ui->truthTable->item(3, 4)->setBackground(Qt::darkGreen);
         break;
     case(4):
         ui->truthTable->item(4, 3)->setBackground(Qt::darkGreen);
+        if(currentLevelIndex== 9)
+            ui->truthTable->item(4, 4)->setBackground(Qt::darkGreen);
         break;
     case(5):
         ui->truthTable->item(5, 3)->setBackground(Qt::darkGreen);
+        if(currentLevelIndex== 9)
+            ui->truthTable->item(5, 4)->setBackground(Qt::darkGreen);
         break;
     case(6):
         ui->truthTable->item(6, 3)->setBackground(Qt::darkGreen);
+        if(currentLevelIndex== 9)
+            ui->truthTable->item(6, 4)->setBackground(Qt::darkGreen);
         break;
     case(7):
         ui->truthTable->item(7, 3)->setBackground(Qt::darkGreen);
+        if(currentLevelIndex== 9)
+            ui->truthTable->item(7, 4)->setBackground(Qt::darkGreen);
         break;
     }
-    //check for all boxes green for 2 input
-    if(ui->truthTable->item(0,3)->background() == Qt::darkGreen &&
-            ui->truthTable->item(1,3)->background() == Qt::darkGreen &&
-           ui->truthTable->item(2,3)->background() == Qt::darkGreen &&
-            ui->truthTable->item(3,3)->background() == Qt::darkGreen){
+
+    //check for all boxes green for 1 input
+    if(currentLevelIndex == 0 && ui->truthTable->item(0,3)->background() == Qt::darkGreen &&
+            ui->truthTable->item(1,3)->background() == Qt::darkGreen){
         ui->levelCompleteButton->show();
         ui->levelCompleteButton->setEnabled(true);
     }
-    //check for all boxes green for 1 input
-    else if(currentLevelIndex == 0 && ui->truthTable->item(0,3)->background() == Qt::darkGreen &&
-            ui->truthTable->item(1,3)->background() == Qt::darkGreen){
+    //check for all boxes green for 2 input
+    if(currentLevelIndex > 0 && currentLevelIndex < 6 &&
+            ui->truthTable->item(0,3)->background() == Qt::darkGreen &&
+            ui->truthTable->item(1,3)->background() == Qt::darkGreen &&
+           ui->truthTable->item(2,3)->background() == Qt::darkGreen &&
+            ui->truthTable->item(3,3)->background() == Qt::darkGreen){
         ui->levelCompleteButton->show();
         ui->levelCompleteButton->setEnabled(true);
     }
@@ -207,12 +225,15 @@ void MainWindow::truthTableRowCorrect(int row){
             ui->truthTable->item(3,3)->background() == Qt::darkGreen &&
             ui->truthTable->item(4,3)->background() == Qt::darkGreen &&
             ui->truthTable->item(5,3)->background() == Qt::darkGreen &&
-           ui->truthTable->item(6,3)->background() == Qt::darkGreen &&
+            ui->truthTable->item(6,3)->background() == Qt::darkGreen &&
             ui->truthTable->item(7,3)->background() == Qt::darkGreen){
 
             ui->levelCompleteButton->show();
             ui->levelCompleteButton->setEnabled(true);
-            ui->levelCompleteButton->setText("You have reached the end of the game. Congratualions!");
+            if(currentLevelIndex == 9){
+            ui->levelCompleteButton->setText("Congratulations! you have won the game");
+            }
+            //ui->levelCompleteButton->setText("You have reached the end of the game. Congratualions!");
     }
 }
 
@@ -245,6 +266,11 @@ void MainWindow::nextLevel(){
         break;
     case(9):
         makeChallengeLevel();
+        break;
+    case(10):
+        //end game screen
+        //ui->levelCompleteButton->setText("Congratulations! you have won the game");
+        break;
     default:
         //final screen
         break;
@@ -264,6 +290,7 @@ void MainWindow::makeLevelTwo(){
 
     currentRowCount += 2;
 
+    //iniialize values for 2 new rows
     ui->truthTable->item(0, 1)->setText("0");
     ui->truthTable->item(1, 1)->setText("0");
     ui->truthTable->item(2, 1)->setText("1");
@@ -441,7 +468,7 @@ void MainWindow::makeChallengeLevel(){
     ui->truthTable->item(4, 3)->setText("1");
     ui->truthTable->item(5, 3)->setText("0");
     ui->truthTable->item(6, 3)->setText("0");
-    ui->truthTable->item(7, 3)->setText("0");
+    ui->truthTable->item(7, 3)->setText("1");
 
     //set sum output column
     ui->truthTable->item(0, 4)->setText("0");
@@ -487,6 +514,8 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 void MainWindow::refreshGameView(){
     for(int i = 0; i < currentRowCount; i++){
         ui->truthTable->item(i, 3)->setBackground(truthTableBackground);
+        if(currentLevelIndex == 9)
+            ui->truthTable->item(i, 4)->setBackground(truthTableBackground);
     }
     scene->clear();
     scene->update();

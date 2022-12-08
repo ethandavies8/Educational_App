@@ -1107,7 +1107,7 @@ background-color: rgb(100, 100, 100);</string>
       </column>
       <column>
        <property name="text">
-        <string>Sum Output</string>
+        <string>Carry output</string>
        </property>
       </column>
       <item row="0" column="0">
@@ -1426,8 +1426,8 @@ color: rgb(0, 0, 0);</string>
   </action>
  </widget>
  <resources>
-  <include location="Gates.qrc"/>
   <include location="Images.qrc"/>
+  <include location="Gates.qrc"/>
  </resources>
  <connections/>
 </ui>

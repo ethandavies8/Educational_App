@@ -76,11 +76,13 @@ void GraphicScene::setUpChallengeGates(){
 
     output = new OutputGate(Gate::Output, myItemMenu, currentGate);
     addItem(output);
-    output->setPos(300, 100);
+    output->setToolTip("Sum");
+    output->setPos(300, 0);
 
     sum = new OutputGate(Gate::Output, myItemMenu, currentGate);
     addItem(sum);
-    sum->setPos(300, 300);
+    sum->setToolTip("Carry out");
+    sum->setPos(300, 200);
 }
 void GraphicScene::setMode(Mode mode)
 {
@@ -471,7 +473,7 @@ void GraphicScene::testChallengeLevel(){
     sourceTwo->setOutput(true);
     sourceThree->setOutput(true);
     //if true for input 1,1,1
-    if(!output->getOutput() && sum->getOutput()){
+    if(output->getOutput() && sum->getOutput()){
         emit rowCorrect(7);
     }
 }
