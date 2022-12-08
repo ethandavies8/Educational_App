@@ -158,15 +158,19 @@ void MainWindow::truthTableRowCorrect(int row){
     switch(row){
     case(0):
         ui->truthTable->item(0, 3)->setCheckState(Qt::Checked);
+        ui->truthTable->item(0, 3)->setBackground(Qt::darkGreen);
         break;
     case(1):
         ui->truthTable->item(1, 3)->setCheckState(Qt::Checked);
+        ui->truthTable->item(1, 3)->setBackground(Qt::darkGreen);
         break;
     case(2):
         ui->truthTable->item(2, 3)->setCheckState(Qt::Checked);
+        ui->truthTable->item(2, 3)->setBackground(Qt::darkGreen);
         break;
     case(3):
         ui->truthTable->item(3, 3)->setCheckState(Qt::Checked);
+        ui->truthTable->item(3, 3)->setBackground(Qt::darkGreen);
         break;
     }
     if(ui->truthTable->item(0,3)->checkState() == Qt::Checked &&
@@ -181,6 +185,13 @@ void MainWindow::truthTableRowCorrect(int row){
         ui->levelCompleteButton->show();
         ui->levelCompleteButton->setEnabled(true);
     }
+//    else if(ui->levelCompleteButton->isVisible() == false) {
+//        for(int i = 0; i < 4; i++){
+//            ui->truthTable->item(i, 3)->setCheckState(Qt::Unchecked);
+//            QColor backGround('#000000');
+//            ui->truthTable->item(i,3)->setBackground(QBrush(backGround));
+//        }
+//    }
 }
 
 void MainWindow::nextLevel(){
@@ -209,6 +220,8 @@ void MainWindow::clearPreviousLevel(){
 
     for(int i = 0; i < 4; i++){
         ui->truthTable->item(i, 3)->setCheckState(Qt::Unchecked);
+        QColor backGround('#000000');
+        ui->truthTable->item(i,3)->setBackground(QBrush(backGround));
     }
     ui->levelCompleteButton->hide();
     ui->levelCompleteButton->setEnabled(false);

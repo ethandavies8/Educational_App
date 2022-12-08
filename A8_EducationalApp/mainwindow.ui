@@ -1012,6 +1012,9 @@ background-color: rgb(100, 100, 100);</string>
       </property>
      </widget>
      <widget class="QTableWidget" name="truthTable">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>810</x>
@@ -1303,8 +1306,8 @@ color: rgb(0, 0, 0);</string>
   </action>
  </widget>
  <resources>
-  <include location="Gates.qrc"/>
   <include location="Images.qrc"/>
+  <include location="Gates.qrc"/>
  </resources>
  <connections/>
 </ui>
