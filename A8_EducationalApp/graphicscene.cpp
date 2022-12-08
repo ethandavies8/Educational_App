@@ -195,10 +195,19 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                Gate *startItem = qgraphicsitem_cast<Gate *>(startItems.first());
                Gate *endItem = qgraphicsitem_cast<Gate *>(endItems.first());
 
-               if(startItem->hasOutput() == false) {
-                   if(endItem->hasOutput())
-                   {
-                       if(endItem->outputWire->containGate(startItem) == false) {
+               if(startItem->getType() != Gate::Output && endItem->getType() != Gate::Source) {
+                   if(startItem->hasOutput() == false) {
+                       if(endItem->hasOutput())
+                       {
+                           if(endItem->outputWire->containGate(startItem) == false) {
+                               Wire *wire = new Wire(startItem, endItem);
+                               wire->setColor(myLineColor);
+
+                               wire->setZValue(-1000.0);
+                               addItem(wire);
+                               wire->updatePosition();
+                           }
+                       } else {
                            Wire *wire = new Wire(startItem, endItem);
                            wire->setColor(myLineColor);
 
@@ -206,24 +215,17 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                            addItem(wire);
                            wire->updatePosition();
                        }
-                   } else {
-                       Wire *wire = new Wire(startItem, endItem);
-                       wire->setColor(myLineColor);
+                   }else {
+                       Wire *wire = startItem->outputWire;
+                       if(wire->containGate(endItem) == false)
+                       {
+                           wire->setColor(myLineColor);
 
-                       wire->setZValue(-1000.0);
-                       addItem(wire);
-                       wire->updatePosition();
-                   }
-               }else {
-                   Wire *wire = startItem->outputWire;
-                   if(wire->containGate(endItem) == false)
-                   {
-                       wire->setColor(myLineColor);
-
-                       wire->connect(endItem);
-                       wire->setZValue(-1000.0);
-                       addItem(wire);
-                       wire->updatePosition();
+                           wire->connect(endItem);
+                           wire->setZValue(-1000.0);
+                           addItem(wire);
+                           wire->updatePosition();
+                       }
                    }
                }
            }

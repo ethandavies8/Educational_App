@@ -1,3 +1,11 @@
+/*
+* The Cuties
+* CS 3505
+* A8-An-Educational-App
+*
+* Header file for Wire object
+*/
+
 #ifndef WIRE_H
 #define WIRE_H
 
@@ -8,13 +16,9 @@
 class Wire : public QGraphicsLineItem
 {
 public:
-    Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent = nullptr); // Need to include gate classes in constructor (begin, end)
     Wire(Gate *startItem, Gate *endItem, QGraphicsItem *parent = nullptr);
 
-    int type() const override { return Type; }
     void setColor(const QColor &color) { myColor = color; }
-    Gate *startItem() const { return startGate; }
-    Gate *endItem() const { return endGate; }
     void removeConnections();
     Gate* getBeginningOfWire() { return startGate; }
 
@@ -33,14 +37,10 @@ protected:
                QWidget *widget = nullptr) override;
 
 private:
-    QPointF startPoint;
-    QVector<Gate *> ends;
     bool value; // Each wire has a value of true or false (1 or 0)
-    QPolygonF beginNode, endNode;
     QColor myColor = Qt::black;
     Gate *startGate;
-    Gate *endGate;
-
+    QVector<Gate *> ends;
 };
 
 #endif // WIRE_H

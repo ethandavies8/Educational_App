@@ -133,6 +133,13 @@ private:
     };
     Tool currentTool;
 
+    void ShowANDialog();
+    void ShowORDialog();
+    void ShowNOTDialog();
+    void ShowXORDialog();
+    void ShowNANDDialog();
+    void ShowNORDialog();
+
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     QHash<Tool, QPixmap> mouseIcons;

@@ -8,8 +8,16 @@
 #include <QMouseEvent>
 #include <QHBoxLayout>
 #include <QtWidgets>
+#include <QDialog>
+#include "ui_AND.h"
+#include "ui_OR.h"
+#include "ui_NOT.h"
+#include "ui_XOR.h"
+#include "ui_NAND.h"
+#include "ui_NOR.h"
 
 #include "graphicscene.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -58,6 +66,12 @@ void MainWindow::connectTitle()
 {
     connect(ui->playTitleButton, &QPushButton::clicked, this, &MainWindow::PressedPlay);
     connect(ui->learnTitleButton, &QPushButton::clicked, this, &MainWindow::PressedInfo);
+    connect(ui->andPushButton, &QPushButton::clicked, this, &MainWindow::ShowANDialog);
+    connect(ui->orPushButton, &QPushButton::clicked, this, &MainWindow::ShowORDialog);
+    connect(ui->notPushButton, &QPushButton::clicked, this, &MainWindow::ShowNOTDialog);
+    connect(ui->nandPushButton, &QPushButton::clicked, this, &MainWindow::ShowNANDDialog);
+    connect(ui->xorPushButton, &QPushButton::clicked, this, &MainWindow::ShowXORDialog);
+    connect(ui->norPushButton, &QPushButton::clicked, this, &MainWindow::ShowNORDialog);
     connect(ui->helpTitleButton, &QPushButton::clicked, this, &MainWindow::PressedHelp);
     connect(ui->learnButton, &QPushButton::clicked, this, &MainWindow::PressedInfo);
     connect(ui->helpButton, &QPushButton::clicked, this, &MainWindow::PressedHelp);
@@ -139,11 +153,11 @@ void MainWindow::setUpTitleFall()
     removeBackground(ui->TitleForground);
 
     PhysicsScene *ps = new PhysicsScene(this);
-    ps->addBody(ui->TitleBackround);
-    ps->addBody(ui->TitleForground, 0.35f);
-    ps->addBody(ui->helpTitleButton, 0.35);
-    ps->addBody(ui->learnTitleButton, 0.35);
-    ps->addBody(ui->playTitleButton, 0.4f);
+    ps->addBody(ui->TitleBackround, 0.2);
+    ps->addBody(ui->TitleForground, 0.25f);
+    ps->addBody(ui->helpTitleButton, 0.25f);
+    ps->addBody(ui->learnTitleButton, 0.25f);
+    ps->addBody(ui->playTitleButton, 0.28f);
     this->fallFrame->setPhysicsScene(this->mainMenuIndex, ps);
 }
 
@@ -638,7 +652,7 @@ void MainWindow::GoToMainMenue()
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
-    std::cout << "resize" << std::endl;
+//    std::cout << "resize" << std::endl;
 }
 
 void MainWindow::refreshGameView()
@@ -768,6 +782,66 @@ void MainWindow::on_Level1Home_clicked()
     cleanSlate();
 }
 
+
+void MainWindow::ShowANDialog()
+{
+    QDialog* aboutAnd = new QDialog();
+
+    Ui_And_Dialog aboutAndUI;
+    aboutAndUI.setupUi(aboutAnd);
+
+    aboutAnd->show();
+}
+
+void MainWindow::ShowORDialog()
+{
+    QDialog* aboutOR = new QDialog();
+
+    Ui_Or_Dialog aboutOrUI;
+    aboutOrUI.setupUi(aboutOR);
+
+    aboutOR->show();
+}
+
+void MainWindow::ShowNOTDialog()
+{
+    QDialog* aboutNOT = new QDialog();
+
+    Ui_Not_Dialog aboutNotUI;
+    aboutNotUI.setupUi(aboutNOT);
+
+    aboutNOT->show();
+}
+
+void MainWindow::ShowXORDialog()
+{
+    QDialog* aboutXOR = new QDialog();
+
+    Ui_XOr_Dialog aboutXorUI;
+    aboutXorUI.setupUi(aboutXOR);
+
+    aboutXOR->show();
+}
+
+void MainWindow::ShowNANDDialog()
+{
+    QDialog* aboutNAND = new QDialog();
+
+    Ui_Nand_Dialog aboutNandUI;
+    aboutNandUI.setupUi(aboutNAND);
+
+    aboutNAND->show();
+}
+
+void MainWindow::ShowNORDialog()
+{
+    QDialog* aboutNOR = new QDialog();
+
+    Ui_Nor_Dialog aboutNorUI;
+    aboutNorUI.setupUi(aboutNOR);
+
+    aboutNOR->show();
+}
 void MainWindow::on_levelSelectHome_clicked()
 {
     GoToMainMenue();
