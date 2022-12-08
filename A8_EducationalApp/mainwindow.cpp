@@ -30,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     connectScene();
 
     QHBoxLayout *layout = new QHBoxLayout;
-    // layout->addWidget(toolBox);
     view = new QGraphicsView(scene);
     QColor backgroundColor(46, 46, 46);
     QBrush backgroundBrush(backgroundColor);
@@ -73,6 +72,7 @@ void MainWindow::connectTitle()
     connect(ui->learnLevelSelect, &QPushButton::clicked, this, &MainWindow::PressedLevels);
     connect(ui->levelSelectLearn, &QPushButton::clicked, this, &MainWindow::PressedInfo);
     connect(ui->levelSelectHelp, &QPushButton::clicked, this, &MainWindow::PressedHelp);
+    connect(ui->gameOverHome, &QPushButton::clicked, this, &MainWindow::GoToMainMenue);
 
 }
 
@@ -96,12 +96,6 @@ void MainWindow::connectActions()
     connect(ui->levelCompleteButton, &QPushButton::clicked, this, &MainWindow::nextLevel);
 }
 
-void MainWindow::resetTool()
-{
-    setCursor(Qt::ArrowCursor);
-    std::cout << "reset tool" << std::endl;
-}
-
 void MainWindow::connectTools()
 {
     connect(ui->ANDGateButton, &QPushButton::pressed, this, &MainWindow::ANDGateSelection);
@@ -119,15 +113,15 @@ void MainWindow::truthTableSetup()
 {
     ui->levelCompleteButton->hide();
 
-    ui->truthTable->setStyleSheet("QTableView::item:selected { color:white; background:#000000;}"
-                                  "QTableCornerButton::section { background-color:#232326; }"
-                                  "QHeaderView::section { color:white; background-color:#232326; }"
-                                  "QTableView::item {color:white;}");
-    ui->truthTableLabel->setText("A NOT Gate will take an input and reverse it in the output.");
+    ui->truthTable->setStyleSheet("QTableView::item:selected { color:white; background:darkGreen;}"
+                                  "QTableCornerButton::section { background-color:gray; }"
+                                  "QHeaderView::section { color:white; background-color:rgb(100, 100, 100);}"
+                                  "QTableView::item {color:black; background-color:darkGray;}");
 
-    QColor truthTablecolor(46, 46, 46);
-    QBrush truthTablebrush(truthTablecolor);
-    truthTableBackground = truthTablebrush;
+    ui->truthTable_2->setStyleSheet("QTableView::item:selected { color:white; background:darkGreen;}"
+                                    "QTableCornerButton::section { background-color:gray; }"
+                                    "QHeaderView::section { color:white; background-color:rgb(100, 100, 100);}"
+                                    "QTableView::item {color:black; background-color:darkGray;}");
     for (int i = 2; i < ui->truthTable->rowCount(); i++)
     {
         ui->truthTable->hideRow(i);
@@ -135,6 +129,8 @@ void MainWindow::truthTableSetup()
     ui->truthTable->hideColumn(1);
     ui->truthTable->hideColumn(2);
     ui->truthTable->hideColumn(4);
+
+    ui->truthTableLabel->setText("Use a NOT gate between the input and output, a NOT gate negates the input value.");
 }
 
 void MainWindow::setUpTitleFall()
@@ -150,11 +146,6 @@ void MainWindow::setUpTitleFall()
     ps->addBody(ui->playTitleButton, 0.4f);
     this->fallFrame->setPhysicsScene(this->mainMenuIndex, ps);
 }
-void MainWindow::removeBackground(QWidget *widget)
-{
-    widget->setAttribute(Qt::WA_NoSystemBackground);
-    widget->setAttribute(Qt::WA_TranslucentBackground);
-}
 
 void MainWindow::setupMouseIcons()
 {
@@ -168,8 +159,62 @@ void MainWindow::setupMouseIcons()
     mouseIcons.insert(Deselect, QPixmap(":/icons/mousePointer.png"));
 }
 
+void MainWindow::PressedPlay()
+{
+    if (!seenHelpMenu)
+    {
+        emit fallTo(this->helpIndex);
+        seenHelpMenu = true;
+    }
+    else
+        emit fallTo(this->firstLevelIndex);
+}
+
+void MainWindow::PressedInfo()
+{
+    emit fallTo(this->infoIndex);
+}
+
+void MainWindow::PressedHelp()
+{
+    emit fallTo(this->helpIndex);
+    seenHelpMenu = true;
+}
+
+void MainWindow::PressedLevels()
+{
+    emit fallTo(this->levelSelectIndex);
+    refreshGameView();
+    emit changeItemType(Gate::NoSelection);
+    scene->setMode(GraphicScene::MoveItem);
+    for (int i = 0; i <= currentLevelIndex; i++)
+    {
+        levelUnlocked(i);
+    }
+}
+
+
+void MainWindow::removeBackground(QWidget *widget)
+{
+    widget->setAttribute(Qt::WA_NoSystemBackground);
+    widget->setAttribute(Qt::WA_TranslucentBackground);
+}
+
+void MainWindow::resetTool()
+{
+    setCursor(Qt::ArrowCursor);
+    std::cout << "reset tool" << std::endl;
+}
+
 void MainWindow::testCircuit()
 {
+    for (int i = 0; i < currentRowCount; i++)
+    {
+        ui->truthTable->item(i, 3)->setSelected(false);
+        if (currentLevelIndex == 9)
+            ui->truthTable->item(i, 4)->setSelected(false);
+    }
+
     if (currentLevelIndex == 0)
     {
         emit checkTwoGateLevel();
@@ -189,80 +234,79 @@ void MainWindow::truthTableRowCorrect(int row)
     switch (row)
     {
     case (0):
-        ui->truthTable->item(0, 3)->setBackground(Qt::darkGreen);
+        ui->truthTable->item(0,3)->setSelected(true);
         if (currentLevelIndex == 9)
-            ui->truthTable->item(0, 4)->setBackground(Qt::darkGreen);
+            ui->truthTable->item(0,4)->setSelected(true);
         break;
     case (1):
-        ui->truthTable->item(1, 3)->setBackground(Qt::darkGreen);
+        ui->truthTable->item(1,3)->setSelected(true);
         if (currentLevelIndex == 9)
-            ui->truthTable->item(1, 4)->setBackground(Qt::darkGreen);
+            ui->truthTable->item(1,4)->setSelected(true);
         break;
     case (2):
-        ui->truthTable->item(2, 3)->setBackground(Qt::darkGreen);
+        ui->truthTable->item(2,3)->setSelected(true);
         if (currentLevelIndex == 9)
-            ui->truthTable->item(2, 4)->setBackground(Qt::darkGreen);
+            ui->truthTable->item(2,3)->setSelected(true);
         break;
     case (3):
-        ui->truthTable->item(3, 3)->setBackground(Qt::darkGreen);
+        ui->truthTable->item(3,3)->setSelected(true);
         if (currentLevelIndex == 9)
-            ui->truthTable->item(3, 4)->setBackground(Qt::darkGreen);
+            ui->truthTable->item(3,4)->setSelected(true);
         break;
     case (4):
-        ui->truthTable->item(4, 3)->setBackground(Qt::darkGreen);
+        ui->truthTable->item(4,3)->setSelected(true);
         if (currentLevelIndex == 9)
-            ui->truthTable->item(4, 4)->setBackground(Qt::darkGreen);
+            ui->truthTable->item(4, 4)->setSelected(true);
         break;
     case (5):
-        ui->truthTable->item(5, 3)->setBackground(Qt::darkGreen);
+        ui->truthTable->item(5,3)->setSelected(true);
         if (currentLevelIndex == 9)
-            ui->truthTable->item(5, 4)->setBackground(Qt::darkGreen);
+            ui->truthTable->item(5,4)->setSelected(true);
         break;
     case (6):
-        ui->truthTable->item(6, 3)->setBackground(Qt::darkGreen);
+        ui->truthTable->item(6,3)->setSelected(true);
         if (currentLevelIndex == 9)
-            ui->truthTable->item(6, 4)->setBackground(Qt::darkGreen);
+            ui->truthTable->item(6,4)->setSelected(true);
         break;
     case (7):
-        ui->truthTable->item(7, 3)->setBackground(Qt::darkGreen);
+        ui->truthTable->item(7,3)->setSelected(true);
         if (currentLevelIndex == 9)
-            ui->truthTable->item(7, 4)->setBackground(Qt::darkGreen);
+            ui->truthTable->item(7, 4)->setSelected(true);
         break;
     }
 
-    // check for all boxes green for 1 input
-    if (currentLevelIndex == 0 && ui->truthTable->item(0, 3)->background() == Qt::darkGreen &&
-        ui->truthTable->item(1, 3)->background() == Qt::darkGreen)
+    // check for all boxes selected for 1 input
+    if (currentLevelIndex == 0 && ui->truthTable->item(0, 3)->isSelected() &&
+        ui->truthTable->item(1, 3)->isSelected())
     {
         ui->levelCompleteButton->show();
         ui->levelCompleteButton->setEnabled(true);
     }
-    // check for all boxes green for 2 input
+    // check for all boxes selected for 2 input
     if (currentLevelIndex > 0 && currentLevelIndex < 6 &&
-        ui->truthTable->item(0, 3)->background() == Qt::darkGreen &&
-        ui->truthTable->item(1, 3)->background() == Qt::darkGreen &&
-        ui->truthTable->item(2, 3)->background() == Qt::darkGreen &&
-        ui->truthTable->item(3, 3)->background() == Qt::darkGreen)
+        ui->truthTable->item(0, 3)->isSelected() &&
+        ui->truthTable->item(1, 3)->isSelected() &&
+        ui->truthTable->item(2, 3)->isSelected() &&
+        ui->truthTable->item(3, 3)->isSelected())
     {
         ui->levelCompleteButton->show();
         ui->levelCompleteButton->setEnabled(true);
     }
-    // check for all boxes green 3 input
-    else if (ui->truthTable->item(0, 3)->background() == Qt::darkGreen &&
-             ui->truthTable->item(1, 3)->background() == Qt::darkGreen &&
-             ui->truthTable->item(2, 3)->background() == Qt::darkGreen &&
-             ui->truthTable->item(3, 3)->background() == Qt::darkGreen &&
-             ui->truthTable->item(4, 3)->background() == Qt::darkGreen &&
-             ui->truthTable->item(5, 3)->background() == Qt::darkGreen &&
-             ui->truthTable->item(6, 3)->background() == Qt::darkGreen &&
-             ui->truthTable->item(7, 3)->background() == Qt::darkGreen)
+    // check for all boxes selected for 3 input
+    else if (ui->truthTable->item(0, 3)->isSelected() &&
+             ui->truthTable->item(1, 3)->isSelected() &&
+             ui->truthTable->item(2, 3)->isSelected() &&
+             ui->truthTable->item(3, 3)->isSelected() &&
+             ui->truthTable->item(4, 3)->isSelected() &&
+             ui->truthTable->item(5, 3)->isSelected() &&
+             ui->truthTable->item(6, 3)->isSelected() &&
+             ui->truthTable->item(7, 3)->isSelected())
     {
-
         ui->levelCompleteButton->show();
         ui->levelCompleteButton->setEnabled(true);
         if (currentLevelIndex == 9)
         {
-            ui->levelCompleteButton->setText("Congratulations! you have won the game");
+            ui->levelCompleteButton->setText("Congratulations! you have won the game, click again for end screen.");
         }
     }
 }
@@ -301,11 +345,9 @@ void MainWindow::nextLevel()
         break;
     case (10):
         emit fallTo(gameOverIndex);
-        // end game screen
-        // ui->levelCompleteButton->setText("Congratulations! you have won the game");
+        currentLevelIndex = 0;
         break;
     default:
-        // final screen
         break;
     }
 }
@@ -324,7 +366,7 @@ void MainWindow::makeLevelOne()
     ui->truthTable->item(1, 3)->setText("0");
     ui->levelLabel->setText("Level 1");
 
-    ui->truthTableLabel->setText("Construct a circuit that corresponds to the truth table by connecting gates and wires between the source and end gates");
+    ui->truthTableLabel->setText("Use a NOT gate between the input and output, a NOT gate negates the input value.");
     clearPreviousLevel();
 }
 
@@ -346,7 +388,7 @@ void MainWindow::makeLevelTwo()
     ui->levelLabel->setText("Level 2");
 
     // update level description and unlock next gate
-    ui->truthTableLabel->setText("An AND Gate will take inputs and only output 1 if both inputs are 1.");
+    ui->truthTableLabel->setText("Here we will use an AND gate which will take two inputs and only output 1 if both inputs are 1.");
     ui->ANDGateButton->setEnabled(true);
 
     clearPreviousLevel();
@@ -364,7 +406,7 @@ void MainWindow::makeLevelThree()
 
     // update level description and unlock next gate
     ui->truthTableLabel->setText(
-        "An OR Gate will take inputs and only output 1 if either or all inputs are 1.");
+        "Here we will use an OR gate which will take inputs and only output 1 if either or all inputs are 1.");
     ui->ORGateButton->setEnabled(true);
     clearPreviousLevel();
 }
@@ -380,7 +422,7 @@ void MainWindow::makeLevelFour()
 
     // update level description and unlock next gate
     ui->truthTableLabel->setText(
-        "An XOR Gate will take inputs and only output 1 if only one input is 1.");
+        "Here we will use an XOR gate which will will take inputs and only output 1 if only one input is 1.");
     ui->XORGateButton->setEnabled(true);
     clearPreviousLevel();
 }
@@ -398,7 +440,7 @@ void MainWindow::makeLevelFive()
     ui->truthTableLabel->setText("The NAND and NOR Gates are opposites of their respective Gates. "
                                  "The NAND Gate will only output 1 if both inputs aren't 1. The NOR Gate will "
                                  "only output 1 if both inputs are 0."
-                                 " Using this information, try to match the not version of the gate to the truth table below");
+                                 " Using this information, try to match the not version of the gate to the truth table below.");
     // unlock remaining gates
     ui->NANDGateButton->setEnabled(true);
     ui->NORGateButton->setEnabled(true);
@@ -415,6 +457,11 @@ void MainWindow::makeLevelSix()
     ui->truthTable->item(2, 3)->setText("0");
     ui->truthTable->item(3, 3)->setText("0");
     ui->levelLabel->setText("Level 6");
+
+    ui->truthTableLabel->setText("The NAND and NOR Gates are opposites of their respective Gates. "
+                                 "The NAND Gate will only output 1 if both inputs aren't 1. The NOR Gate will "
+                                 "only output 1 if both inputs are 0."
+                                 " Using this information, try to match the not version of the gate to the truth table below.");
 
     clearPreviousLevel();
 }
@@ -443,7 +490,9 @@ void MainWindow::makeLevelSeven()
     ui->levelLabel->setText("Level 7");
 
     // update level description and unlock next gate
-    ui->truthTableLabel->setText("A Gate can have multiple inputs. See how an XOR Gate behaves with 3 inputs! It will perform the XOR operation on each input separately");
+    ui->truthTableLabel->setText("A Gate can have more than two inputs. "
+                                 "See how an XOR Gate behaves with 3 inputs! "
+                                 "It will perform the XOR operation on each input separately.");
 
     clearPreviousLevel();
 }
@@ -479,6 +528,8 @@ void MainWindow::makeLevelNine()
     ui->truthTable->item(6, 3)->setText("0");
     ui->truthTable->item(7, 3)->setText("0");
     ui->levelLabel->setText("Level 9");
+
+    ui->truthTableLabel->setText("Here is an example truth table. Connect the Gates to reach the desired output.");
     clearPreviousLevel();
 }
 
@@ -508,7 +559,7 @@ void MainWindow::makeChallengeLevel()
     ui->truthTable->item(6, 4)->setText("1");
     ui->truthTable->item(7, 4)->setText("1");
 
-    ui->levelLabel->setText("Challenge Level");
+    ui->levelLabel->setText("Challenge Level!");
     clearPreviousLevel();
 }
 
@@ -579,44 +630,9 @@ void MainWindow::levelUnlocked(int level)
     }
 }
 
-void MainWindow::PressedPlay()
-{
-    if (!seenHelpMenu)
-    {
-        emit fallTo(this->helpIndex);
-        seenHelpMenu = true;
-    }
-    else
-        emit fallTo(this->firstLevelIndex);
-}
-
-void MainWindow::PressedInfo()
-{
-    emit fallTo(this->infoIndex);
-}
-
-void MainWindow::PressedHelp()
-{
-    emit fallTo(this->helpIndex);
-    seenHelpMenu = true;
-}
-
-void MainWindow::PressedLevels()
-{
-    emit fallTo(this->levelSelectIndex);
-    refreshGameView();
-    emit changeItemType(Gate::NoSelection);
-    scene->setMode(GraphicScene::MoveItem);
-    for (int i = 0; i <= currentLevelIndex; i++)
-    {
-        levelUnlocked(i);
-    }
-}
-
 void MainWindow::GoToMainMenue()
 {
     emit fallTo(this->mainMenuIndex);
-    //    emit titleFallIn();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
@@ -629,9 +645,9 @@ void MainWindow::refreshGameView()
 {
     for (int i = 0; i < currentRowCount; i++)
     {
-        ui->truthTable->item(i, 3)->setBackground(truthTableBackground);
+        ui->truthTable->item(i, 3)->setSelected(false);
         if (currentLevelIndex == 9)
-            ui->truthTable->item(i, 4)->setBackground(truthTableBackground);
+            ui->truthTable->item(i, 4)->setSelected(false);
     }
     scene->clear();
     scene->update();
@@ -651,14 +667,12 @@ void MainWindow::refreshGameView()
     else
     {
         // game over
-        // ui->levelCompleteButton->setText("You have reached the end of the game!");
     }
 }
 
 void MainWindow::ANDGateSelection()
 {
     currentTool = AND;
-    std::cout << "select AND gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
     emit changeItemType(Gate::AND);
     emit changeSelectedGate(mouseIcons[AND]);
@@ -667,7 +681,6 @@ void MainWindow::ANDGateSelection()
 void MainWindow::NANDGateSelection()
 {
     currentTool = NAND;
-    std::cout << "select NAND gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
     emit changeItemType(Gate::NAND);
     emit changeSelectedGate(mouseIcons[NAND]);
@@ -676,9 +689,7 @@ void MainWindow::NANDGateSelection()
 void MainWindow::ORGateSelection()
 {
     currentTool = OR;
-    std::cout << "select OR gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
-
     emit changeItemType(Gate::OR);
     emit changeSelectedGate(mouseIcons[OR]);
 }
@@ -693,9 +704,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::NOTGateSelection()
 {
     currentTool = NOT;
-    std::cout << "select NOT gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
-
     emit changeItemType(Gate::NOT);
     emit changeSelectedGate(mouseIcons[NOT]);
 }
@@ -713,8 +722,6 @@ void MainWindow::selectToolSelection()
 {
     currentTool = Deselect;
     setCursor(Qt::ArrowCursor);
-    std::cout << "select tool" << std::endl;
-
     emit changeItemType(Gate::NoSelection);
     scene->setMode(GraphicScene::MoveItem);
 }
@@ -724,7 +731,6 @@ void MainWindow::NORGateSelection()
     currentTool = NOR;
     std::cout << "select NOR gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
-
     emit changeItemType(Gate::NOR);
     emit changeSelectedGate(mouseIcons[NOR]);
 }
@@ -732,40 +738,40 @@ void MainWindow::NORGateSelection()
 void MainWindow::XORGateSelection()
 {
     currentTool = XOR;
-    std::cout << "select XOR gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
-
     emit changeItemType(Gate::XOR);
     emit changeSelectedGate(mouseIcons[XOR]);
+}
+
+void MainWindow::cleanSlate(){
+
+    refreshGameView();
+    emit changeItemType(Gate::NoSelection);
+    scene->setMode(GraphicScene::MoveItem);
 }
 
 void MainWindow::on_HelpHome_clicked()
 {
     GoToMainMenue();
+    cleanSlate();
 }
 
 void MainWindow::on_learnHome_clicked()
 {
     GoToMainMenue();
-    refreshGameView();
-    emit changeItemType(Gate::NoSelection);
-    scene->setMode(GraphicScene::MoveItem);
+    cleanSlate();
 }
 
 void MainWindow::on_Level1Home_clicked()
 {
     GoToMainMenue();
-    refreshGameView();
-    emit changeItemType(Gate::NoSelection);
-    scene->setMode(GraphicScene::MoveItem);
+    cleanSlate();
 }
 
 void MainWindow::on_levelSelectHome_clicked()
 {
     GoToMainMenue();
-    refreshGameView();
-    emit changeItemType(Gate::NoSelection);
-    scene->setMode(GraphicScene::MoveItem);
+    cleanSlate();
 }
 
 void MainWindow::on_level1Button_clicked()

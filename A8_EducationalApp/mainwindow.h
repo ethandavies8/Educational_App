@@ -29,42 +29,45 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void resizeEvent(QResizeEvent *event);
+    void resizeEvent(QResizeEvent *event) override;
 
 public slots:
+    //pressed button slots
     void PressedPlay();
     void PressedInfo();
     void PressedHelp();
     void PressedLevels();
     void GoToMainMenue();
+    //tool and gate selection slots
     void refreshGameView();
     void ANDGateSelection();
-    //void mouseClicked();
-    void resetTool();
     void NANDGateSelection();
     void ORGateSelection();
     void NOTGateSelection();
     void NORGateSelection();
     void XORGateSelection();
+    void resetTool();
     void lineSelection();
     void selectToolSelection();
+    //circuit and level slots
     void testCircuit();
     void truthTableRowCorrect(int);
     void nextLevel();
     void unlockAllLevels();
 signals:
+    //ui signals
     void fallTo(int frame);
     void titleFallOut();
     void titleFallIn();
     void mainWindowResized();
     void deleteEvent();
+    //backend data signals
     void changeSelectedGate(QPixmap map);
     void changeItemType(Gate::GateType);
     void checkTwoGateLevel();
     void checkThreeGateLevel(int);
     void checkFourGateLevel(int);
     void checkChallengeLevel();
-    //void checkLevelTwo();
 
 private:
     FallingStackedFrame* fallFrame;
@@ -72,6 +75,7 @@ private:
     void setUpTitleFall();
     GraphicScene *scene;
     QGraphicsView *view;
+    //prviate setup helper methods
     void setUpTitle();
     void connectTitle();
     void connectActions();
@@ -79,11 +83,11 @@ private:
     void connectScene();
     void connectLevelSelect();
     void setupMouseIcons();
-    void clearPreviousLevel();
     void truthTableSetup();
 
-    void removeBackground(QWidget* widget);
-
+    //level methods
+    void clearPreviousLevel();
+    void cleanSlate();
     void makeLevelOne();
     void makeLevelTwo();
     void makeLevelThree();
@@ -101,20 +105,21 @@ private:
     void fillFourRowTruthTable();
     void fillEightRowTruthTable();
 
+    void removeBackground(QWidget* widget);
 
-
+    //global variables
     b2World *world;
     int mainMenuIndex = 0;
+    int currentLevelIndex = 0;
     int infoIndex = 1;
     int helpIndex = 2;
     int firstLevelIndex = 3;
     int levelSelectIndex = 4;
-    int currentLevelIndex = 0;
-    int currentRowCount = 2;
     int gameOverIndex = 5;
+    int currentRowCount = 2;
     QMenu *itemMenu;
-    QBrush truthTableBackground;
     bool seenHelpMenu = false;
+
     enum Tool
     {
         AND,
