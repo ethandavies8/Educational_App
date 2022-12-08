@@ -124,6 +124,7 @@ FORMS += \
     AND.ui \
     NOT.ui \
     OR.ui \
+    XOR.ui \
     mainwindow.ui
 
 # Default rules for deployment.
