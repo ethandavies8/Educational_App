@@ -64,6 +64,16 @@ void MainWindow::connectTitle()
     connect(ui->helpButton, &QPushButton::clicked, this, &MainWindow::PressedHelp);
     connect(ui->helpMenuStartGame, &QPushButton::clicked, this, &MainWindow::PressedPlay);
     connect(ui->levelSelectButton, &QPushButton::clicked, this, &MainWindow::PressedLevels);
+    connect(ui->helpLevelSelect, &QPushButton::clicked, this, &MainWindow::PressedLevels);
+    connect(ui->helpLevelSelect2, &QPushButton::clicked, this, &MainWindow::PressedLevels);
+    connect(ui->helpLearn, &QPushButton::clicked, this, &MainWindow::PressedInfo);
+    connect(ui->helpLearn2, &QPushButton::clicked, this, &MainWindow::PressedInfo);
+    connect(ui->helpHome2, &QPushButton::clicked, this, &MainWindow::GoToMainMenue);
+    connect(ui->learnHelp, &QPushButton::clicked, this, &MainWindow::PressedHelp);
+    connect(ui->learnLevelSelect, &QPushButton::clicked, this, &MainWindow::PressedLevels);
+    connect(ui->levelSelectLearn, &QPushButton::clicked, this, &MainWindow::PressedInfo);
+    connect(ui->levelSelectHelp, &QPushButton::clicked, this, &MainWindow::PressedHelp);
+
 }
 
 void MainWindow::connectScene()
@@ -501,12 +511,12 @@ void MainWindow::makeChallengeLevel()
     clearPreviousLevel();
 }
 
-void MainWindow::unlockAllLevels()
-{
-    for (int i = 0; i <= 9; i++)
-    {
-        levelUnlocked(i);
-    }
+void MainWindow::unlockAllLevels(){
+       for (int i = 0; i <= 9; i++)
+       {
+           levelUnlocked(i);
+       }
+       ui->unlockAllLevelsCheck->setEnabled(false);
 }
 
 void MainWindow::levelUnlocked(int level)
@@ -515,33 +525,53 @@ void MainWindow::levelUnlocked(int level)
     {
     case (0):
         ui->level1Button->setEnabled(true);
+        ui->level1Button->setStyleSheet("color: green;"
+                                        "background-color: rgb(60, 60, 60);");
         break;
     case (1):
         ui->level2Button->setEnabled(true);
+        ui->level2Button->setStyleSheet("color: green;"
+                                        "background-color: rgb(60, 60, 60);");
         break;
     case (2):
         ui->level3Button->setEnabled(true);
+        ui->level3Button->setStyleSheet("color: green;"
+                                        "background-color: rgb(60, 60, 60);");
         break;
     case (3):
         ui->level4Button->setEnabled(true);
+        ui->level4Button->setStyleSheet("color: green;"
+                                        "background-color: rgb(60, 60, 60);");
         break;
     case (4):
         ui->level5Button->setEnabled(true);
+        ui->level5Button->setStyleSheet("color: green;"
+                                        "background-color: rgb(60, 60, 60);");
         break;
     case (5):
         ui->level6Button->setEnabled(true);
+        ui->level6Button->setStyleSheet("color: green;"
+                                        "background-color: rgb(60, 60, 60);");
         break;
     case (6):
         ui->level7Button->setEnabled(true);
+        ui->level7Button->setStyleSheet("color: green;"
+                                        "background-color: rgb(60, 60, 60);");
         break;
     case (7):
         ui->level8Button->setEnabled(true);
+        ui->level8Button->setStyleSheet("color: green;"
+                                        "background-color: rgb(60, 60, 60);");
         break;
     case (8):
         ui->level9Button->setEnabled(true);
+        ui->level9Button->setStyleSheet("color: green;"
+                                        "background-color: rgb(60, 60, 60);");
         break;
     case (9):
         ui->level10Button->setEnabled(true);
+        ui->level10Button->setStyleSheet("color: green;"
+                                         "background-color: rgb(60, 60, 60);");
         break;
     default:
         break;
@@ -567,6 +597,7 @@ void MainWindow::PressedInfo()
 void MainWindow::PressedHelp()
 {
     emit fallTo(this->helpIndex);
+    seenHelpMenu = true;
 }
 
 void MainWindow::PressedLevels()
@@ -973,3 +1004,6 @@ void MainWindow::fillEightRowTruthTable()
     ui->truthTable->item(6, 2)->setText("0");
     ui->truthTable->item(7, 2)->setText("1");
 }
+
+
+

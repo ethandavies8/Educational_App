@@ -102,6 +102,7 @@ private:
     void fillEightRowTruthTable();
 
 
+
     b2World *world;
     int mainMenuIndex = 0;
     int infoIndex = 1;
@@ -144,5 +145,6 @@ private slots:
     void on_level8Button_clicked();
     void on_level9Button_clicked();
     void on_level10Button_clicked();
+    void on_helpLearn_clicked();
 };
 #endif // MAINWINDOW_H
