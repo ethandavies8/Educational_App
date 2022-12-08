@@ -1,3 +1,11 @@
+/*
+* The Cuties
+* CS 3505
+* A8-An-Educational-App
+*
+* Implementation file for Wire object
+*/
+
 #include "wire.h"
 #include "gate.h"
 
@@ -7,33 +15,24 @@
 #include <ostream>
 
 // Constructor for wire class
-Wire::Wire(Gate& beginGate, Gate& endGate, QGraphicsItem *parent) : QGraphicsLineItem(parent), startGate(&beginGate) {
-    value = 0; // Preset wire's value to 0, won't care until update time
-    setFlag(QGraphicsItem::ItemIsSelectable, true);
-    setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-    ends.push_back(&endGate);
-    beginGate.addOutput(this);
-    endGate.addInput(this);
-
-}
-
-// Constructor for wire class
 Wire::Wire(Gate *startGate, Gate *endGate, QGraphicsItem *parent)
-    : QGraphicsLineItem(parent), startGate(startGate), endGate(endGate)
-{
+    : QGraphicsLineItem(parent), startGate(startGate) {
 
-    value = 0;
+    value = false; // DEFAULT
+
+    // Establish connections in gates
     startGate->addOutput(this);
     connect(endGate);
 
+    // Drawing settings
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setPen(QPen(myColor, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 }
 
 // Draw wires
 void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
-                  QWidget *)
-{
+                  QWidget *) {
+
     QPen pen(myColor);
       painter->setPen(pen);
 
@@ -56,16 +55,11 @@ void Wire::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
 }
 
 // Find if the gate is already connected or not
-bool Wire::containGate(Gate *gateToCheck)
-{
-    for(Gate* gate : ends) {
-        if(gate == gateToCheck)
-            return true;
-    }
-    return false;
+bool Wire::containGate(Gate *gateToCheck) {
+    return std::find(ends.begin(), ends.end(), gateToCheck) != ends.end();
 }
 
-// Updates value held on wire and updates entire circuit
+// Updates value held on wire and updates the gates this wire is connected to
 void Wire::updateValue(bool newValue) {
 
     value = newValue;
@@ -93,6 +87,7 @@ void Wire::disconnect(Gate* gate) {
 
 // Remove all connections of this wire
 void Wire::removeConnections() {
+
     if (startGate)
         startGate->removeOutput();
 
@@ -102,9 +97,9 @@ void Wire::removeConnections() {
     }
 }
 
-// Telling the scene, how big is the wire
-QRectF Wire::boundingRect() const
-{
+// Telling the scene how big the wire is
+QRectF Wire::boundingRect() const {
+
     qreal extra = (pen().width() + 20) / 2.0;
 
     return QRectF(line().p1(), QSizeF(line().p2().x() - line().p1().x(),
@@ -113,15 +108,11 @@ QRectF Wire::boundingRect() const
             .adjusted(-extra, -extra, extra, extra);
 }
 
-
-
 // Update the wire when gate position is changed.
-void Wire::updatePosition()
-{
+void Wire::updatePosition() {
+
     for(int i = 0; i < ends.size(); i++) {
         QLineF line(mapFromItem(startGate, 0, 0), mapFromItem(ends[i], 0, 0));
         setLine(line);
     }
 }
-
-
