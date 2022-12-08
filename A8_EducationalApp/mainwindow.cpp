@@ -42,23 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     ui->toolLayout->addWidget(widget);
-    ui->levelCompleteButton->hide();
 
-    ui->truthTable->setStyleSheet("QTableView::item:selected { color:white; background:#000000;}"
-                                  "QTableCornerButton::section { background-color:#232326; }"
-                                  "QHeaderView::section { color:white; background-color:#232326; }"
-                                  "QTableView::item {color:white;}");
-    ui->truthTableLabel->setText("A NOT Gate will take an input and reverse it in the output.");
+    truthTableSetup();
 
-    QColor truthTablecolor(46, 46, 46);
-    QBrush truthTablebrush(truthTablecolor);
-    truthTableBackground = truthTablebrush;
-    for(int i = 2; i < ui->truthTable->rowCount(); i++){
-        ui->truthTable->hideRow(i);
-    }
-    ui->truthTable->hideColumn(1);
-    ui->truthTable->hideColumn(2);
-    ui->truthTable->hideColumn(4);
     setupMouseIcons();
 //    qApp->setStyleSheet("QWidget { border: 1px solid red; }");
     this->GoToMainMenue();
@@ -75,6 +61,10 @@ void MainWindow::connectTitle()
     connect(ui->playTitleButton, &QPushButton::clicked, this, &MainWindow::PressedPlay);
     connect(ui->learnTitleButton, &QPushButton::clicked, this, &MainWindow::PressedInfo);
     connect(ui->helpTitleButton, &QPushButton::clicked, this, &MainWindow::PressedHelp);
+    connect(ui->learnButton, &QPushButton::clicked, this, &MainWindow::PressedInfo);
+    connect(ui->helpButton, &QPushButton::clicked, this, &MainWindow::PressedHelp);
+    connect(ui->helpMenuStartGame, &QPushButton::clicked, this, &MainWindow::PressedPlay);
+    connect(ui->levelSelectButton, &QPushButton::clicked, this, &MainWindow::PressedLevels);
 }
 
 void MainWindow::connectScene(){
@@ -113,6 +103,26 @@ void MainWindow::connectTools()
     connect(ui->NORGateButton, &QPushButton::pressed, this, &MainWindow::NORGateSelection);
     connect(ui->XORGateButton, &QPushButton::pressed, this, &MainWindow::XORGateSelection);
 
+}
+
+void MainWindow::truthTableSetup(){
+    ui->levelCompleteButton->hide();
+
+    ui->truthTable->setStyleSheet("QTableView::item:selected { color:white; background:#000000;}"
+                                  "QTableCornerButton::section { background-color:#232326; }"
+                                  "QHeaderView::section { color:white; background-color:#232326; }"
+                                  "QTableView::item {color:white;}");
+    ui->truthTableLabel->setText("A NOT Gate will take an input and reverse it in the output.");
+
+    QColor truthTablecolor(46, 46, 46);
+    QBrush truthTablebrush(truthTablecolor);
+    truthTableBackground = truthTablebrush;
+    for(int i = 2; i < ui->truthTable->rowCount(); i++){
+        ui->truthTable->hideRow(i);
+    }
+    ui->truthTable->hideColumn(1);
+    ui->truthTable->hideColumn(2);
+    ui->truthTable->hideColumn(4);
 }
 
 void MainWindow::setUpTitleFall()
@@ -233,7 +243,6 @@ void MainWindow::truthTableRowCorrect(int row){
             if(currentLevelIndex == 9){
             ui->levelCompleteButton->setText("Congratulations! you have won the game");
             }
-            //ui->levelCompleteButton->setText("You have reached the end of the game. Congratualions!");
     }
 }
 
@@ -486,7 +495,11 @@ void MainWindow::makeChallengeLevel(){
 
 void MainWindow::PressedPlay()
 {
-    emit fallTo(this->firstLevelIndex);
+    if(!seenHelpMenu){
+        emit fallTo(this->helpIndex);
+        seenHelpMenu = true;
+    }
+    else emit fallTo(this->firstLevelIndex);
 }
 
 void MainWindow::PressedInfo()
@@ -497,6 +510,10 @@ void MainWindow::PressedInfo()
 void MainWindow::PressedHelp()
 {
     emit fallTo(this->helpIndex);
+}
+
+void MainWindow::PressedLevels(){
+    emit fallTo(this->levelSelectIndex);
 }
 
 void MainWindow::GoToMainMenue()
@@ -642,6 +659,9 @@ void MainWindow::on_HelpHome_clicked()
 void MainWindow::on_learnHome_clicked()
 {
     GoToMainMenue();
+    refreshGameView();
+    emit changeItemType(Gate::NoSelection);
+    scene->setMode(GraphicScene::MoveItem);
 }
 
 
@@ -652,5 +672,14 @@ void MainWindow::on_Level1Home_clicked()
     emit changeItemType(Gate::NoSelection);
     scene->setMode(GraphicScene::MoveItem);
 
+}
+
+
+void MainWindow::on_levelSelectHome_clicked()
+{
+    GoToMainMenue();
+    refreshGameView();
+    emit changeItemType(Gate::NoSelection);
+    scene->setMode(GraphicScene::MoveItem);
 }
 

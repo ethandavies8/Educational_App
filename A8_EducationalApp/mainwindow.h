@@ -35,6 +35,7 @@ public slots:
     void PressedPlay();
     void PressedInfo();
     void PressedHelp();
+    void PressedLevels();
     void GoToMainMenue();
     void refreshGameView();
     void ANDGateSelection();
@@ -77,6 +78,7 @@ private:
     void connectScene();
     void setupMouseIcons();
     void clearPreviousLevel();
+    void truthTableSetup();
 
     void removeBackground(QWidget* widget);
 
@@ -96,10 +98,12 @@ private:
     int infoIndex = 1;
     int helpIndex = 2;
     int firstLevelIndex = 3;
+    int levelSelectIndex = 4;
     int currentLevelIndex = 0;
     int currentRowCount = 2;
     QMenu *itemMenu;
     QBrush truthTableBackground;
+    bool seenHelpMenu = false;
     enum Tool
     {
         AND,
@@ -120,5 +124,6 @@ private slots:
     void on_HelpHome_clicked();
     void on_learnHome_clicked();
     void on_Level1Home_clicked();
+    void on_levelSelectHome_clicked();
 };
 #endif // MAINWINDOW_H
