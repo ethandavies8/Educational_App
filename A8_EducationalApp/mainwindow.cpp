@@ -157,11 +157,11 @@ void MainWindow::setUpTitleFall()
     removeBackground(ui->TitleForground);
 
     PhysicsScene *ps = new PhysicsScene(this);
-    ps->addBody(ui->TitleBackround);
-    ps->addBody(ui->TitleForground, 0.35f);
-    ps->addBody(ui->helpTitleButton, 0.35);
-    ps->addBody(ui->learnTitleButton, 0.35);
-    ps->addBody(ui->playTitleButton, 0.4f);
+    ps->addBody(ui->TitleBackround, 0.2);
+    ps->addBody(ui->TitleForground, 0.25f);
+    ps->addBody(ui->helpTitleButton, 0.25f);
+    ps->addBody(ui->learnTitleButton, 0.25f);
+    ps->addBody(ui->playTitleButton, 0.28f);
     this->fallFrame->setPhysicsScene(this->mainMenuIndex, ps);
 }
 void MainWindow::removeBackground(QWidget *widget)
@@ -636,7 +636,7 @@ void MainWindow::GoToMainMenue()
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
-    std::cout << "resize" << std::endl;
+//    std::cout << "resize" << std::endl;
 }
 
 void MainWindow::refreshGameView()

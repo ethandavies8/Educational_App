@@ -116,8 +116,8 @@ QVector<bool> testNOT()
     SourceGate input1;
     NOTGate notGate;
     OutputGate output;
-    Wire input1ToNot(input1, notGate);
-    Wire notToOutput(notGate, output);
+    Wire input1ToNot(&input1, &notGate);
+    Wire notToOutput(&notGate, &output);
 
     QVector<bool> result;
 
@@ -142,9 +142,9 @@ QVector<bool> testAND()
     SourceGate input1, input2;
     ANDGate andGate;
     OutputGate output;
-    Wire input1ToAnd(input1, andGate);
-    Wire input2ToAnd(input2, andGate);
-    Wire andToOutput(andGate, output);
+    Wire input1ToAnd(&input1, &andGate);
+    Wire input2ToAnd(&input2, &andGate);
+    Wire andToOutput(&andGate, &output);
 
     QVector<bool> result;
 
@@ -171,9 +171,9 @@ QVector<bool> testNAND()
     SourceGate input1, input2;
     NANDGate nandGate;
     OutputGate output;
-    Wire input1ToNand(input1, nandGate);
-    Wire input2ToNand(input2, nandGate);
-    Wire nandToOutput(nandGate, output);
+    Wire input1ToNand(&input1, &nandGate);
+    Wire input2ToNand(&input2, &nandGate);
+    Wire nandToOutput(&nandGate, &output);
 
     QVector<bool> result;
 
@@ -200,9 +200,9 @@ QVector<bool> testOR()
     SourceGate input1, input2;
     ORGate orGate;
     OutputGate output;
-    Wire input1ToOr(input1, orGate);
-    Wire input2ToOr(input2, orGate);
-    Wire orToOutput(orGate, output);
+    Wire input1ToOr(&input1, &orGate);
+    Wire input2ToOr(&input2, &orGate);
+    Wire orToOutput(&orGate, &output);
 
     QVector<bool> result;
 
@@ -229,9 +229,9 @@ QVector<bool> testNOR()
     SourceGate input1, input2;
     NORGate norGate;
     OutputGate output;
-    Wire input1ToNor(input1, norGate);
-    Wire input2ToNor(input2, norGate);
-    Wire norToOutput(norGate, output);
+    Wire input1ToNor(&input1, &norGate);
+    Wire input2ToNor(&input2, &norGate);
+    Wire norToOutput(&norGate, &output);
 
     QVector<bool> result;
 
@@ -258,9 +258,9 @@ QVector<bool> testXOR()
     SourceGate input1, input2;
     XORGate xorGate;
     OutputGate output;
-    Wire input1ToXor(input1, xorGate);
-    Wire input2ToXor(input2, xorGate);
-    Wire xorToOutput(xorGate, output);
+    Wire input1ToXor(&input1, &xorGate);
+    Wire input2ToXor(&input2, &xorGate);
+    Wire xorToOutput(&xorGate, &output);
 
     QVector<bool> result;
 
@@ -287,9 +287,9 @@ QVector<bool> testXNOR()
     SourceGate input1, input2;
     XNORGate xnorGate;
     OutputGate output;
-    Wire input1ToXnor(input1, xnorGate);
-    Wire input2ToXnor(input2, xnorGate);
-    Wire xnorToOutput(xnorGate, output);
+    Wire input1ToXnor(&input1, &xnorGate);
+    Wire input2ToXnor(&input2, &xnorGate);
+    Wire xnorToOutput(&xnorGate, &output);
 
     QVector<bool> result;
 
@@ -321,11 +321,11 @@ QVector<bool> testBiggerGate()
     SourceGate input1, input2, input3, input4;
     XORGate xorGate;
     OutputGate output;
-    Wire input1Out(input1, xorGate);
-    Wire input2Out(input2, xorGate);
-    Wire input3Out(input3, xorGate);
-    Wire input4Out(input4, xorGate);
-    Wire xorOut(xorGate, output);
+    Wire input1Out(&input1, &xorGate);
+    Wire input2Out(&input2, &xorGate);
+    Wire input3Out(&input3, &xorGate);
+    Wire input4Out(&input4, &xorGate);
+    Wire xorOut(&xorGate, &output);
 
     QVector<bool> result;
 
@@ -356,18 +356,18 @@ QVector<std::tuple<bool, bool>> testAdderCircuit()
     ANDGate a_AND_b, aXORb_AND_cin;
     ORGate aXORbANDcin_OR_aANDb;
     OutputGate outputS, outputCout;
-    Wire inputAOut(inputA, a_XOR_b);
+    Wire inputAOut(&inputA, &a_XOR_b);
     inputAOut.connect(&a_AND_b);
-    Wire inputBOut(inputB, a_XOR_b);
+    Wire inputBOut(&inputB, &a_XOR_b);
     inputBOut.connect(&a_AND_b);
-    Wire inputCinOut(inputCin, aXORb_XOR_cin);
+    Wire inputCinOut(&inputCin, &aXORb_XOR_cin);
     inputCinOut.connect(&aXORb_AND_cin);
-    Wire a_XOR_bOut(a_XOR_b, aXORb_XOR_cin);
+    Wire a_XOR_bOut(&a_XOR_b, &aXORb_XOR_cin);
     a_XOR_bOut.connect(&aXORb_AND_cin);
-    Wire aXORb_XOR_cinOut(aXORb_XOR_cin, outputS);
-    Wire aXORb_AND_cinOut(aXORb_AND_cin, aXORbANDcin_OR_aANDb);
-    Wire a_AND_bOut(a_AND_b, aXORbANDcin_OR_aANDb);
-    Wire aXORbANDcin_OR_aANDbOut(aXORbANDcin_OR_aANDb, outputCout);
+    Wire aXORb_XOR_cinOut(&aXORb_XOR_cin, &outputS);
+    Wire aXORb_AND_cinOut(&aXORb_AND_cin, &aXORbANDcin_OR_aANDb);
+    Wire a_AND_bOut(&a_AND_b, &aXORbANDcin_OR_aANDb);
+    Wire aXORbANDcin_OR_aANDbOut(&aXORbANDcin_OR_aANDb, &outputCout);
 
     QVector<std::tuple<bool, bool>> result;
 
@@ -427,9 +427,9 @@ void testCases()
         SourceGate input1, input2;
         ANDGate andGate;
         OutputGate output;
-        Wire input1ToAnd(input1, andGate);
+        Wire input1ToAnd(&input1, &andGate);
         input1ToAnd.connect(&andGate);
-        Wire andToOutput(andGate, output);
+        Wire andToOutput(&andGate, &output);
 
         QVector<bool> result;
 
@@ -458,10 +458,10 @@ void testCases()
         ORGate orGate;
         NOTGate notGate;
         OutputGate output;
-        Wire input1Out(input1, orGate);
-        Wire input2Out(input2, orGate);
+        Wire input1Out(&input1, &orGate);
+        Wire input2Out(&input2, &orGate);
         input2Out.connect(&notGate);
-        Wire orToOutput(orGate, output);
+        Wire orToOutput(&orGate, &output);
 
         QVector<bool> result;
 
@@ -490,10 +490,10 @@ void testCases()
         XORGate xorGate;
         NOTGate notGate1, notGate2;
         OutputGate output;
-        Wire input1Out(input1, notGate1);
-        Wire input2Out(input2, notGate2);
-        Wire not1ToXor(notGate1, xorGate);
-        Wire not2ToXor(notGate2, xorGate);
+        Wire input1Out(&input1, &notGate1);
+        Wire input2Out(&input2, &notGate2);
+        Wire not1ToXor(&notGate1, &xorGate);
+        Wire not2ToXor(&notGate2, &xorGate);
 
         QVector<bool> result;
 
@@ -523,8 +523,8 @@ void testCases()
         SourceGate input1;
         ANDGate andGate;
         OutputGate output;
-        Wire input1Out(input1, andGate);
-        Wire andToOutput(andGate, output);
+        Wire input1Out(&input1, &andGate);
+        Wire andToOutput(&andGate, &output);
 
         QVector<bool> result;
 
@@ -553,10 +553,10 @@ void testCases()
         SourceGate input1, input2;
         ANDGate andGate1, andGate2;
         OutputGate output;
-        Wire input1ToAnd1(input1, andGate1);
-        Wire input2ToAnd2(input2, andGate2);
-        Wire and1ToAnd2(andGate1, andGate2);
-        Wire and2ToAnd1(andGate2, andGate1);
+        Wire input1ToAnd1(&input1, &andGate1);
+        Wire input2ToAnd2(&input2, &andGate2);
+        Wire and1ToAnd2(&andGate1, &andGate2);
+        Wire and2ToAnd1(&andGate2, &andGate1);
 
         // This circuit is circular, so it will crash if the test fails
 
