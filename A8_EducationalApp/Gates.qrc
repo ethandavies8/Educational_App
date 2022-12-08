@@ -17,5 +17,7 @@
         <file>and.png</file>
         <file>or.png</file>
         <file>not.png</file>
+        <file>NANDpins.png</file>
+        <file>norPINS.png</file>
     </qresource>
 </RCC>

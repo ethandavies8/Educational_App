@@ -122,6 +122,8 @@ HEADERS += \
 
 FORMS += \
     AND.ui \
+    NAND.ui \
+    NOR.ui \
     NOT.ui \
     OR.ui \
     XOR.ui \

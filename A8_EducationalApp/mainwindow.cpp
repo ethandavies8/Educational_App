@@ -12,6 +12,9 @@
 #include "ui_AND.h"
 #include "ui_OR.h"
 #include "ui_NOT.h"
+#include "ui_XOR.h"
+#include "ui_NAND.h"
+#include "ui_NOR.h"
 
 #include "graphicscene.h"
 
@@ -67,6 +70,9 @@ void MainWindow::connectTitle()
     connect(ui->andPushButton, &QPushButton::clicked, this, &MainWindow::ShowANDialog);
     connect(ui->orPushButton, &QPushButton::clicked, this, &MainWindow::ShowORDialog);
     connect(ui->notPushButton, &QPushButton::clicked, this, &MainWindow::ShowNOTDialog);
+    connect(ui->nandPushButton, &QPushButton::clicked, this, &MainWindow::ShowNANDDialog);
+    connect(ui->xorPushButton, &QPushButton::clicked, this, &MainWindow::ShowXORDialog);
+    connect(ui->norPushButton, &QPushButton::clicked, this, &MainWindow::ShowNORDialog);
     connect(ui->helpTitleButton, &QPushButton::clicked, this, &MainWindow::PressedHelp);
     connect(ui->learnButton, &QPushButton::clicked, this, &MainWindow::PressedInfo);
     connect(ui->helpButton, &QPushButton::clicked, this, &MainWindow::PressedHelp);
@@ -797,6 +803,36 @@ void MainWindow::ShowNOTDialog()
     aboutNotUI.setupUi(aboutNOT);
 
     aboutNOT->show();
+}
+
+void MainWindow::ShowXORDialog()
+{
+    QDialog* aboutXOR = new QDialog();
+
+    Ui_XOr_Dialog aboutXorUI;
+    aboutXorUI.setupUi(aboutXOR);
+
+    aboutXOR->show();
+}
+
+void MainWindow::ShowNANDDialog()
+{
+    QDialog* aboutNAND = new QDialog();
+
+    Ui_Nand_Dialog aboutNandUI;
+    aboutNandUI.setupUi(aboutNAND);
+
+    aboutNAND->show();
+}
+
+void MainWindow::ShowNORDialog()
+{
+    QDialog* aboutNOR = new QDialog();
+
+    Ui_Nor_Dialog aboutNorUI;
+    aboutNorUI.setupUi(aboutNOR);
+
+    aboutNOR->show();
 }
 void MainWindow::on_levelSelectHome_clicked()
 {

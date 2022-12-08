@@ -843,25 +843,6 @@ border-radius: 10px;</string>
        <string>OR</string>
       </property>
      </widget>
-     <widget class="QLabel" name="norHelpLabel">
-      <property name="geometry">
-       <rect>
-        <x>240</x>
-        <y>710</y>
-        <width>211</width>
-        <height>71</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nor Gate:&lt;/p&gt;&lt;p&gt;Negated or gate&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-     </widget>
      <widget class="QPushButton" name="learnHome">
       <property name="geometry">
        <rect>
