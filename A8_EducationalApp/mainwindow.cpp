@@ -56,8 +56,9 @@ MainWindow::MainWindow(QWidget *parent)
     for(int i = 2; i < ui->truthTable->rowCount(); i++){
         ui->truthTable->hideRow(i);
     }
-    ui->truthTable->hideColumn(2);
     ui->truthTable->hideColumn(1);
+    ui->truthTable->hideColumn(2);
+    ui->truthTable->hideColumn(4);
     setupMouseIcons();
 //    qApp->setStyleSheet("QWidget { border: 1px solid red; }");
     this->GoToMainMenue();
@@ -211,6 +212,7 @@ void MainWindow::truthTableRowCorrect(int row){
 
             ui->levelCompleteButton->show();
             ui->levelCompleteButton->setEnabled(true);
+            ui->levelCompleteButton->setText("You have reached the end of the game. Congratualions!");
     }
 }
 
@@ -241,7 +243,10 @@ void MainWindow::nextLevel(){
     case(8):
         makeLevelNine();
         break;
+    case(9):
+        makeChallengeLevel();
     default:
+        //final screen
         break;
     }
 }
@@ -423,6 +428,35 @@ void MainWindow::makeLevelNine(){
     ui->levelLabel->setText("Level 9");
     clearPreviousLevel();
 }
+
+void MainWindow::makeChallengeLevel(){
+
+    ui->truthTable->showColumn(4);
+
+    //set first output column
+    ui->truthTable->item(0, 3)->setText("0");
+    ui->truthTable->item(1, 3)->setText("1");
+    ui->truthTable->item(2, 3)->setText("1");
+    ui->truthTable->item(3, 3)->setText("0");
+    ui->truthTable->item(4, 3)->setText("1");
+    ui->truthTable->item(5, 3)->setText("0");
+    ui->truthTable->item(6, 3)->setText("0");
+    ui->truthTable->item(7, 3)->setText("0");
+
+    //set sum output column
+    ui->truthTable->item(0, 4)->setText("0");
+    ui->truthTable->item(1, 4)->setText("0");
+    ui->truthTable->item(2, 4)->setText("0");
+    ui->truthTable->item(3, 4)->setText("1");
+    ui->truthTable->item(4, 4)->setText("0");
+    ui->truthTable->item(5, 4)->setText("1");
+    ui->truthTable->item(6, 4)->setText("1");
+    ui->truthTable->item(7, 4)->setText("1");
+
+    ui->levelLabel->setText("Challenge Level");
+    clearPreviousLevel();
+}
+
 void MainWindow::PressedPlay()
 {
     emit fallTo(this->firstLevelIndex);
@@ -465,8 +499,12 @@ void MainWindow::refreshGameView(){
     }
     else if(currentLevelIndex >= 6 && currentLevelIndex < 9)
         scene->setUpFourGates();
-    else
+    else if(currentLevelIndex == 9)
         scene->setUpChallengeGates();
+    else{
+        //game over
+       // ui->levelCompleteButton->setText("You have reached the end of the game!");
+    }
     /*
     switch(currentLevelIndex){
     case(0):

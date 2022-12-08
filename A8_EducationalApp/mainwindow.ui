@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1321</width>
+    <width>1445</width>
     <height>690</height>
    </rect>
   </property>
@@ -31,7 +31,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1321</width>
+      <width>1431</width>
       <height>671</height>
      </rect>
     </property>
@@ -1014,9 +1014,9 @@ background-color: rgb(100, 100, 100);</string>
      <widget class="QTableWidget" name="truthTable">
       <property name="geometry">
        <rect>
-        <x>810</x>
+        <x>800</x>
         <y>110</y>
-        <width>511</width>
+        <width>631</width>
         <height>291</height>
        </rect>
       </property>
@@ -1054,7 +1054,7 @@ background-color: rgb(100, 100, 100);</string>
        <number>8</number>
       </property>
       <property name="columnCount">
-       <number>4</number>
+       <number>5</number>
       </property>
       <attribute name="horizontalHeaderVisible">
        <bool>true</bool>
@@ -1105,6 +1105,11 @@ background-color: rgb(100, 100, 100);</string>
         <string>Output</string>
        </property>
       </column>
+      <column>
+       <property name="text">
+        <string>Sum Output</string>
+       </property>
+      </column>
       <item row="0" column="0">
        <property name="text">
         <string>0</string>
@@ -1123,6 +1128,11 @@ background-color: rgb(100, 100, 100);</string>
       <item row="0" column="3">
        <property name="text">
         <string>1</string>
+       </property>
+      </item>
+      <item row="0" column="4">
+       <property name="text">
+        <string>0</string>
        </property>
       </item>
       <item row="1" column="0">
@@ -1145,6 +1155,11 @@ background-color: rgb(100, 100, 100);</string>
         <string>0</string>
        </property>
       </item>
+      <item row="1" column="4">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
       <item row="2" column="0">
        <property name="text">
         <string/>
@@ -1163,6 +1178,11 @@ background-color: rgb(100, 100, 100);</string>
       <item row="2" column="3">
        <property name="text">
         <string/>
+       </property>
+      </item>
+      <item row="2" column="4">
+       <property name="text">
+        <string>0</string>
        </property>
       </item>
       <item row="3" column="0">
@@ -1188,6 +1208,11 @@ background-color: rgb(100, 100, 100);</string>
         <string/>
        </property>
       </item>
+      <item row="3" column="4">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
       <item row="4" column="0">
        <property name="text">
         <string>0</string>
@@ -1204,6 +1229,11 @@ background-color: rgb(100, 100, 100);</string>
        </property>
       </item>
       <item row="4" column="3">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="4" column="4">
        <property name="text">
         <string>0</string>
        </property>
@@ -1228,6 +1258,11 @@ background-color: rgb(100, 100, 100);</string>
         <string>0</string>
        </property>
       </item>
+      <item row="5" column="4">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
       <item row="6" column="0">
        <property name="text">
         <string>0</string>
@@ -1248,6 +1283,11 @@ background-color: rgb(100, 100, 100);</string>
         <string>0</string>
        </property>
       </item>
+      <item row="6" column="4">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
       <item row="7" column="0">
        <property name="text">
         <string>0</string>
@@ -1264,6 +1304,11 @@ background-color: rgb(100, 100, 100);</string>
        </property>
       </item>
       <item row="7" column="3">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="7" column="4">
        <property name="text">
         <string>0</string>
        </property>
@@ -1292,7 +1337,7 @@ color: rgb(0, 0, 0);</string>
      <widget class="QLabel" name="truthTableLabel">
       <property name="geometry">
        <rect>
-        <x>820</x>
+        <x>800</x>
         <y>40</y>
         <width>491</width>
         <height>61</height>
@@ -1381,8 +1426,8 @@ color: rgb(0, 0, 0);</string>
   </action>
  </widget>
  <resources>
-  <include location="Images.qrc"/>
   <include location="Gates.qrc"/>
+  <include location="Images.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -62,9 +62,26 @@ void GraphicScene::setUpFourGates(){
 }
 
 void GraphicScene::setUpChallengeGates(){
+    sourceOne = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceOne);
+    sourceOne->setPos(-200, -100);
 
+    sourceTwo = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceTwo);
+    sourceTwo->setPos(-200, 100);
+
+    sourceThree = new SourceGate(Gate::Source, myItemMenu, currentGate);
+    addItem(sourceThree);
+    sourceThree->setPos(-200, 300);
+
+    output = new OutputGate(Gate::Output, myItemMenu, currentGate);
+    addItem(output);
+    output->setPos(300, 100);
+
+    sum = new OutputGate(Gate::Output, myItemMenu, currentGate);
+    addItem(sum);
+    sum->setPos(300, 300);
 }
-
 void GraphicScene::setMode(Mode mode)
 {
     myMode = mode;
@@ -394,5 +411,67 @@ void GraphicScene::testFourGateLevel(int levelIndex){
 }
 
 void GraphicScene::testChallengeLevel(){
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(false);
+    //if true for input 0,0,0
+    if(!output->getOutput() && !sum->getOutput()){
+        emit rowCorrect(0);
+    }
 
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(true);
+    //if true for input 0,0,1
+    if(output->getOutput() && !sum->getOutput()){
+        emit rowCorrect(1);
+    }
+
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(false);
+    //if true for input 0,1,0
+    if(output->getOutput() && !sum->getOutput()){
+        emit rowCorrect(2);
+    }
+
+    sourceOne->setOutput(false);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(true);
+    //if true for input 0,1,1
+    if(!output->getOutput() && sum->getOutput()){
+        emit rowCorrect(3);
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(false);
+    //if true for input 1,0,0
+    if(output->getOutput() && !sum->getOutput()){
+        emit rowCorrect(4);
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(false);
+    sourceThree->setOutput(true);
+    //if true for input 1,0,1
+    if(!output->getOutput() && sum->getOutput()){
+        emit rowCorrect(5);
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(false);
+    //if true for input 1,1,0
+    if(!output->getOutput() && sum->getOutput()){
+        emit rowCorrect(6);
+    }
+
+    sourceOne->setOutput(true);
+    sourceTwo->setOutput(true);
+    sourceThree->setOutput(true);
+    //if true for input 1,1,1
+    if(!output->getOutput() && sum->getOutput()){
+        emit rowCorrect(7);
+    }
 }
