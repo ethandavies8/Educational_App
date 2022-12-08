@@ -111,6 +111,7 @@ private:
     int levelSelectIndex = 4;
     int currentLevelIndex = 0;
     int currentRowCount = 2;
+    int gameOverIndex = 5;
     QMenu *itemMenu;
     QBrush truthTableBackground;
     bool seenHelpMenu = false;
@@ -145,6 +146,5 @@ private slots:
     void on_level8Button_clicked();
     void on_level9Button_clicked();
     void on_level10Button_clicked();
-    void on_helpLearn_clicked();
 };
 #endif // MAINWINDOW_H

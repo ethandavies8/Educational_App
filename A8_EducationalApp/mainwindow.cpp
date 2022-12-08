@@ -300,6 +300,7 @@ void MainWindow::nextLevel()
         makeChallengeLevel();
         break;
     case (10):
+        emit fallTo(gameOverIndex);
         // end game screen
         // ui->levelCompleteButton->setText("Congratulations! you have won the game");
         break;
@@ -652,18 +653,6 @@ void MainWindow::refreshGameView()
         // game over
         // ui->levelCompleteButton->setText("You have reached the end of the game!");
     }
-    /*
-    switch(currentLevelIndex){
-    case(0):
-        scene->setUpTwoGates();
-        break;
-    default:
-        scene->setUpThreeGates();
-        break;
-    }
-
-    std::cout << "refresh" << std::endl;
-    */
 }
 
 void MainWindow::ANDGateSelection()
