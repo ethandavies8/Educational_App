@@ -636,9 +636,9 @@
      <widget class="QGroupBox" name="groupBox">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>4</x>
         <y>30</y>
-        <width>75</width>
+        <width>91</width>
         <height>621</height>
        </rect>
       </property>
@@ -649,12 +649,12 @@
        <string>Tools</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       <set>Qt::AlignCenter</set>
       </property>
       <widget class="QPushButton" name="lineButton">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>95</y>
          <width>75</width>
          <height>75</height>
@@ -690,7 +690,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>245</y>
          <width>75</width>
          <height>75</height>
@@ -726,7 +726,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>320</y>
          <width>75</width>
          <height>75</height>
@@ -759,7 +759,7 @@ color: rgb(0, 0, 0);</string>
       <widget class="QPushButton" name="NOTGateButton">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>170</y>
          <width>75</width>
          <height>75</height>
@@ -795,7 +795,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>470</y>
          <width>75</width>
          <height>75</height>
@@ -816,7 +816,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="icon">
         <iconset resource="Gates.qrc">
-         <normaloff>:/icons/NANDGate.png</normaloff>:/icons/NANDGate.png</iconset>
+         <normaloff>:/icons/nand.png</normaloff>:/icons/nand.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -828,7 +828,7 @@ color: rgb(0, 0, 0);</string>
       <widget class="QPushButton" name="selectionButton">
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>20</y>
          <width>75</width>
          <height>75</height>
@@ -864,7 +864,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>540</y>
          <width>75</width>
          <height>75</height>
@@ -885,7 +885,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="icon">
         <iconset resource="Gates.qrc">
-         <normaloff>:/icons/NORGate.png</normaloff>:/icons/NORGate.png</iconset>
+         <normaloff>:/icons/nor.png</normaloff>:/icons/nor.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -900,7 +900,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="geometry">
         <rect>
-         <x>0</x>
+         <x>10</x>
          <y>395</y>
          <width>75</width>
          <height>75</height>
@@ -921,7 +921,7 @@ color: rgb(0, 0, 0);</string>
        </property>
        <property name="icon">
         <iconset resource="Gates.qrc">
-         <normaloff>:/icons/XORGate.png</normaloff>:/icons/XORGate.png</iconset>
+         <normaloff>:/icons/xor.png</normaloff>:/icons/xor.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -965,9 +965,9 @@ color: rgb(0, 0, 0);</string>
       <property name="geometry">
        <rect>
         <x>810</x>
-        <y>310</y>
-        <width>150</width>
-        <height>150</height>
+        <y>440</y>
+        <width>100</width>
+        <height>100</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -998,9 +998,9 @@ background-color: rgb(100, 100, 100);</string>
       <property name="geometry">
        <rect>
         <x>810</x>
-        <y>490</y>
-        <width>150</width>
-        <height>150</height>
+        <y>550</y>
+        <width>100</width>
+        <height>100</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1015,9 +1015,9 @@ background-color: rgb(100, 100, 100);</string>
       <property name="geometry">
        <rect>
         <x>810</x>
-        <y>130</y>
+        <y>110</y>
         <width>511</width>
-        <height>161</height>
+        <height>291</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1026,11 +1026,17 @@ background-color: rgb(100, 100, 100);</string>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="styleSheet">
        <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Box</enum>
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
       </property>
       <property name="verticalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -1045,7 +1051,7 @@ background-color: rgb(100, 100, 100);</string>
        <bool>false</bool>
       </property>
       <property name="rowCount">
-       <number>4</number>
+       <number>8</number>
       </property>
       <property name="columnCount">
        <number>4</number>
@@ -1075,6 +1081,10 @@ background-color: rgb(100, 100, 100);</string>
       <row/>
       <row/>
       <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
       <column>
        <property name="text">
         <string>Input 1</string>
@@ -1087,12 +1097,12 @@ background-color: rgb(100, 100, 100);</string>
       </column>
       <column>
        <property name="text">
-        <string>Output</string>
+        <string>Input 3</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>Correct?</string>
+        <string>Output</string>
        </property>
       </column>
       <item row="0" column="0">
@@ -1107,15 +1117,12 @@ background-color: rgb(100, 100, 100);</string>
       </item>
       <item row="0" column="2">
        <property name="text">
-        <string>1</string>
+        <string>0</string>
        </property>
       </item>
       <item row="0" column="3">
        <property name="text">
-        <string/>
-       </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
+        <string>1</string>
        </property>
       </item>
       <item row="1" column="0">
@@ -1135,10 +1142,7 @@ background-color: rgb(100, 100, 100);</string>
       </item>
       <item row="1" column="3">
        <property name="text">
-        <string/>
-       </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
+        <string>0</string>
        </property>
       </item>
       <item row="2" column="0">
@@ -1153,15 +1157,12 @@ background-color: rgb(100, 100, 100);</string>
       </item>
       <item row="2" column="2">
        <property name="text">
-        <string/>
+        <string>0</string>
        </property>
       </item>
       <item row="2" column="3">
        <property name="text">
         <string/>
-       </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
        </property>
       </item>
       <item row="3" column="0">
@@ -1179,15 +1180,92 @@ background-color: rgb(100, 100, 100);</string>
       </item>
       <item row="3" column="2">
        <property name="text">
-        <string/>
+        <string>0</string>
        </property>
       </item>
       <item row="3" column="3">
        <property name="text">
         <string/>
        </property>
-       <property name="checkState">
-        <enum>Unchecked</enum>
+      </item>
+      <item row="4" column="0">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="4" column="1">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="4" column="2">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="4" column="3">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="5" column="0">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="5" column="1">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="5" column="2">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="5" column="3">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="6" column="0">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="6" column="1">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="6" column="2">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="6" column="3">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="7" column="0">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="7" column="1">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="7" column="2">
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item row="7" column="3">
+       <property name="text">
+        <string>0</string>
        </property>
       </item>
      </widget>
@@ -1197,8 +1275,8 @@ background-color: rgb(100, 100, 100);</string>
       </property>
       <property name="geometry">
        <rect>
-        <x>980</x>
-        <y>400</y>
+        <x>930</x>
+        <y>470</y>
         <width>311</width>
         <height>151</height>
        </rect>
@@ -1215,7 +1293,7 @@ color: rgb(0, 0, 0);</string>
       <property name="geometry">
        <rect>
         <x>820</x>
-        <y>60</y>
+        <y>40</y>
         <width>491</width>
         <height>61</height>
        </rect>
@@ -1303,8 +1381,8 @@ color: rgb(0, 0, 0);</string>
   </action>
  </widget>
  <resources>
-  <include location="Gates.qrc"/>
   <include location="Images.qrc"/>
+  <include location="Gates.qrc"/>
  </resources>
  <connections/>
 </ui>

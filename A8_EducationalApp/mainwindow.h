@@ -60,6 +60,8 @@ signals:
     void changeItemType(Gate::GateType);
     void checkTwoGateLevel();
     void checkThreeGateLevel(int);
+    void checkFourGateLevel(int);
+    void checkChallengeLevel();
     //void checkLevelTwo();
 
 private:
@@ -83,6 +85,11 @@ private:
     void makeLevelFour();
     void makeLevelFive();
     void makeLevelSix();
+    void makeLevelSeven();
+    void makeLevelEight();
+    void makeLevelNine();
+    void makeChallengeLevel();
+
 
     b2World *world;
     int mainMenuIndex = 0;
@@ -90,7 +97,9 @@ private:
     int helpIndex = 2;
     int firstLevelIndex = 3;
     int currentLevelIndex = 0;
+    int currentRowCount = 2;
     QMenu *itemMenu;
+    QBrush truthTableBackground;
     enum Tool
     {
         AND,
