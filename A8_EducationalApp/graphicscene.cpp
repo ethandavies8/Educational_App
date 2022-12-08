@@ -154,20 +154,35 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                Gate *endItem = qgraphicsitem_cast<Gate *>(endItems.first());
 
                if(startItem->hasOutput() == false) {
-                   Wire *wire = new Wire(startItem, endItem);
-                   wire->setColor(myLineColor);
+                   if(endItem->hasOutput())
+                   {
+                       if(endItem->outputWire->containGate(startItem) == false) {
+                           Wire *wire = new Wire(startItem, endItem);
+                           wire->setColor(myLineColor);
 
-                   wire->setZValue(-1000.0);
-                   addItem(wire);
-                   wire->updatePosition();
+                           wire->setZValue(-1000.0);
+                           addItem(wire);
+                           wire->updatePosition();
+                       }
+                   } else {
+                       Wire *wire = new Wire(startItem, endItem);
+                       wire->setColor(myLineColor);
+
+                       wire->setZValue(-1000.0);
+                       addItem(wire);
+                       wire->updatePosition();
+                   }
                }else {
                    Wire *wire = startItem->outputWire;
-                   wire->setColor(myLineColor);
+                   if(wire->containGate(endItem) == false)
+                   {
+                       wire->setColor(myLineColor);
 
-                   wire->connect(endItem);
-                   wire->setZValue(-1000.0);
-                   addItem(wire);
-                   wire->updatePosition();
+                       wire->connect(endItem);
+                       wire->setZValue(-1000.0);
+                       addItem(wire);
+                       wire->updatePosition();
+                   }
                }
            }
        }
