@@ -218,15 +218,6 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
        QGraphicsScene::mouseReleaseEvent(mouseEvent);
    }
 
-/*
-bool GraphicScene::isItemChange(int type) const
-{
-    const QList<QGraphicsItem *> items = selectedItems();
-    const auto cb = [type](const QGraphicsItem *item) { return item->type() == type; };
-    return std::find_if(items.begin(), items.end(), cb) != items.end();
-}
-*/
-
 void GraphicScene::testTwoGates(){
     sourceOne->setOutput(false);
     if(output->getOutput()){

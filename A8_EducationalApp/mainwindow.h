@@ -51,6 +51,7 @@ public slots:
     void testCircuit();
     void truthTableRowCorrect(int);
     void nextLevel();
+    void unlockAllLevels();
 signals:
     void fallTo(int frame);
     void titleFallOut();
@@ -76,12 +77,14 @@ private:
     void connectActions();
     void connectTools();
     void connectScene();
+    void connectLevelSelect();
     void setupMouseIcons();
     void clearPreviousLevel();
     void truthTableSetup();
 
     void removeBackground(QWidget* widget);
 
+    void makeLevelOne();
     void makeLevelTwo();
     void makeLevelThree();
     void makeLevelFour();
@@ -91,6 +94,12 @@ private:
     void makeLevelEight();
     void makeLevelNine();
     void makeChallengeLevel();
+    void levelUnlocked(int);
+    void enableAllGateButtons();
+    void threeGateUiUpdate();
+    void fourGateGuiUpdate();
+    void fillFourRowTruthTable();
+    void fillEightRowTruthTable();
 
 
     b2World *world;
@@ -125,5 +134,15 @@ private slots:
     void on_learnHome_clicked();
     void on_Level1Home_clicked();
     void on_levelSelectHome_clicked();
+    void on_level1Button_clicked();
+    void on_level2Button_clicked();
+    void on_level3Button_clicked();
+    void on_level4Button_clicked();
+    void on_level5Button_clicked();
+    void on_level6Button_clicked();
+    void on_level7Button_clicked();
+    void on_level8Button_clicked();
+    void on_level9Button_clicked();
+    void on_level10Button_clicked();
 };
 #endif // MAINWINDOW_H

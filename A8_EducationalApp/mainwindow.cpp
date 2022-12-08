@@ -75,14 +75,16 @@ void MainWindow::connectScene(){
     connect(this, &MainWindow::checkFourGateLevel, scene, &GraphicScene::testFourGateLevel);
     connect(this, &MainWindow::checkChallengeLevel, scene, &GraphicScene::testChallengeLevel);
     connect(scene, &GraphicScene::rowCorrect, this, &MainWindow::truthTableRowCorrect);
-    connect(ui->levelCompleteButton, &QPushButton::clicked, this, &MainWindow::nextLevel);
+    connect(ui->unlockAllLevelsCheck, &QCheckBox::clicked, this, &MainWindow::unlockAllLevels);
 }
+
 
 void MainWindow::connectActions()
 {
     connect(ui->actiontitle, &QAction::triggered, this, &MainWindow::GoToMainMenue); // TODO replace with more
     connect(ui->clearButton, &QPushButton::clicked, this, &MainWindow::refreshGameView);
     connect(ui->testResultsButton, &QPushButton::clicked, this, &MainWindow::testCircuit);
+    connect(ui->levelCompleteButton, &QPushButton::clicked, this, &MainWindow::nextLevel);
 }
 
 void MainWindow::resetTool()
@@ -291,25 +293,25 @@ void MainWindow::clearPreviousLevel(){
     refreshGameView();
 }
 
+void MainWindow::makeLevelOne(){
+    ui->truthTable->item(0, 0)->setText("0");
+    ui->truthTable->item(1, 1)->setText("1");
+    ui->truthTable->item(0, 3)->setText("1");
+    ui->truthTable->item(1, 3)->setText("0");
+    ui->levelLabel->setText("Level 1");
+
+    ui->truthTableLabel->setText("Construct a circuit that corresponds to the truth table by connecting gates and wires between the source and end gates");
+    clearPreviousLevel();
+}
+
 void MainWindow::makeLevelTwo(){
     //setup for 2 gates
     ui->truthTable->showRow(2);
     ui->truthTable->showRow(3);
     ui->truthTable->showColumn(1);
 
-    currentRowCount += 2;
-
-    //iniialize values for 2 new rows
-    ui->truthTable->item(0, 1)->setText("0");
-    ui->truthTable->item(1, 1)->setText("0");
-    ui->truthTable->item(2, 1)->setText("1");
-    ui->truthTable->item(3, 1)->setText("1");
-
-    ui->truthTable->item(0, 0)->setText("0");
-    ui->truthTable->item(1, 0)->setText("1");
-    ui->truthTable->item(2, 0)->setText("0");
-    ui->truthTable->item(3, 0)->setText("1");
-
+    currentRowCount = 4;
+    fillFourRowTruthTable();
 
     //update outputs
     ui->truthTable->item(0, 3)->setText("0");
@@ -326,6 +328,7 @@ void MainWindow::makeLevelTwo(){
 }
 
 void MainWindow::makeLevelThree(){
+    fillFourRowTruthTable();
     //update outputs
     ui->truthTable->item(0, 3)->setText("0");
     ui->truthTable->item(1, 3)->setText("1");
@@ -341,6 +344,7 @@ void MainWindow::makeLevelThree(){
 }
 
 void MainWindow::makeLevelFour(){
+    fillFourRowTruthTable();
     ui->truthTable->item(0, 3)->setText("0");
     ui->truthTable->item(1, 3)->setText("1");
     ui->truthTable->item(2, 3)->setText("1");
@@ -356,6 +360,8 @@ void MainWindow::makeLevelFour(){
 }
 
 void MainWindow::makeLevelFive(){
+    fillFourRowTruthTable();
+
     ui->truthTable->item(0, 3)->setText("1");
     ui->truthTable->item(1, 3)->setText("1");
     ui->truthTable->item(2, 3)->setText("1");
@@ -373,6 +379,9 @@ void MainWindow::makeLevelFive(){
 }
 
 void MainWindow::makeLevelSix(){
+
+    fillFourRowTruthTable();
+
     ui->truthTable->item(0, 3)->setText("1");
     ui->truthTable->item(1, 3)->setText("0");
     ui->truthTable->item(2, 3)->setText("0");
@@ -388,37 +397,9 @@ void MainWindow::makeLevelSeven(){
         ui->truthTable->showRow(i);
     }
     ui->truthTable->showColumn(2);
-    currentRowCount += 4;
+    currentRowCount = 8;
 
-    //input 1
-        ui->truthTable->item(0, 0)->setText("0");
-        ui->truthTable->item(1, 0)->setText("0");
-        ui->truthTable->item(2, 0)->setText("0");
-        ui->truthTable->item(3, 0)->setText("0");
-        ui->truthTable->item(4, 0)->setText("1");
-        ui->truthTable->item(5, 0)->setText("1");
-        ui->truthTable->item(6, 0)->setText("1");
-        ui->truthTable->item(7, 0)->setText("1");
-    //input 2
-        ui->truthTable->item(0, 1)->setText("0");
-        ui->truthTable->item(1, 1)->setText("0");
-        ui->truthTable->item(2, 1)->setText("1");
-        ui->truthTable->item(3, 1)->setText("1");
-        ui->truthTable->item(4, 1)->setText("0");
-        ui->truthTable->item(5, 1)->setText("0");
-        ui->truthTable->item(6, 1)->setText("1");
-        ui->truthTable->item(7, 1)->setText("1");
-    //input 3
-
-        ui->truthTable->item(0, 2)->setText("0");
-        ui->truthTable->item(1, 2)->setText("1");
-        ui->truthTable->item(2, 2)->setText("0");
-        ui->truthTable->item(3, 2)->setText("1");
-        ui->truthTable->item(4, 2)->setText("0");
-        ui->truthTable->item(5, 2)->setText("1");
-        ui->truthTable->item(6, 2)->setText("0");
-        ui->truthTable->item(7, 2)->setText("1");
-
+    fillEightRowTruthTable();
 
     //update outputs
         ui->truthTable->item(0, 3)->setText("0");
@@ -438,6 +419,8 @@ void MainWindow::makeLevelSeven(){
 }
 
 void MainWindow::makeLevelEight(){
+    fillEightRowTruthTable();
+
     ui->truthTable->item(0, 3)->setText("1");
     ui->truthTable->item(1, 3)->setText("0");
     ui->truthTable->item(2, 3)->setText("0");
@@ -453,6 +436,8 @@ void MainWindow::makeLevelEight(){
 }
 
 void MainWindow::makeLevelNine(){
+    fillEightRowTruthTable();
+
     ui->truthTable->item(0, 3)->setText("1");
     ui->truthTable->item(1, 3)->setText("0");
     ui->truthTable->item(2, 3)->setText("1");
@@ -468,6 +453,7 @@ void MainWindow::makeLevelNine(){
 void MainWindow::makeChallengeLevel(){
 
     ui->truthTable->showColumn(4);
+    fillEightRowTruthTable();
 
     //set first output column
     ui->truthTable->item(0, 3)->setText("0");
@@ -493,6 +479,49 @@ void MainWindow::makeChallengeLevel(){
     clearPreviousLevel();
 }
 
+void MainWindow::unlockAllLevels(){
+    for(int i = 0; i <= 9; i++){
+        levelUnlocked(i);
+    }
+}
+
+void MainWindow::levelUnlocked(int level){
+    switch(level){
+    case(0):
+    ui->level1Button->setEnabled(true);
+        break;
+    case(1):
+    ui->level2Button->setEnabled(true);
+        break;
+    case(2):
+    ui->level3Button->setEnabled(true);
+        break;
+    case(3):
+    ui->level4Button->setEnabled(true);
+        break;
+    case(4):
+    ui->level5Button->setEnabled(true);
+        break;
+    case(5):
+    ui->level6Button->setEnabled(true);
+        break;
+    case(6):
+    ui->level7Button->setEnabled(true);
+        break;
+    case(7):
+    ui->level8Button->setEnabled(true);
+        break;
+    case(8):
+    ui->level9Button->setEnabled(true);
+        break;
+    case(9):
+    ui->level10Button->setEnabled(true);
+        break;
+    default:
+        break;
+    }
+}
+
 void MainWindow::PressedPlay()
 {
     if(!seenHelpMenu){
@@ -514,6 +543,12 @@ void MainWindow::PressedHelp()
 
 void MainWindow::PressedLevels(){
     emit fallTo(this->levelSelectIndex);
+    refreshGameView();
+    emit changeItemType(Gate::NoSelection);
+    scene->setMode(GraphicScene::MoveItem);
+    for(int i = 0; i <= currentLevelIndex; i++){
+        levelUnlocked(i);
+    }
 }
 
 void MainWindow::GoToMainMenue()
@@ -681,5 +716,244 @@ void MainWindow::on_levelSelectHome_clicked()
     refreshGameView();
     emit changeItemType(Gate::NoSelection);
     scene->setMode(GraphicScene::MoveItem);
+}
+
+
+void MainWindow::on_level1Button_clicked()
+{
+    currentLevelIndex = 0;
+    makeLevelOne();
+    refreshGameView();
+    PressedPlay();
+    ui->ANDGateButton->setEnabled(false);
+    ui->ORGateButton->setEnabled(false);
+    ui->XORGateButton->setEnabled(false);
+    ui->NANDGateButton->setEnabled(false);
+    ui->NORGateButton->setEnabled(false);
+
+    for(int i = 2; i < ui->truthTable->rowCount(); i++){
+        ui->truthTable->hideRow(i);
+    }
+    ui->truthTable->hideColumn(1);
+    ui->truthTable->hideColumn(2);
+    ui->truthTable->hideColumn(4);
+    currentRowCount = 2;
+
+}
+
+
+void MainWindow::on_level2Button_clicked()
+{
+    currentLevelIndex = 1;
+    makeLevelTwo();
+    refreshGameView();
+    PressedPlay();
+    ui->ANDGateButton->setEnabled(true);
+    ui->ORGateButton->setEnabled(false);
+    ui->XORGateButton->setEnabled(false);
+    ui->NANDGateButton->setEnabled(false);
+    ui->NORGateButton->setEnabled(false);
+
+    threeGateUiUpdate();
+}
+
+
+void MainWindow::on_level3Button_clicked()
+{
+    currentLevelIndex = 2;
+    makeLevelThree();
+    refreshGameView();
+    PressedPlay();
+    ui->ANDGateButton->setEnabled(true);
+    ui->ORGateButton->setEnabled(true);
+    ui->XORGateButton->setEnabled(false);
+    ui->NANDGateButton->setEnabled(false);
+    ui->NORGateButton->setEnabled(false);
+    threeGateUiUpdate();
+
+}
+
+
+void MainWindow::on_level4Button_clicked()
+{
+    currentLevelIndex = 3;
+    makeLevelFour();
+    refreshGameView();
+    PressedPlay();
+    ui->ANDGateButton->setEnabled(true);
+    ui->ORGateButton->setEnabled(true);
+    ui->XORGateButton->setEnabled(true);
+    ui->NANDGateButton->setEnabled(false);
+    ui->NORGateButton->setEnabled(false);
+    threeGateUiUpdate();
+
+
+}
+
+
+void MainWindow::on_level5Button_clicked()
+{
+    currentLevelIndex = 4;
+    makeLevelFive();
+    refreshGameView();
+    PressedPlay();
+    ui->ANDGateButton->setEnabled(true);
+    ui->ORGateButton->setEnabled(true);
+    ui->XORGateButton->setEnabled(true);
+    ui->NANDGateButton->setEnabled(true);
+    ui->NORGateButton->setEnabled(true);
+    threeGateUiUpdate();
+
+}
+
+
+void MainWindow::on_level6Button_clicked()
+{
+    currentLevelIndex = 5;
+    makeLevelSix();
+    refreshGameView();
+    PressedPlay();
+    enableAllGateButtons();
+    threeGateUiUpdate();
+
+}
+
+
+
+void MainWindow::on_level7Button_clicked()
+{
+    currentLevelIndex = 6;
+    makeLevelSeven();
+    refreshGameView();
+    PressedPlay();
+    enableAllGateButtons();
+    fourGateGuiUpdate();
+
+}
+
+
+void MainWindow::on_level8Button_clicked()
+{
+    currentLevelIndex = 7;
+    makeLevelEight();
+    refreshGameView();
+    PressedPlay();
+    enableAllGateButtons();
+    fourGateGuiUpdate();
+
+}
+
+
+void MainWindow::on_level9Button_clicked()
+{
+    currentLevelIndex = 8;
+    makeLevelNine();
+    refreshGameView();
+    PressedPlay();
+    enableAllGateButtons();
+    fourGateGuiUpdate();
+
+}
+
+
+void MainWindow::on_level10Button_clicked()
+{
+    currentLevelIndex = 9;
+    makeChallengeLevel();
+    refreshGameView();
+    PressedPlay();
+    enableAllGateButtons();
+    ui->truthTable->showColumn(1);
+    ui->truthTable->showColumn(2);
+    ui->truthTable->showColumn(4);
+
+
+    for(int i = 2; i < ui->truthTable->rowCount(); i++){
+        ui->truthTable->showRow(i);
+    }
+    currentRowCount = 8;
+
+}
+
+void MainWindow::enableAllGateButtons(){
+
+    ui->ANDGateButton->setEnabled(true);
+    ui->ORGateButton->setEnabled(true);
+    ui->XORGateButton->setEnabled(true);
+    ui->NANDGateButton->setEnabled(true);
+    ui->NORGateButton->setEnabled(true);
+}
+
+void MainWindow::threeGateUiUpdate(){
+
+    ui->truthTable->showRow(2);
+    ui->truthTable->showRow(3);
+    ui->truthTable->showColumn(1);
+    ui->truthTable->hideColumn(2);
+    ui->truthTable->hideColumn(4);
+
+    for(int i = 4; i < ui->truthTable->rowCount(); i++){
+        ui->truthTable->hideRow(i);
+    }
+    currentRowCount = 4;
+}
+
+void MainWindow::fourGateGuiUpdate(){
+
+    ui->truthTable->showColumn(1);
+    ui->truthTable->showColumn(2);
+    ui->truthTable->hideColumn(4);
+
+    for(int i = 2; i < ui->truthTable->rowCount(); i++){
+        ui->truthTable->showRow(i);
+    }
+
+    currentRowCount = 8;
+}
+
+void MainWindow::fillFourRowTruthTable(){
+    //iniialize values for columns and rows
+
+    ui->truthTable->item(0, 0)->setText("0");
+    ui->truthTable->item(1, 0)->setText("1");
+    ui->truthTable->item(2, 0)->setText("0");
+    ui->truthTable->item(3, 0)->setText("1");
+
+    ui->truthTable->item(0, 1)->setText("0");
+    ui->truthTable->item(1, 1)->setText("0");
+    ui->truthTable->item(2, 1)->setText("1");
+    ui->truthTable->item(3, 1)->setText("1");
+}
+
+void MainWindow::fillEightRowTruthTable(){
+
+    //input 1
+        ui->truthTable->item(0, 0)->setText("0");
+        ui->truthTable->item(1, 0)->setText("0");
+        ui->truthTable->item(2, 0)->setText("0");
+        ui->truthTable->item(3, 0)->setText("0");
+        ui->truthTable->item(4, 0)->setText("1");
+        ui->truthTable->item(5, 0)->setText("1");
+        ui->truthTable->item(6, 0)->setText("1");
+        ui->truthTable->item(7, 0)->setText("1");
+    //input 2
+        ui->truthTable->item(0, 1)->setText("0");
+        ui->truthTable->item(1, 1)->setText("0");
+        ui->truthTable->item(2, 1)->setText("1");
+        ui->truthTable->item(3, 1)->setText("1");
+        ui->truthTable->item(4, 1)->setText("0");
+        ui->truthTable->item(5, 1)->setText("0");
+        ui->truthTable->item(6, 1)->setText("1");
+        ui->truthTable->item(7, 1)->setText("1");
+    //input 3
+
+        ui->truthTable->item(0, 2)->setText("0");
+        ui->truthTable->item(1, 2)->setText("1");
+        ui->truthTable->item(2, 2)->setText("0");
+        ui->truthTable->item(3, 2)->setText("1");
+        ui->truthTable->item(4, 2)->setText("0");
+        ui->truthTable->item(5, 2)->setText("1");
+        ui->truthTable->item(6, 2)->setText("0");
+        ui->truthTable->item(7, 2)->setText("1");
 }
 
