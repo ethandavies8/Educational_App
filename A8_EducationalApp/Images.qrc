@@ -4,5 +4,7 @@
         <file>info.png</file>
         <file>library.png</file>
         <file>PlayPressed.png</file>
+        <file>output.png</file>
+        <file>source.png</file>
     </qresource>
 </RCC>
