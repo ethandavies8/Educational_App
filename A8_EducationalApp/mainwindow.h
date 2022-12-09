@@ -88,6 +88,7 @@ private:
     //level methods
     void clearPreviousLevel();
     void cleanSlate();
+    void setOutputs(QString);
     void makeLevelOne();
     void makeLevelTwo();
     void makeLevelThree();
@@ -100,6 +101,7 @@ private:
     void makeChallengeLevel();
     void levelUnlocked(int);
     void enableAllGateButtons();
+    void endLevelLoad();
     void threeGateUiUpdate();
     void fourGateGuiUpdate();
     void fillFourRowTruthTable();
@@ -141,7 +143,6 @@ private:
     void ShowNORDialog();
 
 protected:
-    void keyPressEvent(QKeyEvent *event) override;
     QHash<Tool, QPixmap> mouseIcons;
 private slots:
     void on_HelpHome_clicked();

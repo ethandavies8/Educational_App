@@ -31,12 +31,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::fallTo, this->fallFrame, &FallingStackedFrame::FallTo);
     setUpTitleFall();
     connectTools();
-
+    //initialize drawing scene
     scene = new GraphicScene(itemMenu, this);
     scene->setSceneRect(QRectF(0, 0, 250, 250));
-
     connectScene();
-
     QHBoxLayout *layout = new QHBoxLayout;
     view = new QGraphicsView(scene);
     QColor backgroundColor(46, 46, 46);
@@ -46,13 +44,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     QWidget *widget = new QWidget;
     widget->setLayout(layout);
-
     ui->toolLayout->addWidget(widget);
+    ui->levelCompleteButton->hide();
 
     truthTableSetup();
-
     setupMouseIcons();
-    //    qApp->setStyleSheet("QWidget { border: 1px solid red; }");
     this->GoToMainMenue();
 }
 
@@ -62,6 +58,7 @@ MainWindow::~MainWindow()
     delete this->fallFrame;
 }
 
+//connect ui buttons for dialogs and menus
 void MainWindow::connectTitle()
 {
     connect(ui->playTitleButton, &QPushButton::clicked, this, &MainWindow::PressedPlay);
@@ -89,7 +86,7 @@ void MainWindow::connectTitle()
     connect(ui->gameOverHome, &QPushButton::clicked, this, &MainWindow::GoToMainMenue);
 
 }
-
+//connect check circuit methods
 void MainWindow::connectScene()
 {
     connect(this, &MainWindow::changeSelectedGate, scene, &GraphicScene::setGateImage);
@@ -104,16 +101,15 @@ void MainWindow::connectScene()
 
 void MainWindow::connectActions()
 {
-    connect(ui->actiontitle, &QAction::triggered, this, &MainWindow::GoToMainMenue); // TODO replace with more
+    connect(ui->actiontitle, &QAction::triggered, this, &MainWindow::GoToMainMenue);
     connect(ui->clearButton, &QPushButton::clicked, this, &MainWindow::refreshGameView);
     connect(ui->testResultsButton, &QPushButton::clicked, this, &MainWindow::testCircuit);
     connect(ui->levelCompleteButton, &QPushButton::clicked, this, &MainWindow::nextLevel);
 }
-
+//connects all tool buttons to set tools
 void MainWindow::connectTools()
 {
     connect(ui->ANDGateButton, &QPushButton::pressed, this, &MainWindow::ANDGateSelection);
-    // connect(this, &MainWindow::deleteEvent, this, &GraphicScene::setMode(GraphicScene::Del));
     connect(ui->NANDGateButton, &QPushButton::pressed, this, &MainWindow::NANDGateSelection);
     connect(ui->ORGateButton, &QPushButton::pressed, this, &MainWindow::ORGateSelection);
     connect(ui->NOTGateButton, &QPushButton::pressed, this, &MainWindow::NOTGateSelection);
@@ -123,19 +119,16 @@ void MainWindow::connectTools()
     connect(ui->XORGateButton, &QPushButton::pressed, this, &MainWindow::XORGateSelection);
 }
 
+//sets truth table stylesheet and hides all rows and columns other than those for the first level
 void MainWindow::truthTableSetup()
 {
-    ui->levelCompleteButton->hide();
-
-    ui->truthTable->setStyleSheet("QTableView::item:selected { color:white; background:darkGreen;}"
-                                  "QTableCornerButton::section { background-color:gray; }"
-                                  "QHeaderView::section { color:white; background-color:rgb(100, 100, 100);}"
-                                  "QTableView::item {color:black; background-color:darkGray;}");
-
-    ui->truthTable_2->setStyleSheet("QTableView::item:selected { color:white; background:darkGreen;}"
-                                    "QTableCornerButton::section { background-color:gray; }"
-                                    "QHeaderView::section { color:white; background-color:rgb(100, 100, 100);}"
-                                    "QTableView::item {color:black; background-color:darkGray;}");
+    QString truthTableStyleSheet("QTableView::item:selected { color:white; background:darkGreen;}"
+                       "QTableCornerButton::section { background-color:gray; }"
+                       "QHeaderView::section { color:white; background-color:rgb(100, 100, 100);}"
+                       "QTableView::item {color:black; background-color:darkGray;}");
+    ui->truthTable->setStyleSheet(truthTableStyleSheet);
+    ui->truthTable_2->setStyleSheet(truthTableStyleSheet);
+    //hide rows and columns for later levels
     for (int i = 2; i < ui->truthTable->rowCount(); i++)
     {
         ui->truthTable->hideRow(i);
@@ -143,7 +136,6 @@ void MainWindow::truthTableSetup()
     ui->truthTable->hideColumn(1);
     ui->truthTable->hideColumn(2);
     ui->truthTable->hideColumn(4);
-
     ui->truthTableLabel->setText("Use a NOT gate between the input and output, a NOT gate negates the input value.");
 }
 
@@ -198,15 +190,12 @@ void MainWindow::PressedHelp()
 void MainWindow::PressedLevels()
 {
     emit fallTo(this->levelSelectIndex);
-    refreshGameView();
-    emit changeItemType(Gate::NoSelection);
-    scene->setMode(GraphicScene::MoveItem);
+    cleanSlate();
     for (int i = 0; i <= currentLevelIndex; i++)
     {
         levelUnlocked(i);
     }
 }
-
 
 void MainWindow::removeBackground(QWidget *widget)
 {
@@ -217,32 +206,36 @@ void MainWindow::removeBackground(QWidget *widget)
 void MainWindow::resetTool()
 {
     setCursor(Qt::ArrowCursor);
-    std::cout << "reset tool" << std::endl;
 }
 
 void MainWindow::testCircuit()
 {
+    //reset previous selections
     for (int i = 0; i < currentRowCount; i++)
     {
         ui->truthTable->item(i, 3)->setSelected(false);
         if (currentLevelIndex == 9)
             ui->truthTable->item(i, 4)->setSelected(false);
     }
-
+    //two gate level
     if (currentLevelIndex == 0)
     {
         emit checkTwoGateLevel();
     }
+    //three gate levels
     else if (currentLevelIndex > 0 && currentLevelIndex < 6)
     {
         emit checkThreeGateLevel(currentLevelIndex);
     }
+    //four gate levels
     else if (currentLevelIndex >= 6 && currentLevelIndex < 9)
         emit checkFourGateLevel(currentLevelIndex);
+    //final level
     else
         emit checkChallengeLevel();
 }
 
+//sets row to show green in the ui, and also sets carry out column showing green if it is the final level
 void MainWindow::truthTableRowCorrect(int row)
 {
     switch (row)
@@ -260,7 +253,7 @@ void MainWindow::truthTableRowCorrect(int row)
     case (2):
         ui->truthTable->item(2,3)->setSelected(true);
         if (currentLevelIndex == 9)
-            ui->truthTable->item(2,3)->setSelected(true);
+            ui->truthTable->item(2,4)->setSelected(true);
         break;
     case (3):
         ui->truthTable->item(3,3)->setSelected(true);
@@ -306,7 +299,8 @@ void MainWindow::truthTableRowCorrect(int row)
         ui->levelCompleteButton->show();
         ui->levelCompleteButton->setEnabled(true);
     }
-    // check for all boxes selected for 3 input
+    // check for all boxes selected for 3 inputs, we only have to check the 3rd column because signal only sends
+    //if both column values are correct
     else if (ui->truthTable->item(0, 3)->isSelected() &&
              ui->truthTable->item(1, 3)->isSelected() &&
              ui->truthTable->item(2, 3)->isSelected() &&
@@ -320,11 +314,12 @@ void MainWindow::truthTableRowCorrect(int row)
         ui->levelCompleteButton->setEnabled(true);
         if (currentLevelIndex == 9)
         {
-            ui->levelCompleteButton->setText("Congratulations! you have won the game, click again for end screen.");
+            ui->levelCompleteButton->setText("Congratulations! you have won the game!");
         }
     }
 }
 
+//updates level index and makes next level
 void MainWindow::nextLevel()
 {
     currentLevelIndex++;
@@ -365,6 +360,7 @@ void MainWindow::nextLevel()
         break;
     }
 }
+
 void MainWindow::clearPreviousLevel()
 {
     ui->levelCompleteButton->hide();
@@ -372,8 +368,17 @@ void MainWindow::clearPreviousLevel()
     refreshGameView();
 }
 
+//helper for setting truth table values
+void MainWindow::setOutputs(QString output){
+    for(int i = 0; i < (int)output.length(); i++){
+        QString textChar = output.at(i);
+        ui->truthTable->item(i, 3)->setText(textChar);
+    }
+}
+
 void MainWindow::makeLevelOne()
 {
+    //set truthTable values
     ui->truthTable->item(0, 0)->setText("0");
     ui->truthTable->item(1, 1)->setText("1");
     ui->truthTable->item(0, 3)->setText("1");
@@ -393,12 +398,9 @@ void MainWindow::makeLevelTwo()
 
     currentRowCount = 4;
     fillFourRowTruthTable();
-
-    // update outputs
-    ui->truthTable->item(0, 3)->setText("0");
-    ui->truthTable->item(1, 3)->setText("0");
-    ui->truthTable->item(2, 3)->setText("0");
-    ui->truthTable->item(3, 3)->setText("1");
+    //set output column of truth table
+    QString output = "0001";
+    setOutputs(output);
     ui->levelLabel->setText("Level 2");
 
     // update level description and unlock next gate
@@ -412,13 +414,10 @@ void MainWindow::makeLevelThree()
 {
     fillFourRowTruthTable();
     // update outputs
-    ui->truthTable->item(0, 3)->setText("0");
-    ui->truthTable->item(1, 3)->setText("1");
-    ui->truthTable->item(2, 3)->setText("1");
-    ui->truthTable->item(3, 3)->setText("1");
+    QString output = "0111";
+    setOutputs(output);
     ui->levelLabel->setText("Level 3");
 
-    // update level description and unlock next gate
     ui->truthTableLabel->setText(
         "Here we will use an OR gate which will take inputs and only output 1 if either or all inputs are 1.");
     ui->ORGateButton->setEnabled(true);
@@ -428,13 +427,11 @@ void MainWindow::makeLevelThree()
 void MainWindow::makeLevelFour()
 {
     fillFourRowTruthTable();
-    ui->truthTable->item(0, 3)->setText("0");
-    ui->truthTable->item(1, 3)->setText("1");
-    ui->truthTable->item(2, 3)->setText("1");
-    ui->truthTable->item(3, 3)->setText("0");
+
+    QString output = "0110";
+    setOutputs(output);
     ui->levelLabel->setText("Level 4");
 
-    // update level description and unlock next gate
     ui->truthTableLabel->setText(
         "Here we will use an XOR gate which will will take inputs and only output 1 if only one input is 1.");
     ui->XORGateButton->setEnabled(true);
@@ -445,11 +442,8 @@ void MainWindow::makeLevelFive()
 {
     fillFourRowTruthTable();
 
-    ui->truthTable->item(0, 3)->setText("1");
-    ui->truthTable->item(1, 3)->setText("1");
-    ui->truthTable->item(2, 3)->setText("1");
-    ui->truthTable->item(3, 3)->setText("0");
-    ui->levelLabel->setText("Level 5");
+    QString output = "1110";
+    setOutputs(output);
 
     ui->truthTableLabel->setText("The NAND and NOR Gates are opposites of their respective Gates. "
                                  "The NAND Gate will only output 1 if both inputs aren't 1. The NOR Gate will "
@@ -463,20 +457,16 @@ void MainWindow::makeLevelFive()
 
 void MainWindow::makeLevelSix()
 {
-
     fillFourRowTruthTable();
 
-    ui->truthTable->item(0, 3)->setText("1");
-    ui->truthTable->item(1, 3)->setText("0");
-    ui->truthTable->item(2, 3)->setText("0");
-    ui->truthTable->item(3, 3)->setText("0");
+    QString output = "1000";
+    setOutputs(output);
     ui->levelLabel->setText("Level 6");
 
     ui->truthTableLabel->setText("The NAND and NOR Gates are opposites of their respective Gates. "
                                  "The NAND Gate will only output 1 if both inputs aren't 1. The NOR Gate will "
                                  "only output 1 if both inputs are 0."
                                  " Using this information, try to match the not version of the gate to the truth table below.");
-
     clearPreviousLevel();
 }
 
@@ -493,21 +483,13 @@ void MainWindow::makeLevelSeven()
     fillEightRowTruthTable();
 
     // update outputs
-    ui->truthTable->item(0, 3)->setText("0");
-    ui->truthTable->item(1, 3)->setText("1");
-    ui->truthTable->item(2, 3)->setText("1");
-    ui->truthTable->item(3, 3)->setText("0");
-    ui->truthTable->item(4, 3)->setText("1");
-    ui->truthTable->item(5, 3)->setText("0");
-    ui->truthTable->item(6, 3)->setText("0");
-    ui->truthTable->item(7, 3)->setText("1");
+    QString output = "01101001";
+    setOutputs(output);
     ui->levelLabel->setText("Level 7");
 
-    // update level description and unlock next gate
     ui->truthTableLabel->setText("A Gate can have more than two inputs. "
                                  "See how an XOR Gate behaves with 3 inputs! "
                                  "It will perform the XOR operation on each input separately.");
-
     clearPreviousLevel();
 }
 
@@ -515,14 +497,8 @@ void MainWindow::makeLevelEight()
 {
     fillEightRowTruthTable();
 
-    ui->truthTable->item(0, 3)->setText("1");
-    ui->truthTable->item(1, 3)->setText("0");
-    ui->truthTable->item(2, 3)->setText("0");
-    ui->truthTable->item(3, 3)->setText("1");
-    ui->truthTable->item(4, 3)->setText("0");
-    ui->truthTable->item(5, 3)->setText("0");
-    ui->truthTable->item(6, 3)->setText("1");
-    ui->truthTable->item(7, 3)->setText("1");
+    QString output = "10010011";
+    setOutputs(output);
     ui->levelLabel->setText("Level 8");
 
     ui->truthTableLabel->setText("Here is an example truth table. Connect the Gates to reach the desired output.");
@@ -533,14 +509,8 @@ void MainWindow::makeLevelNine()
 {
     fillEightRowTruthTable();
 
-    ui->truthTable->item(0, 3)->setText("1");
-    ui->truthTable->item(1, 3)->setText("0");
-    ui->truthTable->item(2, 3)->setText("1");
-    ui->truthTable->item(3, 3)->setText("1");
-    ui->truthTable->item(4, 3)->setText("1");
-    ui->truthTable->item(5, 3)->setText("0");
-    ui->truthTable->item(6, 3)->setText("0");
-    ui->truthTable->item(7, 3)->setText("0");
+    QString output = "10111000";
+    setOutputs(output);
     ui->levelLabel->setText("Level 9");
 
     ui->truthTableLabel->setText("Here is an example truth table. Connect the Gates to reach the desired output.");
@@ -554,14 +524,8 @@ void MainWindow::makeChallengeLevel()
     fillEightRowTruthTable();
 
     // set first output column
-    ui->truthTable->item(0, 3)->setText("0");
-    ui->truthTable->item(1, 3)->setText("1");
-    ui->truthTable->item(2, 3)->setText("1");
-    ui->truthTable->item(3, 3)->setText("0");
-    ui->truthTable->item(4, 3)->setText("1");
-    ui->truthTable->item(5, 3)->setText("0");
-    ui->truthTable->item(6, 3)->setText("0");
-    ui->truthTable->item(7, 3)->setText("1");
+    QString output = "01101001";
+    setOutputs(output);
 
     // set sum output column
     ui->truthTable->item(0, 4)->setText("0");
@@ -573,7 +537,8 @@ void MainWindow::makeChallengeLevel()
     ui->truthTable->item(6, 4)->setText("1");
     ui->truthTable->item(7, 4)->setText("1");
 
-    ui->levelLabel->setText("Challenge Level!");
+    ui->levelLabel->setText("Level 10");
+    ui->truthTableLabel->setText("Challenge Level!");
     clearPreviousLevel();
 }
 
@@ -587,6 +552,7 @@ void MainWindow::unlockAllLevels(){
 
 void MainWindow::levelUnlocked(int level)
 {
+    //sets corresponding levels to be unlocked in level select
     switch (level)
     {
     case (0):
@@ -652,11 +618,11 @@ void MainWindow::GoToMainMenue()
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
-//    std::cout << "resize" << std::endl;
 }
 
 void MainWindow::refreshGameView()
 {
+    //defaults all truth table values shown as true
     for (int i = 0; i < currentRowCount; i++)
     {
         ui->truthTable->item(i, 3)->setSelected(false);
@@ -665,17 +631,22 @@ void MainWindow::refreshGameView()
     }
     scene->clear();
     scene->update();
-
+    ui->levelCompleteButton->hide();
+    ui->levelCompleteButton->setEnabled(false);
+    //first level
     if (currentLevelIndex == 0)
     {
         scene->setUpTwoGates();
     }
+    //levels with three gates
     else if (currentLevelIndex > 0 && currentLevelIndex < 6)
     {
         scene->setUpThreeGates();
     }
+    //levels with four gates
     else if (currentLevelIndex >= 6 && currentLevelIndex < 9)
         scene->setUpFourGates();
+    //final level
     else if (currentLevelIndex == 9)
         scene->setUpChallengeGates();
     else
@@ -708,13 +679,6 @@ void MainWindow::ORGateSelection()
     emit changeSelectedGate(mouseIcons[OR]);
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-    if (event->key() == Qt::Key_Delete)
-    {
-        emit deleteEvent();
-    }
-}
 void MainWindow::NOTGateSelection()
 {
     currentTool = NOT;
@@ -726,8 +690,6 @@ void MainWindow::NOTGateSelection()
 void MainWindow::lineSelection()
 {
     currentTool = Wire;
-    std::cout << "select line" << std::endl;
-
     emit changeItemType(Gate::NoSelection);
     scene->setMode(GraphicScene::InsertLine);
 }
@@ -757,8 +719,8 @@ void MainWindow::XORGateSelection()
     emit changeSelectedGate(mouseIcons[XOR]);
 }
 
+//reset all game concerns
 void MainWindow::cleanSlate(){
-
     refreshGameView();
     emit changeItemType(Gate::NoSelection);
     scene->setMode(GraphicScene::MoveItem);
@@ -854,6 +816,7 @@ void MainWindow::on_level1Button_clicked()
     makeLevelOne();
     refreshGameView();
     PressedPlay();
+    //reset defaults for allowed gates and truth table columns and rows
     ui->ANDGateButton->setEnabled(false);
     ui->ORGateButton->setEnabled(false);
     ui->XORGateButton->setEnabled(false);
@@ -876,12 +839,12 @@ void MainWindow::on_level2Button_clicked()
     makeLevelTwo();
     refreshGameView();
     PressedPlay();
+    //allowed gates for level 2
     ui->ANDGateButton->setEnabled(true);
     ui->ORGateButton->setEnabled(false);
     ui->XORGateButton->setEnabled(false);
     ui->NANDGateButton->setEnabled(false);
     ui->NORGateButton->setEnabled(false);
-
     threeGateUiUpdate();
 }
 
@@ -891,6 +854,7 @@ void MainWindow::on_level3Button_clicked()
     makeLevelThree();
     refreshGameView();
     PressedPlay();
+    //only allow approved gates on level 3
     ui->ANDGateButton->setEnabled(true);
     ui->ORGateButton->setEnabled(true);
     ui->XORGateButton->setEnabled(false);
@@ -905,6 +869,7 @@ void MainWindow::on_level4Button_clicked()
     makeLevelFour();
     refreshGameView();
     PressedPlay();
+    //only allow for approved gates on level 4
     ui->ANDGateButton->setEnabled(true);
     ui->ORGateButton->setEnabled(true);
     ui->XORGateButton->setEnabled(true);
@@ -915,15 +880,10 @@ void MainWindow::on_level4Button_clicked()
 
 void MainWindow::on_level5Button_clicked()
 {
+    //set and make level
     currentLevelIndex = 4;
     makeLevelFive();
-    refreshGameView();
-    PressedPlay();
-    ui->ANDGateButton->setEnabled(true);
-    ui->ORGateButton->setEnabled(true);
-    ui->XORGateButton->setEnabled(true);
-    ui->NANDGateButton->setEnabled(true);
-    ui->NORGateButton->setEnabled(true);
+    endLevelLoad();
     threeGateUiUpdate();
 }
 
@@ -931,9 +891,7 @@ void MainWindow::on_level6Button_clicked()
 {
     currentLevelIndex = 5;
     makeLevelSix();
-    refreshGameView();
-    PressedPlay();
-    enableAllGateButtons();
+    endLevelLoad();
     threeGateUiUpdate();
 }
 
@@ -941,9 +899,7 @@ void MainWindow::on_level7Button_clicked()
 {
     currentLevelIndex = 6;
     makeLevelSeven();
-    refreshGameView();
-    PressedPlay();
-    enableAllGateButtons();
+    endLevelLoad();
     fourGateGuiUpdate();
 }
 
@@ -951,9 +907,7 @@ void MainWindow::on_level8Button_clicked()
 {
     currentLevelIndex = 7;
     makeLevelEight();
-    refreshGameView();
-    PressedPlay();
-    enableAllGateButtons();
+    endLevelLoad();
     fourGateGuiUpdate();
 }
 
@@ -961,19 +915,16 @@ void MainWindow::on_level9Button_clicked()
 {
     currentLevelIndex = 8;
     makeLevelNine();
-    refreshGameView();
-    PressedPlay();
-    enableAllGateButtons();
+    endLevelLoad();
     fourGateGuiUpdate();
 }
 
 void MainWindow::on_level10Button_clicked()
 {
+    //show all columns and rows of truth table and make level
     currentLevelIndex = 9;
     makeChallengeLevel();
-    refreshGameView();
-    PressedPlay();
-    enableAllGateButtons();
+    endLevelLoad();
     ui->truthTable->showColumn(1);
     ui->truthTable->showColumn(2);
     ui->truthTable->showColumn(4);
@@ -985,9 +936,15 @@ void MainWindow::on_level10Button_clicked()
     currentRowCount = 8;
 }
 
+//view update for loading
+void MainWindow::endLevelLoad(){
+    refreshGameView();
+    PressedPlay();
+    enableAllGateButtons();
+}
+
 void MainWindow::enableAllGateButtons()
 {
-
     ui->ANDGateButton->setEnabled(true);
     ui->ORGateButton->setEnabled(true);
     ui->XORGateButton->setEnabled(true);
@@ -997,7 +954,7 @@ void MainWindow::enableAllGateButtons()
 
 void MainWindow::threeGateUiUpdate()
 {
-
+    //show 2 input columns
     ui->truthTable->showRow(2);
     ui->truthTable->showRow(3);
     ui->truthTable->showColumn(1);
@@ -1013,11 +970,10 @@ void MainWindow::threeGateUiUpdate()
 
 void MainWindow::fourGateGuiUpdate()
 {
-
+    //show all but sum column
     ui->truthTable->showColumn(1);
     ui->truthTable->showColumn(2);
     ui->truthTable->hideColumn(4);
-
     for (int i = 2; i < ui->truthTable->rowCount(); i++)
     {
         ui->truthTable->showRow(i);
@@ -1029,12 +985,12 @@ void MainWindow::fourGateGuiUpdate()
 void MainWindow::fillFourRowTruthTable()
 {
     // iniialize values for columns and rows
-
+    //input 1
     ui->truthTable->item(0, 0)->setText("0");
     ui->truthTable->item(1, 0)->setText("1");
     ui->truthTable->item(2, 0)->setText("0");
     ui->truthTable->item(3, 0)->setText("1");
-
+    //input 2
     ui->truthTable->item(0, 1)->setText("0");
     ui->truthTable->item(1, 1)->setText("0");
     ui->truthTable->item(2, 1)->setText("1");
@@ -1043,7 +999,6 @@ void MainWindow::fillFourRowTruthTable()
 
 void MainWindow::fillEightRowTruthTable()
 {
-
     // input 1
     ui->truthTable->item(0, 0)->setText("0");
     ui->truthTable->item(1, 0)->setText("0");
@@ -1063,7 +1018,6 @@ void MainWindow::fillEightRowTruthTable()
     ui->truthTable->item(6, 1)->setText("1");
     ui->truthTable->item(7, 1)->setText("1");
     // input 3
-
     ui->truthTable->item(0, 2)->setText("0");
     ui->truthTable->item(1, 2)->setText("1");
     ui->truthTable->item(2, 2)->setText("0");

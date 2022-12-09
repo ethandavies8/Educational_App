@@ -34,20 +34,22 @@
         QPixmap *map;
         switch(type){
         case(Source):
-            map = new QPixmap(":/icons/line.png");
-            setPixmap(*map);
+            map = new QPixmap(":/buttonIcons/source.png");
+            setPixmap(map->scaled(55, 55));
         break;
         case(Output):
-            map = new QPixmap(":/icons/line.png");
-            setPixmap(*map);
+            map = new QPixmap(":/buttonIcons/output.png");
+            setPixmap(map->scaled(55, 55));
+            height = 55;
+            width = 55;
             break;
         default:
             setPixmap(gateImage.scaled(90,55));
             setFlag(QGraphicsItem::ItemIsMovable, true);
+            height = 55;
+            width = 90;
             break;
-        }        
-        height = 55;
-        width = 90;
+        }
         setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
         setFlag(QGraphicsItem::ItemIsSelectable, true);
         setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
