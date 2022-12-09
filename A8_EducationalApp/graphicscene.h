@@ -37,12 +37,9 @@ public slots:
     void testThreeGateLevel(int);
     void testFourGateLevel(int);
     void testChallengeLevel();
-    //void testLevelTwo();
 
 signals:
-    //void itemInserted(Gate *item);
-    //void itemSelected(QGraphicsItem *item);
-    void rowCorrect(int);
+    void sendTruthTable(QVector<bool>);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;

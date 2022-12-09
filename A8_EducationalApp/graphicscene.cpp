@@ -229,79 +229,97 @@ void GraphicScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 //tests for correct not gate output
 void GraphicScene::testTwoGates(){
+    QVector<bool> answers;
+    for(int i = 0; i < 2; i++){
+        answers.append(false);
+    }
     sourceOne->setOutput(false);
     if(output->getOutput()){
-        emit rowCorrect(0);
+        answers[0] = true;
     }
     sourceOne->setOutput(true);
     if(!output->getOutput()){
-        emit rowCorrect(1);
+        answers[1] = true;
     }
+    emit sendTruthTable(answers);
 }
-
-//tests for correct output for levels with 2 inputs
 void GraphicScene::testThreeGateLevel(int levelIndex){
+
+    QVector<bool> answers;
+    for(int i = 0; i < 4; i++){
+        answers.append(false);
+    }
     //if true for input 0,0
     sourceOne->setOutput(false);
     sourceTwo->setOutput(false);
     if(output->getOutput()){
         if(levelIndex == 4 || levelIndex == 5){
-            emit rowCorrect(0);
+            answers[0] = true;
         }
     }
     else{
-        if(levelIndex == 1 || levelIndex == 2 || levelIndex == 3)
-            emit rowCorrect(0);
+        if(levelIndex == 1 || levelIndex == 2 || levelIndex == 3){
+            answers[0] = true;
+        }
     }
     //if true for input 1, 0
     sourceOne->setOutput(true);
     sourceTwo->setOutput(false);
     if(output->getOutput()){
-        if(levelIndex == 2 || levelIndex == 3 || levelIndex == 4)
-            emit rowCorrect(1);
+        if(levelIndex == 2 || levelIndex == 3 || levelIndex == 4){
+            answers[1] = true;
+        }
     }
     else{
-        if(levelIndex == 1 || levelIndex == 5)
-            emit rowCorrect(1);
+        if(levelIndex == 1 || levelIndex == 5){
+            answers[1] = true;
+        }
     }
     //if true for input 0, 1
     sourceOne->setOutput(false);
     sourceTwo->setOutput(true);
     if(output->getOutput()){
-        if(levelIndex == 2 || levelIndex == 3 || levelIndex == 4)
-            emit rowCorrect(2);
+        if(levelIndex == 2 || levelIndex == 3 || levelIndex == 4){
+            answers[2] = true;
+        }
     }
     else{
-        if(levelIndex == 1 || levelIndex == 5)
-            emit rowCorrect(2);
+        if(levelIndex == 1 || levelIndex == 5){
+            answers[2] = true;
+        }
     }
     //if true for input 1, 1
     sourceOne->setOutput(true);
     sourceTwo->setOutput(true);
     if(output->getOutput()){
-        if(levelIndex == 1 || levelIndex == 2)
-            emit rowCorrect(3);
+        if(levelIndex == 1 || levelIndex == 2){
+            answers[3] = true;
+        }
     }
     else{
         if(levelIndex == 3 || levelIndex == 4|| levelIndex == 5){
-            emit rowCorrect(3);
+            answers[3] = true;
         }
     }
+    emit sendTruthTable(answers);
 }
-
 //test for levels with 3 inputs
 void GraphicScene::testFourGateLevel(int levelIndex){
+    QVector<bool> answers;
+    for(int i = 0; i < 8; i++){
+        answers.append(false);
+    }
     //if true for input 0,0,0
     sourceOne->setOutput(false);
     sourceTwo->setOutput(false);
     sourceThree->setOutput(false);
     if(output->getOutput()){
         if(levelIndex == 7 || levelIndex == 8)
-            emit rowCorrect(0);
+            answers[0] = true;
     }
     else{
         if(levelIndex == 6)
-            emit rowCorrect(0);
+            answers[0] = true;
     }
     //if true for input 0,0, 1
     sourceOne->setOutput(false);
@@ -309,11 +327,11 @@ void GraphicScene::testFourGateLevel(int levelIndex){
     sourceThree->setOutput(true);
     if(output->getOutput()){
         if(levelIndex == 6)
-            emit rowCorrect(1);
+            answers[1] = true;
     }
     else{
         if(levelIndex == 7 || levelIndex == 8)
-            emit rowCorrect(1);
+            answers[1] = true;
     }
     //if true for input 0,1,0
     sourceOne->setOutput(false);
@@ -321,11 +339,11 @@ void GraphicScene::testFourGateLevel(int levelIndex){
     sourceThree->setOutput(false);
     if(output->getOutput()){
         if(levelIndex == 6 || levelIndex == 8)
-            emit rowCorrect(2);
+            answers[2] = true;
     }
     else{
         if(levelIndex == 7)
-            emit rowCorrect(2);
+            answers[2] = true;
     }
     //if true for input 0,1,1
     sourceOne->setOutput(false);
@@ -333,11 +351,11 @@ void GraphicScene::testFourGateLevel(int levelIndex){
     sourceThree->setOutput(true);
     if(output->getOutput()){
         if(levelIndex == 7 || levelIndex == 8)
-            emit rowCorrect(3);
+            answers[3] = true;
     }
     else{
         if(levelIndex == 6)
-            emit rowCorrect(3);
+            answers[3] = true;
     }
     //if true for input 1,0,0
     sourceOne->setOutput(true);
@@ -345,11 +363,11 @@ void GraphicScene::testFourGateLevel(int levelIndex){
     sourceThree->setOutput(false);
     if(output->getOutput()){
         if(levelIndex == 6 || levelIndex == 8)
-            emit rowCorrect(4);
+            answers[4] = true;
     }
     else{
         if(levelIndex == 7)
-            emit rowCorrect(4);
+            answers[4] = true;
     }
     //if true for input 1,0,1
     sourceOne->setOutput(true);
@@ -357,7 +375,7 @@ void GraphicScene::testFourGateLevel(int levelIndex){
     sourceThree->setOutput(true);
     if(!output->getOutput()){
         if(levelIndex == 6 || levelIndex == 7 || levelIndex == 8)
-            emit rowCorrect(5);
+           answers[5] = true;
     }
     //if true for input 1,1,0
     sourceOne->setOutput(true);
@@ -365,11 +383,11 @@ void GraphicScene::testFourGateLevel(int levelIndex){
     sourceThree->setOutput(false);
     if(output->getOutput()){
         if(levelIndex == 7)
-            emit rowCorrect(6);
+             answers[6] = true;
     }
     else{
         if(levelIndex == 6 || levelIndex == 8)
-            emit rowCorrect(6);
+            answers[6] = true;
     }
     //if true for input 1,1,1
     sourceOne->setOutput(true);
@@ -377,62 +395,69 @@ void GraphicScene::testFourGateLevel(int levelIndex){
     sourceThree->setOutput(true);
     if(output->getOutput()){
         if(levelIndex == 6 || levelIndex == 7)
-            emit rowCorrect(7);
+            answers[7] = true;
     }
     else{
         if(levelIndex == 8)
-            emit rowCorrect(7);
+            answers[7] = true;
     }
+    emit sendTruthTable(answers);
 }
 
 //test final level for both outputs
 void GraphicScene::testChallengeLevel(){
+    QVector<bool> answers;
+    for(int i = 0; i < 8; i++){
+        answers.append(false);
+    }
     //if true for input 0,0,0
     sourceOne->setOutput(false);
     sourceTwo->setOutput(false);
     sourceThree->setOutput(false);
     if(!output->getOutput() && !sum->getOutput())
-        emit rowCorrect(0);
+        answers[0] = true;
     //if true for input 0,0,1
     sourceOne->setOutput(false);
     sourceTwo->setOutput(false);
     sourceThree->setOutput(true);
     if(output->getOutput() && !sum->getOutput())
-        emit rowCorrect(1);
+        answers[1] = true;
     //if true for input 0,1,0
     sourceOne->setOutput(false);
     sourceTwo->setOutput(true);
     sourceThree->setOutput(false);
     if(output->getOutput() && !sum->getOutput())
-        emit rowCorrect(2);
+        answers[2] = true;
     //if true for input 0,1,1
     sourceOne->setOutput(false);
     sourceTwo->setOutput(true);
     sourceThree->setOutput(true);
     if(!output->getOutput() && sum->getOutput())
-        emit rowCorrect(3);
+        answers[3] = true;
     //if true for input 1,0,0
     sourceOne->setOutput(true);
     sourceTwo->setOutput(false);
     sourceThree->setOutput(false);
     if(output->getOutput() && !sum->getOutput())
-        emit rowCorrect(4);
+        answers[4] = true;
     //if true for input 1,0,1
     sourceOne->setOutput(true);
     sourceTwo->setOutput(false);
     sourceThree->setOutput(true);
     if(!output->getOutput() && sum->getOutput())
-        emit rowCorrect(5);
+        answers[5] = true;
     //if true for input 1,1,0
     sourceOne->setOutput(true);
     sourceTwo->setOutput(true);
     sourceThree->setOutput(false);
     if(!output->getOutput() && sum->getOutput())
-        emit rowCorrect(6);
+        answers[6] = true;
     //if true for input 1,1,1
     sourceOne->setOutput(true);
     sourceTwo->setOutput(true);
     sourceThree->setOutput(true);
     if(output->getOutput() && sum->getOutput())
-        emit rowCorrect(7);
+        answers[7] = true;
+
+    emit sendTruthTable(answers);
 }

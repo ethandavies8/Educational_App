@@ -36,6 +36,8 @@
         case(Source):
             map = new QPixmap(":/buttonIcons/source.png");
             setPixmap(map->scaled(55, 55));
+            height = 55;
+            width = 55;
         break;
         case(Output):
             map = new QPixmap(":/buttonIcons/output.png");

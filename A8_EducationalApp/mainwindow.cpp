@@ -95,8 +95,8 @@ void MainWindow::connectScene()
     connect(this, &MainWindow::checkThreeGateLevel, scene, &GraphicScene::testThreeGateLevel);
     connect(this, &MainWindow::checkFourGateLevel, scene, &GraphicScene::testFourGateLevel);
     connect(this, &MainWindow::checkChallengeLevel, scene, &GraphicScene::testChallengeLevel);
-    connect(scene, &GraphicScene::rowCorrect, this, &MainWindow::truthTableRowCorrect);
     connect(ui->unlockAllLevelsCheck, &QCheckBox::clicked, this, &MainWindow::unlockAllLevels);
+    connect(scene, &GraphicScene::sendTruthTable, this, &MainWindow::checkTruthTable);
 }
 
 void MainWindow::connectActions()
@@ -210,13 +210,17 @@ void MainWindow::resetTool()
 
 void MainWindow::testCircuit()
 {
+    //refreshGameView();
+
     //reset previous selections
+    /*
     for (int i = 0; i < currentRowCount; i++)
     {
         ui->truthTable->item(i, 3)->setSelected(false);
         if (currentLevelIndex == 9)
             ui->truthTable->item(i, 4)->setSelected(false);
     }
+    */
     //two gate level
     if (currentLevelIndex == 0)
     {
@@ -235,81 +239,20 @@ void MainWindow::testCircuit()
         emit checkChallengeLevel();
 }
 
-//sets row to show green in the ui, and also sets carry out column showing green if it is the final level
-void MainWindow::truthTableRowCorrect(int row)
-{
-    switch (row)
-    {
-    case (0):
-        ui->truthTable->item(0,3)->setSelected(true);
-        if (currentLevelIndex == 9)
-            ui->truthTable->item(0,4)->setSelected(true);
-        break;
-    case (1):
-        ui->truthTable->item(1,3)->setSelected(true);
-        if (currentLevelIndex == 9)
-            ui->truthTable->item(1,4)->setSelected(true);
-        break;
-    case (2):
-        ui->truthTable->item(2,3)->setSelected(true);
-        if (currentLevelIndex == 9)
-            ui->truthTable->item(2,4)->setSelected(true);
-        break;
-    case (3):
-        ui->truthTable->item(3,3)->setSelected(true);
-        if (currentLevelIndex == 9)
-            ui->truthTable->item(3,4)->setSelected(true);
-        break;
-    case (4):
-        ui->truthTable->item(4,3)->setSelected(true);
-        if (currentLevelIndex == 9)
-            ui->truthTable->item(4, 4)->setSelected(true);
-        break;
-    case (5):
-        ui->truthTable->item(5,3)->setSelected(true);
-        if (currentLevelIndex == 9)
-            ui->truthTable->item(5,4)->setSelected(true);
-        break;
-    case (6):
-        ui->truthTable->item(6,3)->setSelected(true);
-        if (currentLevelIndex == 9)
-            ui->truthTable->item(6,4)->setSelected(true);
-        break;
-    case (7):
-        ui->truthTable->item(7,3)->setSelected(true);
-        if (currentLevelIndex == 9)
-            ui->truthTable->item(7, 4)->setSelected(true);
-        break;
+void MainWindow::checkTruthTable(QVector<bool> values){
+    bool allTrue = true;
+    for(int i = 0; i < values.size(); i++){
+        if(values.at(i) == true){
+            ui->truthTable->item(i, 3)->setSelected(true);
+            if (currentLevelIndex == 9)
+                ui->truthTable->item(i,4)->setSelected(true);
+        }
+        else{
+            allTrue = false;
+            ui->truthTable->item(i, 3)->setSelected(false);
+        }
     }
-
-    // check for all boxes selected for 1 input
-    if (currentLevelIndex == 0 && ui->truthTable->item(0, 3)->isSelected() &&
-        ui->truthTable->item(1, 3)->isSelected())
-    {
-        ui->levelCompleteButton->show();
-        ui->levelCompleteButton->setEnabled(true);
-    }
-    // check for all boxes selected for 2 input
-    if (currentLevelIndex > 0 && currentLevelIndex < 6 &&
-        ui->truthTable->item(0, 3)->isSelected() &&
-        ui->truthTable->item(1, 3)->isSelected() &&
-        ui->truthTable->item(2, 3)->isSelected() &&
-        ui->truthTable->item(3, 3)->isSelected())
-    {
-        ui->levelCompleteButton->show();
-        ui->levelCompleteButton->setEnabled(true);
-    }
-    // check for all boxes selected for 3 inputs, we only have to check the 3rd column because signal only sends
-    //if both column values are correct
-    else if (ui->truthTable->item(0, 3)->isSelected() &&
-             ui->truthTable->item(1, 3)->isSelected() &&
-             ui->truthTable->item(2, 3)->isSelected() &&
-             ui->truthTable->item(3, 3)->isSelected() &&
-             ui->truthTable->item(4, 3)->isSelected() &&
-             ui->truthTable->item(5, 3)->isSelected() &&
-             ui->truthTable->item(6, 3)->isSelected() &&
-             ui->truthTable->item(7, 3)->isSelected())
-    {
+    if(allTrue){
         ui->levelCompleteButton->show();
         ui->levelCompleteButton->setEnabled(true);
         if (currentLevelIndex == 9)
@@ -317,6 +260,27 @@ void MainWindow::truthTableRowCorrect(int row)
             ui->levelCompleteButton->setText("Congratulations! you have won the game!");
         }
     }
+    else{
+    scene->clear();
+    scene->update();
+    //first level
+    if (currentLevelIndex == 0)
+    {
+        scene->setUpTwoGates();
+    }
+    //levels with three gates
+    else if (currentLevelIndex > 0 && currentLevelIndex < 6)
+    {
+        scene->setUpThreeGates();
+    }
+    //levels with four gates
+    else if (currentLevelIndex >= 6 && currentLevelIndex < 9)
+        scene->setUpFourGates();
+    //final level
+    else if (currentLevelIndex == 9)
+        scene->setUpChallengeGates();
+    }
+
 }
 
 //updates level index and makes next level
@@ -705,7 +669,6 @@ void MainWindow::selectToolSelection()
 void MainWindow::NORGateSelection()
 {
     currentTool = NOR;
-    std::cout << "select NOR gate" << std::endl;
     scene->setMode(GraphicScene::InsertItem);
     emit changeItemType(Gate::NOR);
     emit changeSelectedGate(mouseIcons[NOR]);

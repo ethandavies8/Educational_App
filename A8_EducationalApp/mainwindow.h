@@ -51,9 +51,9 @@ public slots:
     void selectToolSelection();
     //circuit and level slots
     void testCircuit();
-    void truthTableRowCorrect(int);
     void nextLevel();
     void unlockAllLevels();
+    void checkTruthTable(QVector<bool>);
 signals:
     //ui signals
     void fallTo(int frame);
